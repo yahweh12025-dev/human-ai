@@ -10,7 +10,7 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Super Agent** | 🟡 Beta | Orchestration & Delegation | `HumanAIResearcher` | Needs better routing logic |
 | **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
 | **Critic** | 🔴 Incomplete | Quality control & Fact-checking | TBD | Not yet integrated into pipeline |
-| **Navigator** | 🔴 Incomplete | Complex UI interaction | `Playwright` | Needs specific workflow skills |
+| **Navigator** | 🟡 Beta | Complex UI interaction | `NavigatorSkills` | Auth-Flow & Data extraction implemented |
 | **GitHub Scout** | 🟡 Beta | Repo discovery & analysis | `GitHub API` | Needs better filtering logic |
 | **Repo Reviewer** | 🟡 Beta | Code quality & security audit | `GitHub API` | Lacks deep context integration |
 | **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Leveraging main agent for Phase 1 |

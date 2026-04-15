@@ -9,7 +9,7 @@ import os
 import sys
 import random
 import traceback
-import json
+from .navigator_skills import NavigatorSkills
 import re
 from datetime import datetime
 from pathlib import Path
@@ -135,6 +135,7 @@ class WebNavigator:
 class NavigatorAgent:
     def __init__(self):
         self.navigator = WebNavigator()
+        self.skills = NavigatorSkills(self.navigator)
         self.history = []
 
     async def run_goal_oriented_loop(self, goal: str, max_steps: int = 10):
@@ -275,6 +276,11 @@ class NavigatorAgent:
             await self.navigator.press_key(action_obj["details"], action_obj["key"])
         elif action == "scroll":
             await self.navigator.scroll_to(action_obj["details"])
+        elif action == "login":
+            # Expects action_obj["details"] to be the URL and "value" to be a JSON string of credentials
+            import json
+            creds = json.loads(action_obj["value"])
+            await self.skills.perform_login(action_obj["details"], creds)
 
 async def main():
     agent = NavigatorAgent()
