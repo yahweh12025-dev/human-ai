@@ -72,8 +72,30 @@ class NavigatorSkills:
                 cells = await row_locator.locator(col_selector).all()
                 row_text = [await cell.inner_text() for cell in cells]
                 table_data.append(row_text)
-            
+            \n
             return table_data
         except Exception as e:
             print(f"❌ Table extraction failed: {e}")
             return []
+
+    async def extract_authenticated_dashboard_data(self, login_url: str, dashboard_url: str, credentials: Dict[str, str], table_selector: str) -> List[List[str]]:
+        """
+        Performs an authenticated workflow: login, navigate to dashboard, extract table data.
+        """
+        print(f"🔐 Starting authenticated dashboard workflow for {dashboard_url}")
+        
+        # Step 1: Login
+        login_success = await self.skills.perform_login(login_url, credentials)
+        if not login_success:
+            print("❌ Workflow failed at login step.")
+            return []
+        
+        # Step 2: Navigate to Dashboard
+        print(f"🌐 Navigating to dashboard: {dashboard_url}")
+        await self.navigator.navigate_to(dashboard_url)
+        
+        # Step 3: Extract Data from Table
+        print(f"📊 Extracting data from table: {table_selector}")
+        table_data = await self.skills.extract_dynamic_table_data(table_selector)
+        
+        return table_data
