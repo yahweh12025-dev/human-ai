@@ -50,3 +50,30 @@ class NavigatorSkills:
         """
         element = self.navigator.page.locator(selector)
         return await element.inner_text()
+
+    async def extract_dynamic_table_data(self, table_selector: str, row_selector: str = 'tr', col_selector: str = 'td') -> List[List[str]]:
+        """
+        Waits for a table to load and extracts its data as a list of lists (rows x columns).
+        """
+        print(f"📊 Extracting data from dynamic table: {table_selector}")
+        try:
+            # Wait for the table to be present in the DOM
+            await self.navigator.page.wait_for_selector(table_selector, state='attached', timeout=30000)
+            
+            # Optional: Wait a bit more for potential JS rendering
+            await self.navigator.page.wait_for_timeout(2000)
+            
+            # Locate all rows within the table
+            rows = await self.navigator.page.locator(f'{table_selector} {row_selector}').all()
+            
+            table_data = []
+            for row_locator in rows:
+                # Locate all cells within the current row
+                cells = await row_locator.locator(col_selector).all()
+                row_text = [await cell.inner_text() for cell in cells]
+                table_data.append(row_text)
+            
+            return table_data
+        except Exception as e:
+            print(f"❌ Table extraction failed: {e}")
+            return []
