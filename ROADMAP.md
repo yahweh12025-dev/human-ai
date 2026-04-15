@@ -9,8 +9,8 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Fully verified E2E with Supabase |
 | **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer + Input Sanitization Guardrail |
 | **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
-| **Critic** | 🟡 Beta | Quality control & Fact-checking | `CriticAgent` | Implemented: Can review content for accuracy and completeness. |
-| **Navigator** | 🟡 Beta | Complex UI interaction | `NavigatorSkills` | Auth-Flow & Data extraction implemented |
+| **Critic** | 🟢 Stable | Quality control & Fact-checking | `CriticAgent` | Fully integrated into AntFarm pipeline as Reviewer. |
+| **Navigator** | 🟢 Stable | Complex UI interaction | `NavigatorSkills` | Multi-step web workflows implemented and verified |
 | **GitHub Scout** | 🟡 Beta | Repo discovery & analysis | `GitHub API` | Needs better filtering logic |
 | **Repo Reviewer** | 🟡 Beta | Code quality & security audit | `GitHub API` | Lacks deep context integration |
 | **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Leveraging main agent for Phase 1 |
@@ -39,15 +39,17 @@ This document tracks the development state of the Human-AI agent swarm.
 
 ### Phase 2: Capability Expansion (Current 🚀)
 - [x] **Technical Synthesis**: Implemented professional report generation.
-- [ ] **Agent: Navigator**: Develop specialized skills for complex web interaction.
-- [ ] **Agent: Critic**: Implement the "Fact-Check" loop.
+- [x] **Agent: Navigator**: Develop specialized skills for complex web interaction. (Completed: Playwright integration + multi-step workflows)
+- [x] **Agent: Critic**: Implement the "Fact-Check" loop. (Completed: integrated into AntFarm)
 - [x] **GitHub Integration**: Link Repo Reviewer and GitHub Scout (Link verified via test script).
+- [x] **Model Guardrail**: Strictly enforced free-only models across Gateway and Agents.
+- [x] **Infrastructure**: Installed and configured `claw-code` CLI with OpenRouter integration.
 
 **Next Mission**: The Navigator Agent. Designing the core logic for the Navigator agent, focusing on its ability to use Playwright for multi-step, goal-oriented web navigation.
 
 ### Phase 3: Orchestration & Ecosystem (Upcoming 📅)
 - [ ] **Omni-Channel Intelligence (Browser/API Hybrid)**: Implement a rotation logic that cycles between direct LLM APIs and Browser-based AI Chat interfaces (Gemini, Claude, Grok) to bypass rate limits and leverage specialized reasoning capabilities.
-- [ ] **Antfarm Integration**: Transition to a "Squad" model (Writer, Reviewer, Developer pipelines).
+- [x] **Antfarm Integration**: Transition to a "Squad" model (Writer, Reviewer, Developer pipelines) - Implemented via AntFarmOrchestrator.
 - [ ] **Dify Knowledge Hub**: Connect the repo to a RAG-powered "Brain" for interactive querying via Telegram.
 
 ## 📝 Backlog & Technical Debt

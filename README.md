@@ -1,3 +1,7 @@
+# 🚀 Current Architecture: The Hybrid Swarm
+OpenClaw (Orchestrator) $ightarrow$ Dr. Claw (Worker) $ightarrow$ Browser-Driven Navigator
+- Strictly Free-Only Models enforced via `utils/guardrails.py`
+- Autopilot prioritized to Dr. Claw for implementation tasks.
 # 🧬 Human AI Swarm Architecture
 
 This repository is evolving into a multi-agent autonomous swarm designed for deep research, rapid building, and seamless communication.

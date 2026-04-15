@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Human AI: Researcher Agent (v3.0)
+Human AI: Researcher Agent (v3.1)
 Integrated with DeepSeek Browser Agent, OpenClaw Gateway, and Supabase.
 """
 
@@ -167,13 +167,35 @@ class HumanAIResearcher:
         if not os.path.exists(SESSION_PATH): await self.ds_agent.login()
         return await self.ds_agent.prompt(prompt)
 
-    async def _call_llm(self, prompt):
+    async def _prompt_only(self, prompt: str) -> str:
+        """Directly prompt the LLM without triggering a research cycle."""
+        if not self.ds_agent.page: await self.ds_agent.start_browser()
+        return await self.ds_agent.prompt(prompt)
+
+    def _call_llm(self, prompt):
         try:
-            return await self._run_ds_browser(prompt)
+            import nest_asyncio
+            nest_asyncio.apply()
+            return asyncio.run(self._run_ds_browser(prompt))
         except Exception as e: return f"Error: {str(e)}"
 
+    async def synthesize(self, data: str) -> str:
+        """
+        Generates a technical report based on provided data without performing external research.
+        """
+        print(f"✍️ Synthesizing report from provided data...")
+        prompt = f"I have the following structured data. Please synthesize it into a professional technical report with an executive summary, key findings, and a detailed analysis:\n\n{data}"
+        report = await self._prompt_only(prompt)
+
+        if self.supabase:
+            try:
+                self.supabase.table('research_findings').insert({'topic': f'Synthesis from structured data (length: {len(data)} chars)', 'content': report}).execute()
+            except Exception as e: print(f'Supabase error: {e}')
+
+        return report
+
     async def research(self, topic):
-        print(f"\\n🔍 Deep Researching: {topic}")
+        print(f"\n🔍 Deep Researching: {topic}")
         
         if self.supabase:
             try:
@@ -191,7 +213,7 @@ class HumanAIResearcher:
                 print(f"⚠️ Supabase check failed: {e}")
 
         target_prompt = f"I need to research {topic}. Provide a list of 3-5 high-quality URLs. Return only URLs, one per line."
-        targets_text = await self._call_llm(target_prompt)
+        targets_text = self._call_llm(target_prompt)
         urls = re.findall(r'https?://[^\s<>"]+', targets_text)
         
         if not urls:
@@ -199,7 +221,7 @@ class HumanAIResearcher:
             return "Could not find relevant sources for research."
 
         schema_prompt = f"What specific data points should be extracted from a webpage to research {topic}? Return a simple comma-separated list of fields."
-        schema_desc = await self._call_llm(schema_prompt)
+        schema_desc = self._call_llm(schema_prompt)
         print(f"📋 Extraction Schema: {schema_desc}")
 
         aggregated_data = ""
@@ -215,13 +237,13 @@ class HumanAIResearcher:
                 )
                 stdout, stderr = await process.communicate()
                 parsed_json_str = stdout.decode().strip()
-                aggregated_data += f"\\n--- Source: {url} ---\\n{parsed_json_str}\\n"
+                aggregated_data += f"\n--- Source: {url} ---\n{parsed_json_str}\n"
             except Exception as e:
                 print(f"⚠️ Parsing failed for {url}: {e}")
-                aggregated_data += f"\\n--- Source: {url} (Raw) ---\\n{raw_html[:2000]}\\n"
+                aggregated_data += f"\n--- Source: {url} (Raw) ---\n{raw_html[:2000]}\n"
 
-        synthesis_prompt = f"Create a detailed technical report on {topic} using the following structured data extracted from multiple sources:\\n{aggregated_data}"
-        report = await self._call_llm(synthesis_prompt)
+        synthesis_prompt = f"Create a detailed technical report on {topic} using the following structured data extracted from multiple sources:\n{aggregated_data}"
+        report = self._call_llm(synthesis_prompt)
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         topic_slug = re.sub(r'[^a-zA-Z0-9]', '_', topic).lower()

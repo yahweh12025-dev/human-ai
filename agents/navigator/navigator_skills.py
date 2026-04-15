@@ -72,7 +72,7 @@ class NavigatorSkills:
                 cells = await row_locator.locator(col_selector).all()
                 row_text = [await cell.inner_text() for cell in cells]
                 table_data.append(row_text)
-            \n
+            
             return table_data
         except Exception as e:
             print(f"❌ Table extraction failed: {e}")
@@ -99,3 +99,34 @@ class NavigatorSkills:
         table_data = await self.skills.extract_dynamic_table_data(table_selector)
         
         return table_data
+    async def query_llm_via_browser(self, prompt: str) -> str:
+        """
+        Bypasses direct API calls by using the browser to query a free AI interface.
+        This is a fallback for when the API returns 400/404 errors.
+        """
+        print("🌐 Querying LLM via Browser (API Bypass Mode)...")
+        try:
+            # Navigate to a stable free AI chat interface
+            await self.navigator.navigate_to("https://openrouter.ai/chat")
+            
+            # 1. Find the chat input box
+            input_selector = 'textarea[placeholder*="Message"], textarea, [role="textbox"]'
+            await self.navigator.page.wait_for_selector(input_selector, timeout=10000)
+            
+            # 2. Type the prompt
+            await self.navigator.fill(input_selector, prompt)
+            await self.navigator.press_key(input_selector, 'Enter')
+            
+            # 3. Wait for the response to generate
+            await asyncio.sleep(10) 
+            
+            # 4. Scrape the last assistant message
+            messages = await self.navigator.page.locator('.message-content, [role="article"]').all()
+            if messages:
+                last_msg = await messages[-1].inner_text()
+                return last_msg
+            
+            return "Error: No response found on page."
+        except Exception as e:
+            print(f"❌ Browser LLM query failed: {e}")
+            return f"Error: Browser LLM bypass failed: {str(e)}"
