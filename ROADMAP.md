@@ -7,7 +7,7 @@ This document tracks the development state of the Human-AI agent swarm.
 | Agent | Status | Purpose | Primary Tool/Skill | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Fully verified E2E with Supabase |
-| **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer |
+| **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer + Input Sanitization Guardrail |
 | **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
 | **Critic** | 🔴 Incomplete | Quality control & Fact-checking | TBD | Not yet integrated into pipeline |
 | **Navigator** | 🟡 Beta | Complex UI interaction | `NavigatorSkills` | Auth-Flow & Data extraction implemented |
