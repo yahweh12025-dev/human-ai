@@ -9,7 +9,7 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Fully verified E2E with Supabase |
 | **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer + Input Sanitization Guardrail |
 | **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
-| **Critic** | 🔴 Incomplete | Quality control & Fact-checking | TBD | Not yet integrated into pipeline |
+| **Critic** | 🟡 Beta | Quality control & Fact-checking | `CriticAgent` | Implemented: Can review content for accuracy and completeness. |
 | **Navigator** | 🟡 Beta | Complex UI interaction | `NavigatorSkills` | Auth-Flow & Data extraction implemented |
 | **GitHub Scout** | 🟡 Beta | Repo discovery & analysis | `GitHub API` | Needs better filtering logic |
 | **Repo Reviewer** | 🟡 Beta | Code quality & security audit | `GitHub API` | Lacks deep context integration |
