@@ -129,14 +129,51 @@ class DeepSeekBrowserAgent:
     async def prompt(self, text):
         if not self.page: await self.start_browser()
         await self.page.goto("https://chat.deepseek.com")
-        await self.page.wait_for_timeout(2000)
-        textbox = self.page.locator('textarea, div[contenteditable=true]').last
-        await self._human_type(textbox, text)
-        await textbox.press("Enter")
-        await self.page.wait_for_function('document.querySelector("textarea") && !document.querySelector("textarea").disabled', timeout=120000)
-        await self.page.wait_for_timeout(2000)
-        messages = await self.page.query_selector_all('[class*="markdown"]')
-        return await messages[-1].inner_text() if messages else "No response"
+        
+        # Wait for the page to be interactive
+        try:
+            # Try several possible selectors for the input box
+            selectors = [
+                'textarea[placeholder*="Message"]',
+                'div[contenteditable="true"]',
+                'textarea',
+                'div[role="textbox"]'
+            ]
+            
+            textbox = None
+            for selector in selectors:
+                try:
+                    # Short wait for each selector
+                    el = self.page.locator(selector).last
+                    await el.wait_for(state="visible", timeout=5000)
+                    if await el.is_enabled():
+                        textbox = el
+                        break
+                except:
+                    continue
+            
+            if not textbox:
+                # Final fallback to the original logic
+                textbox = self.page.locator('textarea, div[contenteditable=true]').last
+                await textbox.wait_for(state="visible", timeout=10000)
+
+            await self._human_type(textbox, text)
+            await textbox.press("Enter")
+            
+            # Wait for the response to generate: wait until the textarea is no longer disabled/hidden
+            # and a new markdown block appears.
+            await self.page.wait_for_function(
+                'document.querySelector("textarea") && !document.querySelector("textarea").disabled', 
+                timeout=120000
+            )
+            await self.page.wait_for_timeout(2000)
+            
+            messages = await self.page.query_selector_all('[class*="markdown"]')
+            return await messages[-1].inner_text() if messages else "No response"
+            
+        except Exception as e:
+            print(f"❌ Browser Prompt Error: {e}")
+            return f"Error during browser interaction: {str(e)}"
 
     async def close(self):
         if self.browser: await self.browser.close()
