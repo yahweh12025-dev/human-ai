@@ -37,8 +37,8 @@ def push_secrets_to_infisical():
         print(f"📦 Found {len(secrets_to_push)} secrets in .env to push.")
         
         # Push each secret
-        # endpoint: POST /api/v1/secrets
-        secret_url = "https://app.infisical.com/api/v1/secrets"
+        # Correct endpoint: /v1/secrets
+        secret_url = "https://app.infisical.com/v1/secrets"
         headers = {
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json"

@@ -1,15 +1,18 @@
 import asyncio
 import os
 from typing import Dict, Any
-import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+# Import the shared browser agent
+import sys
+sys.path.append('/home/ubuntu/human-ai')
+from agents.researcher.researcher_agent import DeepSeekBrowserAgent
+
+load_dotenv('/home/ubuntu/human-ai/.env')
 
 class DeveloperAgent:
     def __init__(self):
-        self.model = os.getenv("OLLAMA_MODEL", "deepseek-r1:14b")
-        self.api_url = os.getenv("OLLAMA_URL", "http://localhost:11434") + "/api/generate"
+        self.browser_agent = None
 
     async def implement(self, draft: str) -> str:
         """
@@ -25,13 +28,20 @@ class DeveloperAgent:
         )
 
         try:
-            loop = asyncio.get_event_loop()
-            response = await loop.run_in_executor(None, lambda: requests.post(
-                self.api_url,
-                json={"model": self.model, "prompt": prompt, "stream": False},
-                timeout=120
-            ))
-            return response.json().get('response', "Implementation failed.")
+            self.browser_agent = DeepSeekBrowserAgent()
+            await self.browser_agent.start_browser()
+            
+            # Ensure login (uses cookies if available)
+            session_path = os.getenv("SESSION_PATH", "/home/ubuntu/human-ai/session/state.json")
+            if not os.path.exists(session_path):
+                await self.browser_agent.login()
+            
+            # Get the response from the LLM via the browser
+            result = await self.browser_agent.prompt(prompt)
+            return result
         except Exception as e:
             print(f"❌ Developer Error: {e}")
             return f"Error during implementation: {str(e)}"
+        finally:
+            if self.browser_agent:
+                await self.browser_agent.close()

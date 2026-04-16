@@ -13,16 +13,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 WORK_DIR = os.getenv("WORK_DIR", "/home/ubuntu/human-ai")
-MODEL_OVERRIDE = "openrouter/auto"
-
-try:
-    from freeride_manager import manager
-except ImportError:
-    class MockManager:
-        MODEL_QUEUE = [MODEL_OVERRIDE]
-        def get_current(self): return MODEL_OVERRIDE, os.getenv("OPENROUTER_API_KEY")
-        def get_next_fallback(self): return MODEL_OVERRIDE, os.getenv("OPENROUTER_API_KEY")
-    manager = MockManager()
 
 class WebNavigator:
     def __init__(self):
@@ -80,19 +70,11 @@ class NavigatorAgent:
         self.navigator = WebNavigator()
         from .navigator_skills import NavigatorSkills
         self.skills = NavigatorSkills(self.navigator)
+        # AdaptiveRouter is kept for goal classification, but the execution path is now unified to Browser.
         from utils.adaptive_router import AdaptiveRouter
         self.router = AdaptiveRouter()
 
     async def run_goal_oriented_loop(self, goal: str, max_steps: int = 10):
-        route = self.router.route_task(goal)
-        print(f"🛣️ ROUTING DECISION: {route.upper()} for goal: {goal}")
-        
-        if route == "api":
-            print("⚡ Using Direct API Path for efficiency...")
-            # API-only logic would go here. For now, we fall back to the browser 
-            # but mark it as 'API-optimized' to avoid heavy scraping if possible.
-            # In future versions, we'll implement a specific APINavigator class.
-            
         print(f"🎯 GOAL: {goal}")
         log_file = Path(WORK_DIR) / "logs" / "navigator_loop.log"
         log_file.parent.mkdir(parents=True, exist_ok=True)
@@ -102,9 +84,12 @@ class NavigatorAgent:
                 print(f"--- Loop Iteration {step+1}/{max_steps} ---")
                 tree = await self.navigator.get_accessibility_tree()
                 content = await self.navigator.get_visible_text()
-                print("🤔 Thinking...")
-                await asyncio.sleep(random.uniform(2, 5))
+                print("🤔 Thinking (Browser-First)...")
+                
+                # STRICT BROWSER-FIRST ROUTING:
+                # We bypass all direct API calls and use the browser-based LLM interface.
                 action_decided = await self._get_llm_decision(goal, tree, content)
+                
                 if action_decided["type"] == "complete":
                     return {"status": "success", "reason": action_decided["reason"]}
                 if action_decided["type"] == "error":
@@ -120,30 +105,17 @@ class NavigatorAgent:
 
     async def _get_llm_decision(self, goal, tree, content):
         prompt = f"GOAL: {goal}\\n\\nPAGE TEXT:\\n{content[:2000]}\\n\\nSEMANTIC MAP:\\n{tree}\\n\\nRespond with a JSON object: {{\"type\": \"navigate\"|\"click\"|\"fill\"|\"press\"|\"scroll\"|\"complete\"|\"error\", \"action\": \"name\", \"details\": \"selector/url\", \"value\": \"text\", \"key\": \"key\", \"reason\": \"why\"}}"
-        for attempt in range(len(manager.MODEL_QUEUE)):
-            model, api_key = manager.get_current()
-            try:
-                headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-                payload = {"model": model, "messages": [{"role": "user", "content": prompt}]}
-                loop = asyncio.get_event_loop()
-                response = await loop.run_in_executor(None, lambda: requests.post("https://openrouter.ai/api/v1/chat/completions", json=payload, headers=headers, timeout=60))
-                if response.status_code == 429:
-                    manager.get_next_fallback()
-                    continue
-                response.raise_for_status()
-                res_text = response.json()['choices'][0]['message']['content']
-                match = re.search(r'\{.*\}', res_text, re.DOTALL)
-                if match: return json.loads(match.group())
-            except Exception as e:
-                print(f"⚠️ Attempt {attempt+1} failed: {e}")
-                manager.get_next_fallback()
-        print("🚨 API failed. Trying Browser fallback...")
-        browser_res = await self.skills.query_llm_via_browser(prompt)
-        match = re.search(r'\{.*\}', browser_res, re.DOTALL)
-        if match:
-            try: return json.loads(match.group())
-            except: pass
-        return {"type": "error", "reason": "All fallbacks failed."}
+        
+        # STRICT BROWSER ROUTING: No more requests.post to OpenRouter.
+        try:
+            browser_res = await self.skills.query_llm_via_browser(prompt)
+            match = re.search(r'\{.*\}', browser_res, re.DOTALL)
+            if match:
+                return json.loads(match.group())
+        except Exception as e:
+            print(f"⚠️ Browser-LLM failure: {e}")
+            
+        return {"type": "error", "reason": "Browser-based LLM decision failed."}
 
     async def _execute_action(self, action_obj):
         action = action_obj["action"]

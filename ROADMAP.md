@@ -84,7 +84,10 @@ This document tracks the development state of the Human-AI agent swarm.
 - [ ] **Core Support Agents**: Deploy OCR, Compliance, Messenger, and Doctor agents.
 - [ ] **Super-Agent Monitoring**: Hermes/OpenClaw joint audit of swarm speed, tokens, and reasoning.
 
-### Phase 4: Autonomous Super-Agents (Future 🌌)
+### Phase 4: Autonomous Super-Agents & Ecosystem (Future 🌌)
+- [ ] **Legacy Data Ingestion**: Process historical AI chat data $\rightarrow$ Categorize $\rightarrow$ Supabase Storage.
+- [ ] **Swarm Command Center**: Develop and deploy a Vercel-hosted GUI for remote swarm orchestration.
+- [ ] **Master Log Implementation**: Create a unified, periodically updated master log for all system activities.
 - [ ] **Social Media Swarm**: Deploy 5-agent content pipeline.
 - [ ] **Trading Swarm**: Deploy research $\rightarrow$ backtest $\rightarrow$ execute pipeline.
 - [ ] **End-to-End Security Audit**: Full audit from Repo $\rightarrow$ Vercel $\rightarrow$ API.

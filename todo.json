@@ -1,23 +1,23 @@
 {
   "pending": [
     {
-      "id": "infisical-1",
-      "content": "Migrate .env secrets to Infisical",
+      "id": "yt-research-1",
+      "content": "Verify end-to-end YouTube research: Orchestrator -> Researcher -> NativeWorker -> Sandbox -> Supabase (Awaiting final validation with Dify API Key)",
       "status": "pending"
     },
     {
-      "id": "infisical-2",
-      "content": "Implement dual-phase rotation logic in SecretManager",
-      "status": "pending"
+      "id": "browser-first-1",
+      "status": "completed",
+      "content": "Audit and refactor all agents to ensure strict browser-first routing (no direct LLM API calls)"
     },
     {
-      "id": "infisical-3",
-      "content": "Configure GitHub OIDC for secretless access",
-      "status": "pending"
+      "id": "master-log-1",
+      "status": "completed",
+      "content": "Design and implement the master log system to aggregate OpenClaw, Hermes, and Swarm events"
     },
     {
-      "id": "infisical-4",
-      "content": "Setup cron for leak scanning and GitHub sync",
+      "id": "dashboard-1",
+      "content": "Begin development of the Swarm Command Center GUI (Vercel-connected)",
       "status": "pending"
     }
   ],
@@ -28,6 +28,7 @@
     "Dr. Claw integration",
     "Free-model guardrails",
     "GitHub sync",
-    "Telegram verified"
+    "Telegram verified",
+    "Researcher evolution: YouTube synthesis"
   ]
 }
