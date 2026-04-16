@@ -38,6 +38,10 @@ logger = SwarmMasterLog()
 class TaskRequest(BaseModel):
     description: str
 
+@app.get("/")
+async def root():
+    return {"message": "Human-AI Swarm Command Center API is online."}
+
 @app.get("/status")
 async def get_status(token: str = Depends(verify_token)):
     return {
@@ -50,10 +54,30 @@ async def get_status(token: str = Depends(verify_token)):
         }
     }
 
+@app.get("/health")
+async def system_health(token: str = Depends(verify_token)):
+    sandbox_ok = os.path.exists("/home/ubuntu/human-ai/utils/sandbox.Dockerfile")
+    try:
+        from agents.researcher.researcher_agent import HumanAIResearcher
+        agent = HumanAIResearcher()
+        # we use a short timeout to prevent hanging
+        await asyncio.wait_for(agent.ds_agent.start_browser(), timeout=5)
+        browser_ok = True
+    except:
+        browser_ok = False
+
+    return {
+        "status": "healthy" if (sandbox_ok and browser_ok) else "degraded",
+        "components": {
+            "sandbox": "OK" if sandbox_ok else "FAIL",
+            "browser_agents": "OK" if browser_ok else "FAIL",
+            "api_bridge": "OK"
+        }
+    }
+
 @app.post("/execute")
 async def execute_task(req: TaskRequest, token: str = Depends(verify_token)):
     try:
-        # Trigger the AntFarm pipeline
         result = await orchestrator.execute_pipeline({"description": req.description})
         return result
     except Exception as e:
@@ -61,7 +85,6 @@ async def execute_task(req: TaskRequest, token: str = Depends(verify_token)):
 
 @app.get("/logs")
 async def get_logs(limit: int = 50, token: str = Depends(verify_token)):
-    # Read the master log file and return the last N entries
     try:
         with open('/home/ubuntu/human-ai/master_log.json', 'r') as f:
             import json
