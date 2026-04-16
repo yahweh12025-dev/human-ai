@@ -1,0 +1,34 @@
+{
+  "pending": [
+    {
+      "id": "yt-research-1",
+      "content": "Verify end-to-end YouTube research: Orchestrator -> Researcher -> NativeWorker -> Sandbox -> Supabase (Awaiting final validation with Dify API Key)",
+      "status": "pending"
+    },
+    {
+      "id": "browser-first-1",
+      "status": "completed",
+      "content": "Audit and refactor all agents to ensure strict browser-first routing (no direct LLM API calls)"
+    },
+    {
+      "id": "master-log-1",
+      "status": "completed",
+      "content": "Design and implement the master log system to aggregate OpenClaw, Hermes, and Swarm events"
+    },
+    {
+      "id": "dashboard-1",
+      "content": "Begin development of the Swarm Command Center GUI (Vercel-connected)",
+      "status": "pending"
+    }
+  ],
+  "in_progress": [],
+  "completed": [
+    "Swarms stabilized",
+    "Browser-first navigation",
+    "Dr. Claw integration",
+    "Free-model guardrails",
+    "GitHub sync",
+    "Telegram verified",
+    "Researcher evolution: YouTube synthesis"
+  ]
+}
