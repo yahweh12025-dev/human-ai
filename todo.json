@@ -1,23 +1,33 @@
 {
   "pending": [
     {
-      "id": "yt-research-1",
-      "content": "Verify end-to-end YouTube research: Orchestrator -> Researcher -> NativeWorker -> Sandbox -> Supabase (Awaiting final validation with Dify API Key)",
+      "id": "skill-exp-1",
+      "content": "Develop advanced synthesis skills for ResearcherAgent",
       "status": "pending"
     },
     {
-      "id": "browser-first-1",
-      "status": "completed",
-      "content": "Audit and refactor all agents to ensure strict browser-first routing (no direct LLM API calls)"
+      "id": "worker-stab-1",
+      "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
+      "status": "pending"
     },
     {
-      "id": "master-log-1",
-      "status": "completed",
-      "content": "Design and implement the master log system to aggregate OpenClaw, Hermes, and Swarm events"
+      "id": "storage-audit-1",
+      "content": "Implement background consistency check between Supabase and Firebase",
+      "status": "pending"
+    },
+    {
+      "id": "legacy-data-1",
+      "content": "Ingest historical chat data into Dify Brain (FINAL STEP)",
+      "status": "pending"
+    },
+    {
+      "id": "generic-agent-1",
+      "content": "Integrate GenericAgent into AntFarm for dynamic task delegation",
+      "status": "pending"
     }
   ],
   "in_progress": [
-    "dashboard-1"
+    "Sprints: Infrastructure, Intelligence, Audit"
   ],
   "completed": [
     "Swarms stabilized",
@@ -26,6 +36,7 @@
     "Free-model guardrails",
     "GitHub sync",
     "Telegram verified",
-    "Researcher evolution: YouTube synthesis"
+    "Researcher evolution: YouTube synthesis",
+    "dashboard-1"
   ]
 }
