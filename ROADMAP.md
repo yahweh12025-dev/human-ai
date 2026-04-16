@@ -8,12 +8,12 @@ This document tracks the development state of the Human-AI agent swarm.
 | :--- | :--- | :--- | :--- | :--- |
 | **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Upgrade: YouTube Summarization + Playwright Browsing |
 | **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer |
-| **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
+| **Planner** | 🟢 Active | Strategic Pathing & Risk Mitigation | `strategic-planner` | Prevents error loops and defines fallback paths |
 | **Critic** | 🟢 Stable | Quality control & Fact-checking | `CriticAgent` | Fully integrated into AntFarm pipeline as Reviewer. |
 | **Navigator** | 🟢 Stable | Complex UI interaction | `NavigatorSkills` | Multi-step web workflows implemented and verified |
 | **GitHub Scout** | 🟡 Beta | Repo discovery & analysis | `GitHub API` | Needs better filtering logic |
 | **Repo Reviewer** | 🟡 Beta | Code quality & security audit | `GitHub API` | Lacks deep context integration |
-| **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Leveraging main agent for Phase 1 |
+| **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Integrating Kilo-Code for advanced read/write/edit |
 | **Comm-Bridge** | 🟡 Beta | External communication | `Supabase` / `Webhooks` | Basic connectivity only |
 | **Messaging** | 🟡 Beta | User-facing alerts/chat | `Telegram` | Operational via Bot API |
 | **OCR Agent** | 🔴 Pending | Multi-format document extraction | `OCR-Core` | PDF, Word, PPTX $\rightarrow$ Text/MD/JSON |
@@ -50,6 +50,7 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Self-Improvement** | 🔄 Implementing | Autonomous skill/prompt iteration | All Agents (Hermes, OpenClaw, Swarm) |
 | **Enhanced Memory** | 🔴 Pending | Context caching & iterative refinement | All Agents |
 | **YouTube Summarizer**| 🔴 Pending | Transcript extraction & synthesis | Researcher / Specialized Agent |
+| **Skill Mining** | 🔴 Pending | Periodic discovery of new skills online/internally | All Agents |
 
 ## 📈 Development Pipeline
 
@@ -71,6 +72,7 @@ This document tracks the development state of the Human-AI agent swarm.
 - [ ] **Researcher Evolution**: Implement Playwright-level browsing and YouTube synthesis.
 - [ ] **Universal Self-Improvement**: Deploy `self_improvement` skill to all swarm agents.
 - [ ] **Memory Core**: Implement Hermes-style context caching and refinement for all agents.
+- [ ] **Kilo-Code Integration**: Fully verify read/write/edit delegation for OpenClaw.
 
 ### Phase 3: Orchestration & Ecosystem (Upcoming 📅)
 - [ ] **Enterprise Security (Infisical)**: Migrate secrets, implement dual-phase rotation.
@@ -80,11 +82,13 @@ This document tracks the development state of the Human-AI agent swarm.
 - [ ] **Dify Knowledge Hub**: Connect repo to RAG-powered "Brain".
 - [ ] **Swarm Dashboard**: Complete Vercel-deployed GUI for remote swarm control.
 - [ ] **Core Support Agents**: Deploy OCR, Compliance, Messenger, and Doctor agents.
+- [ ] **Super-Agent Monitoring**: Hermes/OpenClaw joint audit of swarm speed, tokens, and reasoning.
 
 ### Phase 4: Autonomous Super-Agents (Future 🌌)
 - [ ] **Social Media Swarm**: Deploy 5-agent content pipeline.
 - [ ] **Trading Swarm**: Deploy research $\rightarrow$ backtest $\rightarrow$ execute pipeline.
 - [ ] **End-to-End Security Audit**: Full audit from Repo $\rightarrow$ Vercel $\rightarrow$ API.
+- [ ] **Skill Mining Loop**: Fully autonomous skill discovery and deployment system.
 
 ## 📝 Backlog & Technical Debt
 - [ ] **Sandbox Environment**: Create a safe container for the `Builder` agent.
