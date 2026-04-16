@@ -29,7 +29,7 @@ const App = () => {
         if (!task) return;
         setIsExecuting(true);
         try {
-            await axios.post(`${API_BASE}/execute`, { task }, { headers: { 'X-API-Key': API_KEY } });
+            await axios.post(`${API_BASE}/execute`, { description: task }, { headers: { 'X-API-Key': API_KEY } });
             setTask('');
         } catch (e) { alert('Execution failed to start'); }
         finally { setIsExecuting(false); }
