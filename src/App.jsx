@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Activity, Database, Brain, Terminal, Send, ShieldCheck, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'; // Use Vercel Env Var or fallback to local
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:50001'; // Use Vercel Env Var or fallback to local
 const API_KEY = 'swarm-secret-key'; // Should be moved to .env in production
 
 const App = () => {
