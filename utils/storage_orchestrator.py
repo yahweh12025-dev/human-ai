@@ -13,33 +13,32 @@ class StorageOrchestrator:
         self.supabase_key = os.getenv("SUPABASE_KEY")
         self.supabase = create_client(self.supabase_url, self.supabase_key) if self.supabase_url else None
         
-        # Firebase Setup (Placeholder until keys are provided)
+        # Firebase Setup
         self.firebase_key_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_PATH")
         self.firebase_bucket = os.getenv("FIREBASE_STORAGE_BUCKET")
-        self.firebase_enabled = os.path.exists(self.firebase_key_path) if self.firebase_key_path else False
+        self.firebase_enabled = False
         
-        if self.firebase_enabled:
-            import firebase_admin
-            from firebase_admin import credentials, firestore, storage
+        if self.firebase_key_path and os.path.exists(self.firebase_key_path):
             try:
-                if not firebase_admin._app:
+                import firebase_admin
+                from firebase_admin import credentials, firestore, storage
+                if not firebase_admin._apps:
                     cred = credentials.Certificate(self.firebase_key_path)
                     firebase_admin.initialize_app(cred, {
                         'storageBucket': self.firebase_bucket
                     })
                 self.db = firestore.client()
                 self.bucket = storage.bucket()
+                self.firebase_enabled = True
             except Exception as e:
                 print(f"❌ Firebase Init Error: {e}")
-                self.firebase_enabled = False
 
     def save_finding(self, topic: str, content: str, metadata: Dict[str, Any] = None):
-        \"\"\"
+        """
         Save a research finding. 
         Primary: Supabase (Relational/RAG)
         Backup: Firebase Firestore (NoSQL/Recovery)
-        \"\"\"
-        # 1. Save to Supabase
+        """
         success_supabase = False
         if self.supabase:
             try:
@@ -48,7 +47,6 @@ class StorageOrchestrator:
             except Exception as e:
                 print(f"⚠️ Supabase Save Failed: {e}")
 
-        # 2. Save to Firebase as Backup
         if self.firebase_enabled:
             try:
                 doc_ref = self.db.collection('research_findings').document(topic.replace(" ", "_"))
@@ -64,9 +62,9 @@ class StorageOrchestrator:
         return success_supabase
 
     def upload_large_file(self, file_path: str, destination_blob_name: str):
-        \"\"\"
+        """
         Saves large files exclusively to Firebase Storage to avoid Supabase bloat.
-        \"\"\"
+        """
         if not self.firebase_enabled:
             print("❌ Firebase not enabled. Cannot upload large file.")
             return None
