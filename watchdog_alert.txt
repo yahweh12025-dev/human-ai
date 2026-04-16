@@ -1,2 +1,0 @@
-🚨 Autopilot Watchdog Alert:
-- Daemon was restarted
