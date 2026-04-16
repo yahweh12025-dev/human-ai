@@ -16,6 +16,10 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Leveraging main agent for Phase 1 |
 | **Comm-Bridge** | 🟡 Beta | External communication | `Supabase` / `Webhooks` | Basic connectivity only |
 | **Messaging** | 🟡 Beta | User-facing alerts/chat | `Telegram` | Operational via Bot API |
+| **OCR Agent** | 🔴 Pending | Multi-format document extraction | `OCR-Core` | PDF, Word, PPTX $\rightarrow$ Text/MD/JSON |
+| **Compliance Agent** | 🔴 Pending | Guardrail & Model Enforcement | `Compliance-Check` | Strict "Free-Only" model & Procedure audit |
+| **Messenger Agent** | 🔴 Pending | Info Synthesis & Inter-Agent Relay | `Context-Bridge` | Summarizes data for hand-off between agents |
+| **Doctor Agent** | 🔴 Pending | Error Resolution & File Healing | `Fix-It-Core` | Resolves output errors or corrupts files |
 
 ### 🚀 Future Agent Pipeline (Drafts/Templates)
 
@@ -44,6 +48,7 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Cloud Vault** | 🟢 Stable | Secure Secret Management | All Agents |
 | **Technical Synthesis** | 🟢 Stable | Professional report formatting | Researcher, Critic |
 | **Self-Improvement** | 🔄 Implementing | Autonomous skill/prompt iteration | All Agents (Hermes, OpenClaw, Swarm) |
+| **Enhanced Memory** | 🔴 Pending | Context caching & iterative refinement | All Agents |
 | **YouTube Summarizer**| 🔴 Pending | Transcript extraction & synthesis | Researcher / Specialized Agent |
 
 ## 📈 Development Pipeline
@@ -65,6 +70,7 @@ This document tracks the development state of the Human-AI agent swarm.
 - [x] **Infrastructure**: Installed and configured `claw-code` CLI with OpenRouter integration.
 - [ ] **Researcher Evolution**: Implement Playwright-level browsing and YouTube synthesis.
 - [ ] **Universal Self-Improvement**: Deploy `self_improvement` skill to all swarm agents.
+- [ ] **Memory Core**: Implement Hermes-style context caching and refinement for all agents.
 
 ### Phase 3: Orchestration & Ecosystem (Upcoming 📅)
 - [ ] **Enterprise Security (Infisical)**: Migrate secrets, implement dual-phase rotation.
@@ -73,6 +79,7 @@ This document tracks the development state of the Human-AI agent swarm.
 - [x] **Antfarm Integration**: Transition to a "Squad" model.
 - [ ] **Dify Knowledge Hub**: Connect repo to RAG-powered "Brain".
 - [ ] **Swarm Dashboard**: Complete Vercel-deployed GUI for remote swarm control.
+- [ ] **Core Support Agents**: Deploy OCR, Compliance, Messenger, and Doctor agents.
 
 ### Phase 4: Autonomous Super-Agents (Future 🌌)
 - [ ] **Social Media Swarm**: Deploy 5-agent content pipeline.
