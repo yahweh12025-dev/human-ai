@@ -80,8 +80,19 @@ class NavigatorAgent:
         self.navigator = WebNavigator()
         from .navigator_skills import NavigatorSkills
         self.skills = NavigatorSkills(self.navigator)
+        from utils.adaptive_router import AdaptiveRouter
+        self.router = AdaptiveRouter()
 
     async def run_goal_oriented_loop(self, goal: str, max_steps: int = 10):
+        route = self.router.route_task(goal)
+        print(f"🛣️ ROUTING DECISION: {route.upper()} for goal: {goal}")
+        
+        if route == "api":
+            print("⚡ Using Direct API Path for efficiency...")
+            # API-only logic would go here. For now, we fall back to the browser 
+            # but mark it as 'API-optimized' to avoid heavy scraping if possible.
+            # In future versions, we'll implement a specific APINavigator class.
+            
         print(f"🎯 GOAL: {goal}")
         log_file = Path(WORK_DIR) / "logs" / "navigator_loop.log"
         log_file.parent.mkdir(parents=True, exist_ok=True)

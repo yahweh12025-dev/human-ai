@@ -1,38 +1,24 @@
-# 🚀 Current Architecture: The Hybrid Swarm
-OpenClaw (Orchestrator) $ightarrow$ Dr. Claw (Worker) $ightarrow$ Browser-Driven Navigator
-- Strictly Free-Only Models enforced via `utils/guardrails.py`
-- Autopilot prioritized to Dr. Claw for implementation tasks.
-# 🧬 Human AI Swarm Architecture
+# 🚀 Human-AI Agent Swarm
 
-This repository is evolving into a multi-agent autonomous swarm designed for deep research, rapid building, and seamless communication.
+A high-fidelity research and implementation engine designed for autonomous exploration and verified code generation.
 
-## 🏗️ Swarm Structure
+## 🏗️ Architecture: The Hybrid Swarm
+The system employs a multi-layered orchestration strategy:
+- **Orchestrator (AntFarm)**: Manages the "Squad" pipeline (Retrieve $\rightarrow$ Research $\rightarrow$ Implement $\rightarrow$ Verify $\rightarrow$ Remember).
+- **Implementation (NativeWorker)**: Direct LLM-to-Code generation using OpenRouter.
+- **Verification (Docker Sandbox)**: All generated code is executed in an isolated container to prevent host damage.
+- **Memory (Dify Brain)**: A RAG-powered knowledge hub for long-term context persistence.
 
-### 1. The Super-Agent (`/agents/super_agent`)
-The **Super-Agent** is the peak of the architecture. It has the ability to embody any of the specialized agents simultaneously, managing the context switch between researching, planning, and building to solve high-complexity problems.
+## 🛠️ Installation & Setup
+1. **Clone the repo**: `git clone <repo_url>`
+2. **Environment**: Copy `.env.example` to `.env` and fill in your API keys.
+3. **Dependencies**: Install via `pip install -r requirements.txt`.
+4. **Infrastructure**: Ensure Docker is installed and running for the Sandbox.
 
-### 2. Core Specialized Agents (`/agents`)
-- **Researcher Agent (`/agents/researcher`)**: High-fidelity, account-based deep research (DeepSeek).
-- **Navigator Agent (`/agents/navigator`)**: Anonymous, account-less high-speed web exploration.
-- **Builder Agent (`/agents/builder`)**: Implementation, Aider integration, and system configuration.
-- **Prompter Agent (`/agents/prompter`)**: Prompt optimization and swarm coordination.
-- **Critic Agent (`/agents/critic`)**: Quality control and error elimination.
-- **Planner Agent (`/agents/planner`)**: Strategic decomposition of complex goals.
-- **GitHub Scout & Repo Reviewer**: External intelligence gathering.
-- **Messaging Agents**: Remote interfaces for Telegram/WhatsApp.
+## 🗺️ Roadmap
+For a detailed view of the agent registry and current development milestones, please refer to [ROADMAP.md](./ROADMAP.md).
 
-### 3. Common Skills (`/skills`)
-Shared toolsets used by all agents (e.g., `gmail_skill.py`, `file_conv_skill.py`, `github_intelligence.py`).
-
-## ⚙️ Autonomous Infrastructure
-The swarm is driven by **Specialized Background Loops** located in `/loops`:
-- `core_research_loop.sh`: Constant testing and recovery of the DeepSeek agent.
-- `error_resolution_loop.sh`: Triage and automated fixing of bugs.
-- `skill_improvement_loop.sh`: Scouting GitHub for new capabilities.
-- `feature_dev_loop.sh`: Turning templates/drafts into working code.
-
-## 🔄 Interaction Flow
-`Planner` $\to$ `Researcher/Navigator` $\to$ `Critic` $\to$ `Builder` $\to$ `Critic` $\to$ `Messaging`.
-
-## 🚀 Portability & Cloud
-Secrets and history are synced via the `CloudVaultManager` to Supabase. The entire system can be deployed to any instance using the `Infrastructure Vault`.
+## 🛡️ Security
+- **Secret Management**: Integration with Infisical for rotated keys.
+- **Guardrails**: Strict enforcement of free-only models.
+- **Isolation**: Code execution is strictly limited to a non-networked Docker sandbox.

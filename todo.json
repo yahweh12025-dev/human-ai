@@ -1,1 +1,33 @@
-{"pending": [], "in_progress": [], "completed": ["Install claw-code", "Enforce free models", "Integrate dr-claw", "Implement Navigator Browser Fallback", "Fix Navigator Syntax Errors"]}
+{
+  "pending": [
+    {
+      "id": "infisical-1",
+      "content": "Migrate .env secrets to Infisical",
+      "status": "pending"
+    },
+    {
+      "id": "infisical-2",
+      "content": "Implement dual-phase rotation logic in SecretManager",
+      "status": "pending"
+    },
+    {
+      "id": "infisical-3",
+      "content": "Configure GitHub OIDC for secretless access",
+      "status": "pending"
+    },
+    {
+      "id": "infisical-4",
+      "content": "Setup cron for leak scanning and GitHub sync",
+      "status": "pending"
+    }
+  ],
+  "in_progress": [],
+  "completed": [
+    "Swarms stabilized",
+    "Browser-first navigation",
+    "Dr. Claw integration",
+    "Free-model guardrails",
+    "GitHub sync",
+    "Telegram verified"
+  ]
+}

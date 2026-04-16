@@ -1,128 +1,81 @@
 #!/usr/bin/env python3
 """
-Human AI: Dr. Claw Worker Agent
-Specialized worker agent that delegates complex coding tasks to the Dr. Claw daemon.
+Human AI: Native Worker Agent - v2.1
+Directly implements tasks using OpenRouter and local system tools.
 """
 
 import asyncio
-import json
 import os
-import subprocess
-import time
-from pathlib import Path
-from typing import Dict, Any, Optional
+import json
 import requests
+from typing import Dict, Any, Optional
+from dotenv import load_dotenv
 
-class DrClawWorker:
+load_dotenv('/home/ubuntu/human-ai/.env')
+
+class NativeWorker:
     def __init__(self):
-        self.drclaw_binary = "/home/ubuntu/human-ai/venv/bin/drclaw"  # Path to installed CLI
-        self.drclaw_server_url = "http://localhost:3001"  # Default dr-claw server port
+        self.api_key = os.getenv("OPENROUTER_API_KEY")
+        # Use a highly stable free model
+        self.model = "google/gemma-4-31b-it:free" 
         self.working_dir = os.getenv("WORK_DIR", "/home/ubuntu/human-ai")
-        self.process = None
-
-    async def start_server(self):
-        """Start the Dr. Claw server if not already running."""
-        # Check if server is already responding
-        try:
-            response = requests.get(f"{self.drclaw_server_url}/api/health", timeout=2)
-            if response.status_code == 200:
-                print("✅ Dr. Claw server is already running")
-                return
-        except:
-            pass  # Server not running, we'll start it
-
-        print("🚀 Starting Dr. Claw server...")
-        # Start the server in the background
-        self.process = subprocess.Popen(
-            ["node", "/home/ubuntu/human-ai/dr-claw/server/index.js"],
-            cwd="/home/ubuntu/human-ai/dr-claw/server",
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        # Wait a bit for server to start
-        await asyncio.sleep(3)
-        print("✅ Dr. Claw server started")
-
-    async def stop_server(self):
-        """Stop the Dr. Claw server."""
-        if self.process:
-            self.process.terminate()
-            await self.process.wait()
-            self.process = None
-            print("🛑 Dr. Claw server stopped")
 
     async def execute_task(self, task_prompt: str) -> Dict[str, Any]:
-        """
-        Execute a task using the Dr. Claw CLI or API.
-        Returns a dictionary with status and result.
-        """
-        await self.start_server()
+        print(f"🛠️ Native Worker executing: {task_prompt[:100]}...")
+        
+        # Clean the prompt to remove error messages from the brain
+        clean_prompt = task_prompt.replace("Brain Query Error:", "").strip()
+        
+        system_prompt = "You are a senior Python developer. Provide ONLY the raw Python code. No markdown, no backticks, no explanations. Just the code."
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://openclaw.ai",
+            "X-Title": "Human-AI Swarm"
+        }
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": clean_prompt}
+            ]
+        }
         
         try:
-            # Use the Dr. Claw CLI to execute the task
-            # This assumes the CLI can take a task and return structured output
-            cmd = [
-                self.drclaw_binary,
-                "task",
-                "--prompt", task_prompt,
-                "--output-format", "json",
-                "--working-dir", self.working_dir
-            ]
-            
-            print(f"🔧 Executing Dr. Claw task: {task_prompt[:100]}...")
-            
-            # Run the command
-            process = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                cwd=self.working_dir
+            loop = asyncio.get_event_loop()
+            response = await loop.run_in_executor(
+                None, 
+                lambda: requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=60)
             )
             
-            stdout, stderr = await process.communicate()
+            if response.status_code != 200:
+                print(f"❌ API Error {response.status_code}: {response.text}")
+                return {"status": "error", "error": response.text}
+
+            code = response.json()['choices'][0]['message']['content'].strip()
             
-            if process.returncode != 0:
-                error_msg = stderr.decode('utf-8').strip()
-                print(f"❌ Dr. Claw task failed: {error_msg}")
-                return {
-                    "status": "error",
-                    "error": error_msg or "Unknown error",
-                    "output": stdout.decode('utf-8').strip()
-                }
+            # Robust cleaning of markdown
+            if "```" in code:
+                import re
+                match = re.search(r"```(?:python)?\s*(.*?)\s*```", code, re.DOTALL)
+                if match:
+                    code = match.group(1)
             
-            # Parse the JSON output
-            output_str = stdout.decode('utf-8').strip()
-            try:
-                result = json.loads(output_str)
-                print("✅ Dr. Claw task completed successfully")
-                return {
-                    "status": "success",
-                    "result": result,
-                    "output": output_str
-                }
-            except json.JSONDecodeError:
-                # If not JSON, return as plain text
-                return {
-                    "status": "success",
-                    "result": output_str,
-                    "output": output_str
-                }
-                
-        except Exception as e:
-            print(f"❌ Error executing Dr. Claw task: {str(e)}")
+            print("✅ Code generated by Native Worker.")
             return {
-                "status": "error",
-                "error": str(e)
+                "status": "success",
+                "result": code,
+                "output": code
             }
+        except Exception as e:
+            print(f"❌ Native Worker error: {e}")
+            return {"status": "error", "error": str(e)}
 
 async def main():
-    """Test the Dr. Claw worker."""
-    worker = DrClawWorker()
-    try:
-        result = await worker.execute_task("Create a simple Python script that prints 'Hello from Dr. Claw!'")
-        print(f"Result: {result}")
-    finally:
-        await worker.stop_server()
+    worker = NativeWorker()
+    result = await worker.execute_task("Create a simple Python script that prints 'Hello from Native Worker!'")
+    print(f"Result: {result}")
 
 if __name__ == "__main__":
     asyncio.run(main())
