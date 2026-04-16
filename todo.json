@@ -14,14 +14,11 @@
       "id": "master-log-1",
       "status": "completed",
       "content": "Design and implement the master log system to aggregate OpenClaw, Hermes, and Swarm events"
-    },
-    {
-      "id": "dashboard-1",
-      "content": "Begin development of the Swarm Command Center GUI (Vercel-connected)",
-      "status": "pending"
     }
   ],
-  "in_progress": [],
+  "in_progress": [
+    "dashboard-1"
+  ],
   "completed": [
     "Swarms stabilized",
     "Browser-first navigation",

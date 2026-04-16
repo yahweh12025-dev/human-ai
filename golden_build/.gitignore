@@ -1,0 +1,17 @@
+.secrets/
+*.bak
+*.test.py
+migrate_to_vault_final.py
+venv/
+session/
+logs/
+errors/
+autodev.log
+autopilot.log
+routing.log
+researcher_login.log
+improvement.log
+
+.env
+master_log.json
+firebase-key.json
