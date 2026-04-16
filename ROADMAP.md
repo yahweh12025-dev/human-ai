@@ -1,4 +1,4 @@
-# 🗺️ Human-AI Project Roadmap & Agent Map
+# 🗺️ Human-AI Project Roadmap & Agent Map (Updated)
 
 This document tracks the development state of the Human-AI agent swarm.
 
@@ -6,8 +6,8 @@ This document tracks the development state of the Human-AI agent swarm.
 
 | Agent | Status | Purpose | Primary Tool/Skill | Note |
 | :--- | :--- | :--- | :--- | :--- |
-| **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Fully verified E2E with Supabase |
-| **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer + Input Sanitization Guardrail |
+| **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Upgrade: YouTube Summarization + Playwright Browsing |
+| **Super Agent** | 🟢 Stable | Orchestration & Delegation | `AntFarmOrchestrator` | Pipeline integrated: Writer $\rightarrow$ Reviewer $\rightarrow$ Developer |
 | **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
 | **Critic** | 🟢 Stable | Quality control & Fact-checking | `CriticAgent` | Fully integrated into AntFarm pipeline as Reviewer. |
 | **Navigator** | 🟢 Stable | Complex UI interaction | `NavigatorSkills` | Multi-step web workflows implemented and verified |
@@ -17,6 +17,24 @@ This document tracks the development state of the Human-AI agent swarm.
 | **Comm-Bridge** | 🟡 Beta | External communication | `Supabase` / `Webhooks` | Basic connectivity only |
 | **Messaging** | 🟡 Beta | User-facing alerts/chat | `Telegram` | Operational via Bot API |
 
+### 🚀 Future Agent Pipeline (Drafts/Templates)
+
+#### 📱 Social Media Super-Agent
+*Goal: Fully autonomous content lifecycle management.*
+- **Content Planner**: Research trends, schedule posts, define themes.
+- **Content Creator**: Generate text, images, and video scripts.
+- **Content Reviewer**: Quality check, brand alignment, and fact-checking.
+- **Content Uploader**: Automated posting via API/Playwright.
+- **Analysis Agent**: Track engagement, sentiment, and iterate on strategy.
+
+#### 📈 Trading Super-Agent
+*Goal: Fully autonomous financial trading and strategy evolution.*
+- **Strategy Researcher**: Analyze news, market trends, and find new alpha.
+- **Signal Generator**: Apply 3+ distinct strategies to generate trade signals.
+- **Backtesting Agent**: Verify signals against historical data.
+- **Middle-Layer Reviewer**: Analyze backtest results vs live performance.
+- **Trade Executor (Builder)**: Code/Control MT4/5 or Playwright-based browser trading.
+
 ## 🛠️ Skill Matrix
 
 | Skill Name | Status | Purpose | Agent Dependency |
@@ -25,7 +43,8 @@ This document tracks the development state of the Human-AI agent swarm.
 | **GitHub Intelligence** | 🟡 Beta | Repo analysis patterns | GitHub Scout, Repo Reviewer |
 | **Cloud Vault** | 🟢 Stable | Secure Secret Management | All Agents |
 | **Technical Synthesis** | 🟢 Stable | Professional report formatting | Researcher, Critic |
-| **Navigator Skill** | 🔴 Pending | Multi-step web workflows | Navigator |
+| **Self-Improvement** | 🔄 Implementing | Autonomous skill/prompt iteration | All Agents (Hermes, OpenClaw, Swarm) |
+| **YouTube Summarizer**| 🔴 Pending | Transcript extraction & synthesis | Researcher / Specialized Agent |
 
 ## 📈 Development Pipeline
 
@@ -39,20 +58,28 @@ This document tracks the development state of the Human-AI agent swarm.
 
 ### Phase 2: Capability Expansion (Current 🚀)
 - [x] **Technical Synthesis**: Implemented professional report generation.
-- [x] **Agent: Navigator**: Develop specialized skills for complex web interaction. (Completed: Playwright integration + multi-step workflows)
-- [x] **Agent: Critic**: Implement the "Fact-Check" loop. (Completed: integrated into AntFarm)
-- [x] **GitHub Integration**: Link Repo Reviewer and GitHub Scout (Link verified via test script).
+- [x] **Agent: Navigator**: Develop specialized skills for complex web interaction.
+- [x] **Agent: Critic**: Implement the "Fact-Check" loop.
+- [x] **GitHub Integration**: Link Repo Reviewer and GitHub Scout.
 - [x] **Model Guardrail**: Strictly enforced free-only models across Gateway and Agents.
 - [x] **Infrastructure**: Installed and configured `claw-code` CLI with OpenRouter integration.
-
-**Next Mission**: The Navigator Agent. Designing the core logic for the Navigator agent, focusing on its ability to use Playwright for multi-step, goal-oriented web navigation.
+- [ ] **Researcher Evolution**: Implement Playwright-level browsing and YouTube synthesis.
+- [ ] **Universal Self-Improvement**: Deploy `self_improvement` skill to all swarm agents.
 
 ### Phase 3: Orchestration & Ecosystem (Upcoming 📅)
-- [ ] **Omni-Channel Intelligence (Browser/API Hybrid)**: Implement a rotation logic that cycles between direct LLM APIs and Browser-based AI Chat interfaces (Gemini, Claude, Grok) to bypass rate limits and leverage specialized reasoning capabilities.
-- [x] **Antfarm Integration**: Transition to a "Squad" model (Writer, Reviewer, Developer pipelines) - Implemented via AntFarmOrchestrator.
-- [ ] **Dify Knowledge Hub**: Connect the repo to a RAG-powered "Brain" for interactive querying via Telegram.
+- [ ] **Enterprise Security (Infisical)**: Migrate secrets, implement dual-phase rotation.
+- [ ] **n8n-mcp Integration**: Implement MCP bridge to n8n for deterministic workflows.
+- [ ] **Omni-Channel Intelligence**: Rotation logic between APIs and Browser AI.
+- [x] **Antfarm Integration**: Transition to a "Squad" model.
+- [ ] **Dify Knowledge Hub**: Connect repo to RAG-powered "Brain".
+- [ ] **Swarm Dashboard**: Complete Vercel-deployed GUI for remote swarm control.
+
+### Phase 4: Autonomous Super-Agents (Future 🌌)
+- [ ] **Social Media Swarm**: Deploy 5-agent content pipeline.
+- [ ] **Trading Swarm**: Deploy research $\rightarrow$ backtest $\rightarrow$ execute pipeline.
+- [ ] **End-to-End Security Audit**: Full audit from Repo $\rightarrow$ Vercel $\rightarrow$ API.
 
 ## 📝 Backlog & Technical Debt
-- [ ] **Sandbox Environment**: Create a safe container for the `Builder` agent to run code.
-- [ ] **Prompt Library**: Standardize system prompts across all agents for consistency.
+- [ ] **Sandbox Environment**: Create a safe container for the `Builder` agent.
+- [ ] **Prompt Library**: Standardize system prompts across all agents.
 - [ ] **API Key Rotation**: Implement secure secret management for all agent keys.
