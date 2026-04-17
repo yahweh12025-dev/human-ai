@@ -15,6 +15,11 @@
 - [x] **Master Log System**: Global event aggregation for the entire swarm.
 
 ## Phase 3: Orchestration & Ecosystem 🚀 (IN PROGRESS)
+- [ ] **Swarm Telegram Bot Integration**: Create and configure @Swarm26_bot for inter-agent communication
+- [ ] **Swarm Health Monitoring**: Implement automated health checking for swarm components
+- [ ] **Swarm Session Management**: 90% token usage reset mechanisms for swarm agents
+- [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
+- [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development
 - [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
 - [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
