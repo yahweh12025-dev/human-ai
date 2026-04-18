@@ -26,172 +26,177 @@
     {
       "content": "Develop advanced synthesis skills for ResearcherAgent",
       "id": "skill-exp-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
       "id": "worker-stab-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Implement background consistency check between Supabase and Firebase",
       "id": "storage-audit-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Ingest historical chat data into Dify Brain (FINAL STEP)",
       "id": "legacy-data-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Configure Browser-based Google Gemini session for Swarm access",
       "id": "gemini-browser-config-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Implement Rate-Aware Hybrid Router: Gemini (Reasoning) <-> DeepSeek (Volume) via Browser",
       "id": "hybrid-llm-router-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Implement DeepSeek-style cookie authentication for Gemini via Playwright (login to gemini.google.com, manage session cookies)",
       "id": "gemini-browser-auth-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Create rate-aware hybrid router: Gemini (browser, vision/reasoning) <-> DeepSeek (unlimited volume) via browser sessions",
       "id": "gemini-browser-routing-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Integrate browser-based Perplexity (Free tier) for real-time search and citation",
       "id": "perplexity-browser-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Integrate browser-based Claude (Free tier) with rate-limit aware routing for coding/nuance",
       "id": "claude-browser-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Implement LangChain Omni-Model Bridge: Standardize browser-based LLM access as ChatModels",
       "id": "langchain-bridge-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Connect Omni-Model Layer to Dify (RAG) and Graphify (Knowledge Graph) via LangChain pipelines",
       "id": "dify-graphify-langchain-1",
-      "status": "pending
+      "status": "pending"
     },
     {
-      "content": "Integrate Mistral Free API key as low-latency fallback logic check",
+      "content": "Integrate Mistral Free API key as low-litfallback logic check",
       "id": "mistral-api-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Configure KILOCODE_API_KEY in .env and verify provider connectivity",
       "id": "kilo-config-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Integrate Kilo Code as a specialized Coding Agent within AntFarm for high-fidelity refactoring",
       "id": "kilo-integration-1",
-      "status": "pending
+      "status": "pending"
     },
     {
       "content": "Update OpenClaw autopilot to use Kilo Code for the 'Fix' phase of the Triage loop",
-      "id": "kilo-autopilot-1,
-      "status": "pending
+      "id": "kilo-autopilot-1",
+      "status": "pending"
     },
     {
       "content": "Develop ConverterAgent for multi-format transformation (PDF, Word, PPTX, JSON <-> TXT, MD)",
-      "id": "converter-agent-1,
-      "status": "pending
+      "id": "converter-agent-1",
+      "status": "pending"
     },
     {
       "content": "Develop and integrate OCR Agent for visual data extraction from browser screenshots",
-      "id": "ocr-agent-1,
-      "status": "pending
+      "id": "ocr-agent-1",
+      "status": "pending"
     },
     {
       "content": "E2E Verification: Test RepoReviewer agent on current repository and verify output quality",
-      "id": "verify-repo-reviewer-1,
-      "status": "pending
+      "id": "verify-repo-reviewer-1",
+      "status": "pending"
     },
     {
       "content": "E2E Verification: Test AntFarm Orchestrator pipeline for a complete Research -> Implement flow",
-      "id": "verify-antfarm-1,
-      "status": "pending
+      "id": "verify-antfarm-1",
+      "status": "pending"
     },
     {
       "content": "E2E Verification: Test Navigator agent for complex site navigation and data retrieval",
-      "id": "verify-navigator-1,
-      "status": "pending
+      "id": "verify-navigator-1",
+      "status": "pending"
     },
     {
       "content": "Implement Memory Bridge: Periodically distill Hermes' daily memory into Swarm global MEMORY.md",
-      "id": "memory-bridge-1,
-      "status": "pending
+      "id": "memory-bridge-1",
+      "status": "pending"
     },
     {
       "content": "Linter-Fixer Agent: Background agent that detects and auto-fixes syntax/import errors in agent code.",
-      "id": "linter-fixer-1,
-      "status": "pending
+      "id": "linter-fixer-1",
+      "status": "pending"
     },
     {
       "content": "Documentation-Scribe Agent: Automatically updates README/ROADMAP and generates technical docs for new features.",
-      "id": "documentation-scribe-1,
-      "status": "pending
+      "id": "documentation-scribe-1",
+      "status": "pending"
     },
     {
       "content": "Dependency-Manager Agent: Monitors code and auto-installs necessary Python packages.",
-      "id": "dependency-manager-1,
-      "status": "pending
+      "id": "dependency-manager-1",
+      "status": "pending"
     },
     {
       "content": "Academic-Crawler Agent: Interfaces with arXiv/PubMed for high-authority research data.",
-      "id": "academic-crawler-1,
-      "status": "pending
+      "id": "academic-crawler-1",
+      "status": "pending"
     },
     {
       "content": "Create Notebook LM Specialist Agent for document upload, summarization, and comparison via browser.",
-      "id": "notebook-lm-specialist-1,
-      "status": "pending
+      "id": "notebook-lm-specialist-1",
+      "status": "pending"
     },
     {
       "content": "Implement browser-based login and session management for Google Notebook LM (cookie-based like Gemini/DeepSeek).",
-      "id": "notebook-lm-browser-auth-1,
-      "status": "pending
+      "id": "notebook-lm-browser-auth-1",
+      "status": "pending"
     },
     {
       "content": "Integrate Notebook LM Specialist as a specialized research node in the AntFarm Orchestration pipeline.",
-      "id": "notebook-lm-integration-1,
-      "status": "pending
+      "id": "notebook-lm-integration-1",
+      "status": "pending"
     },
     {
       "content": "Environment-Replicator Agent: Runs agent logic in isolated Docker containers to ensure environment consistency.",
-      "id": "environment-replicator-1,
-      "status": "pending
+      "id": "environment-replicator-1",
+      "status": "pending"
     },
     {
       "content": "Knowledge-Velocity Agent: Interfaces with arXiv, GitHub trending, and expert blogs for high-authority, fast knowledge acquisition.",
-      "id": "knowledge-velocity-1,
-      "status": "pending
+      "id": "knowledge-velocity-1",
+      "status": "pending"
     },
     {
       "content": "Test-Synthesizer Agent: Automatically generates and maintains test suites from code changes to strengthen the autopilot's 'Verify' phase.",
-      "id": "test-synthesizer-1,
-      "status": "pending
+      "id": "test-synthesizer-1",
+      "status": "pending"
     },
     {
-      "content": "Decision Journal Skill: Automatically logs all routing decisions, model choices, and task outcomes to DECISION_LOG.md for transparency.",
-      "id": "decision-journal-1",
-      "status": "pending
+      "content": "Outcome Journal Skill: Creates a skill that logs the outcomes of tasks and features to OUTCOME_LOG.md for transparency and human-AI collaboration.",
+      "id": "outcome-journal-1",
+      "status": "pending"
     },
     {
       "content": "Vector Memory Integration: Indexes repo Markdown and logs into a local ChromaDB for queryable long-term context before task execution.",
       "id": "vector-memory-1",
-      "status": "pending\n  ]\n}"
+      "status": "pending"
+    },
+    {
+      "content": "Env-Request Manager: Controlled process for agents to request and receive new .env keys via a secure request log (to be approved by human or future agent).",
+      "id": "env-request-manager-1",
+      "status": "pending"
     }
   ]
 }
