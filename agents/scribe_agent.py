@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 from typing import List, Dict, Any
 from pathlib import Path
-from hermes_tools import read_file, write_file
 
 class DocumentationScribe:
     """
@@ -21,7 +20,12 @@ class DocumentationScribe:
         """
         print("📝 [Scribe] Updating ROADMAP.md...")
         try:
-            content = read_file(str(self.roadmap_path))['content']
+            if not self.roadmap_path.exists():
+                return {"status": "error", "error": "ROADMAP.md not found"}
+                
+            with open(self.roadmap_path, 'r') as f:
+                content = f.read()
+                
             lines = content.split('\n')
             
             # Mark completed tasks
@@ -32,7 +36,6 @@ class DocumentationScribe:
             
             # Add new tasks (simplified append to Phase 3)
             if new_tasks:
-                # Find Phase 3 section
                 for i, line in enumerate(lines):
                     if "Phase 3" in line:
                         insert_pos = i + 1
@@ -41,7 +44,9 @@ class DocumentationScribe:
                             insert_pos += 1
                         break
             
-            write_file(str(self.roadmap_path), "\n".join(lines))
+            with open(self.roadmap_path, 'w') as f:
+                f.write("\n".join(lines))
+                
             return {"status": "success", "updated": True}
         except Exception as e:
             print(f"❌ [Scribe] Roadmap update failed: {e}")
@@ -53,18 +58,26 @@ class DocumentationScribe:
         """
         print("📝 [Scribe] Logging achievement to README.md...")
         try:
-            content = read_file(str(self.readme_path))['content']
+            if not self.readme_path.exists():
+                # Create a basic README if it doesn't exist
+                with open(self.readme_path, 'w') as f:
+                    f.write("# Human-AI Swarm\n\n")
+                
+            with open(self.readme_path, 'r') as f:
+                content = f.read()
+                
             timestamp = datetime.now().strftime("%Y-%m-%d")
             entry = f"- **{timestamp}**: {achievement}"
             
-            # Find a 'Recent Updates' or 'Achievements' section
             if "## Recent Updates" in content:
                 parts = content.split("## Recent Updates")
                 updated_content = parts[0] + "## Recent Updates\n" + entry + "\n" + parts[1]
             else:
                 updated_content = content + "\n\n## Recent Updates\n" + entry
                 
-            write_file(str(self.readme_path), updated_content)
+            with open(self.readme_path, 'w') as f:
+                f.write(updated_content)
+                
             return {"status": "success"}
         except Exception as e:
             print(f"❌ [Scribe] README update failed: {e}")

@@ -1,10 +1,10 @@
 """
 VECTOR MEMORY INTEGRATION SKILL
-Purpose: To move beyond simple text logs to a queryable long-term memory (LTM) using a local Vector DB.
+Purpose: To move beyond simple text logs to a queryable long-term memory (LTM) using a local ChromaDB.
 This allows agents (like OpenClaw) to retrieve semantically relevant context before passing a task to Hermes or making a decision.
 
 Action: Indexes the repo's Markdown files and key terminal logs into a local ChromaDB instance.
-Provides a `query_memory(query: str)` function to retrieve relevant context.
+Provides a `query_memory(query: str, min_relevance: float = None)` function to retrieve relevant context.
 """
 import os
 import sys
@@ -26,6 +26,10 @@ FILES_TO_INDEX = [
     "openclaw_auto_loop.log",
     "master_log.json"
 ]
+
+# Default relevance threshold for query results (ChromaDB L2 distance: lower = more similar)
+# A value of 1.5 is a reasonable starting point for filtering out weak matches.
+DEFAULT_MIN_RELEVANCE = 1.5
 
 def _check_and_install_chromadb():
     """Checks if chromadb is installed and installs it if not."""
@@ -92,19 +96,32 @@ def build_memory_index():
             print(f"[VECTOR MEMORY WARNING] File not found for indexing: {file_name}")
     print(f"[VECTOR MEMORY] Index build complete. Collection '{COLLECTION_NAME}' has {collection.count()} documents.")
 
-def query_memory(query: str, n_results: int = 3) -> list:
+def query_memory(query: str, min_relevance: float = DEFAULT_MIN_RELEVANCE) -> list:
     """
     Queries the vector memory for context relevant to the input query.
-    Returns a list of the most relevant text snippets.
+    Returns a list of the most relevant text snippets that meet the minimum relevance threshold.
+    Args:
+        query (str): The query string to search for.
+        min_relevance (float, optional): The maximum distance (lower is more similar) for a result to be included.
+                                         Defaults to 1.5 (ChromaDB L2 distance).
+    Returns:
+        list: A list of relevant text snippets (empty list if no results meet the threshold).
     """
     try:
         collection = _get_or_create_collection()
         results = collection.query(
             query_texts=[query],
-            n_results=n_results
+            n_results=10  # Fetch more candidates to filter down from
         )
-        # Return the documents (the text snippets) from the results
-        return results.get('documents', [[]])[0]
+        documents = results.get('documents', [[]])[0]
+        distances = results.get('distances', [[]])[0]
+        
+        # Filter results by the minimum relevance threshold (lower distance = more similar)
+        filtered_documents = [
+            doc for doc, dist in zip(documents, distances)
+            if dist <= min_relevance
+        ]
+        return filtered_documents
     except Exception as e:
         print(f"[VECTOR MEMORY ERROR] Query failed: {e}")
         return []
@@ -116,7 +133,10 @@ if __name__ == "__main__":
     test_query = "What is the current goal of the Researcher agent?"
     results = query_memory(test_query)
     print(f"\nQuery: '{test_query}'")
-    print("Top Results:")
-    for i, res in enumerate(results, 1):
-        print(f"  {i}. {res[:150]}...")
+    print(f"Results with relevance <= {DEFAULT_MIN_RELEVANCE}:")
+    if results:
+        for i, res in enumerate(results, 1):
+            print(f"  {i}. {res[:150]}...")
+    else:
+        print("  No results met the relevance threshold.")
     print(f"\nVector DB is ready at: {VECTOR_DB_PATH}")

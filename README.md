@@ -22,3 +22,11 @@ For a detailed view of the agent registry and current development milestones, pl
 - **Secret Management**: Integration with Infisical for rotated keys.
 - **Guardrails**: Strict enforcement of free-only models.
 - **Isolation**: Code execution is strictly limited to a non-networked Docker sandbox.
+
+
+## Recent Updates
+- **2026-04-18**: Swarm verification successful
+
+- **2026-04-18**: Implemented a fully autonomous Document Intelligence pipeline including Converter and OCR agents.
+
+- **2026-04-18**: Successfully integrated GenericAgent into AntFarm Orchestrator
