@@ -101,6 +101,31 @@
     {
       "content": "Update OpenClaw autopilot to use Kilo Code for the 'Fix' phase of the Triage loop",
       "id": "kilo-autopilot-1",
+      "status,": "pending"
+    },
+    {
+      "content": "Develop and integrate OCR Agent for visual data extraction from browser screenshots",
+      "id": "ocr-agent-1",
+      "status": "pending"
+    },
+    {
+      "content": "E2E Verification: Test RepoReviewer agent on current repository and verify output quality",
+      "id": "verify-repo-reviewer-1",
+      "status": "pending"
+    },
+    {
+      "content": "E2E Verification: Test AntFarm Orchestrator pipeline for a complete Research -> Implement flow",
+      "id": "verify-antfarm-1",
+      "status": "pending"
+    },
+    {
+      "content": "E2E Verification: Test Navigator agent for complex site navigation and data retrieval",
+      "id": "verify-navigator-1",
+      "status": "pending"
+    },
+    {
+      "content": "Implement Memory Bridge: Periodically distill Hermes' daily memory into Swarm global MEMORY.md",
+      "id": "memory-bridge-1",
       "status": "pending"
     }
   ]

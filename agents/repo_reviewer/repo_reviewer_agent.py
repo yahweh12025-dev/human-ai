@@ -21,9 +21,9 @@ class RepoReviewerAgent:
         ]
 
     async def analyze_file_purpose(self, file_path: str) -> Dict[str, Any]:
-        \"\"\"
+        """
         Determines if a file is legacy, active, or a draft.
-        \"\"\"
+        """
         path = Path(file_path)
         if not path.exists() or path.suffix not in ['.py', '.sh', '.json', '.md']:
             return {"status": "ignored"}
@@ -53,9 +53,9 @@ class RepoReviewerAgent:
             return {"file": file_path, "status": "error", "error": str(e)}
 
     async def run_full_recursive_audit(self) -> List[Dict[str, Any]]:
-        \"\"\"
+        """
         Crawl the entire repository and generate a comprehensive audit report.
-        \"\"\"
+        """
         print("🔍 Starting Recursive Sovereign Audit of /home/ubuntu/human-ai...")
         full_report = []
         
@@ -78,7 +78,7 @@ async def main():
     agent = RepoReviewerAgent()
     report = await agent.run_full_recursive_audit()
     
-    print(f"\\n--- 🛡️ SOVEREIGN AUDIT REPORT ---")
+    print(f"\n--- 🛡️ SOVEREIGN AUDIT REPORT ---")
     print(f"Found {len(report)} items requiring attention.\\n")
     
     for item in report:
