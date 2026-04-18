@@ -2126,5 +2126,40 @@
     "type": "BRAIN_INDEX",
     "message": "Verified solution indexed for: EXECUTE TASK: Task ID generic-agent-1 - Integrate GenericAgent into AntFarm for dynamic task delegation",
     "metadata": {}
+  },
+  {
+    "timestamp": "2026-04-18T16:14:00.914733",
+    "source": "AntFarm",
+    "type": "PIPELINE_START",
+    "message": "Starting pipeline for: EXECUTE TASK: Task ID omni-router-expand-1 - Expand Hybrid Router to include Perplexity (search) and Claude (reasoning) via browser",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-04-18T16:14:10.259053",
+    "source": "AntFarm",
+    "type": "BRAIN_QUERY",
+    "message": "Context retrieved for: EXECUTE TASK: Task ID omni-router-expand-1 - Expand Hybrid Router to include Perplexity (search) and Claude (reasoning) via browser",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-04-18T16:14:10.261193",
+    "source": "AntFarm",
+    "type": "IMPLEMENTATION_START",
+    "message": "Implementing solution for: EXECUTE TASK: Task ID omni-router-expand-1 - Expand Hybrid Router to include Perplexity (search) and Claude (reasoning) via browser",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-04-18T16:14:43.599275",
+    "source": "AntFarm",
+    "type": "VERIFICATION_START",
+    "message": "Verifying code for: EXECUTE TASK: Task ID omni-router-expand-1 - Expand Hybrid Router to include Perplexity (search) and Claude (reasoning) via browser",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-04-18T16:14:43.783989",
+    "source": "AntFarm",
+    "type": "VERIFICATION_FAILURE",
+    "message": "Traceback (most recent call last):\n  File \"/app/script.py\", line 3, in <module>\n    from anthropic import Anthropic\nModuleNotFoundError: No module named 'anthropic'\n",
+    "metadata": {}
   }
 ]
