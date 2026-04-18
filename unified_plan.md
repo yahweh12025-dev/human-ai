@@ -21,6 +21,11 @@
 - [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
 - [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development
 - [ ] **Hybrid LLM Routing**: Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
+- [ ] **Omni-Model Intelligence Layer**: 
+    - Integrate browser-based Perplexity (Search) and Claude (Reasoning) with rate-limit handling.
+    - Integrate Mistral Free API for low-latency logic checks.
+    - Use LangChain as the orchestration bridge to standardize browser-LLM access.
+- [ ] **Dify & Graphify Synergy**: Implement LangChain-based pipelines to route data between Dify (RAG) and Graphify (Knowledge Graph).
 - [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
 - [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.

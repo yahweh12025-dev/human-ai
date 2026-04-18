@@ -87,6 +87,21 @@
       "content": "Integrate Mistral Free API key as low-latency fallback logic check",
       "id": "mistral-api-1",
       "status": "pending"
+    },
+    {
+      "content": "Configure KILOCODE_API_KEY in .env and verify provider connectivity",
+      "id": "kilo-config-1",
+      "status": "pending"
+    },
+    {
+      "content": "Integrate Kilo Code as a specialized Coding Agent within AntFarm for high-fidelity refactoring",
+      "id": "kilo-integration-1",
+      "status": "pending"
+    },
+    {
+      "content": "Update OpenClaw autopilot to use Kilo Code for the 'Fix' phase of the Triage loop",
+      "id": "kilo-autopilot-1",
+      "status": "pending"
     }
   ]
 }
