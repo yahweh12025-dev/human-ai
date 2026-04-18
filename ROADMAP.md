@@ -34,7 +34,7 @@
 - [x] **Outcome Journal Skill**: Create a skill that logs the outcomes of tasks and features to OUTCOME_LOG.md for transparency and human-AI collaboration.
 
 - [x] **Kilo Code High-Fidelity Integration**: Implement a specialized KiloCodeAgent for autonomous code refactoring and optimization.
-- [ ] **Parallel Execution via OpenClaw Teams**: Implement a team-spawner to run batch tasks in parallel across multiple sandboxes.
+- [x] **Parallel Execution via OpenClaw Teams**: Implement a team-spawner to run batch tasks in parallel across multiple sandboxes.
 - [ ] **Notebook LM Specialist Agent**: Build a browser-based agent for advanced document synthesis and comparison via notebooklm.google.com.
 - [ ] **Swarm Command & Health Center**: Deploy a Telegram bot for real-time monitoring, status checks, and steering of the swarm.
 - [ ] **Dify $\leftrightarrow$ Graphify Knowledge Bridge**: Implement LangChain pipelines to sync the Outcome Journal into Dify RAG and Graphify Knowledge Graph.
@@ -57,6 +57,10 @@
     46|    -   [ ] **Knowledge-Graph-Architect": Formats Researcher outputs for Graphify to build a connected knowledge web.
     47|    -   [ ] **Env-Request Manager": Controlled process for agents to request and receive new .env keys via a secure request log (to be approved by human or future agent).
     48|- [ ] **Development Improvement & Intelligence":
+  - [x] **Obsidian Integration**: Connect the swarm to a linked Markdown vault for high-fidelity memory and knowledge mapping
+  - [ ] **Swarm Optimizer Skill**: Create a self-analysis skill to identify swarm gaps and suggest autonomous improvements
+  - [x] **Obsidian Integration**: Connect the swarm to a linked Markdown vault for high-fidelity memory and knowledge mapping
+  - [ ] **Swarm Optimizer Skill**: Create a self-analysis skill to identify swarm gaps and suggest autonomous improvements
     49|    - [ ] **Skill-Recommender Agent**: Analyzes development logs to suggest new skills the swarm should build.
     50|    -   [ ] **Skill-Dependency Mapper": Analyzes the skill directory to build a dependency graph and expose it via query.
     51|    -   [ ] **Development Velocity Tracker": Computes and logs development metrics (tasks/day, lines of code, skills built) to enable evidence-based improvement.

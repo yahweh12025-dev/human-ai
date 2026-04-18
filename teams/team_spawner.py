@@ -346,6 +346,29 @@ class OpenClawTeamSpawner:
                 
         return []
     
+    
+    def check_system_health(self) -> Dict[str, Any]:
+        """Check if all required directories and files are present."""
+        required_paths = [
+            self.base_workdir,
+            self.outcome_log_path,
+            Path('/home/ubuntu/human-ai/master_log.json')
+        ]
+        
+        health = {
+            'status': 'healthy',
+            'checks': {}
+        }
+        
+        for path in required_paths:
+            exists = path.exists()
+            health['checks'][str(path)] = '✅' if exists else '❌'
+            if not exists:
+                health['status'] = 'unhealthy'
+        
+        return health
+
+
     def get_system_status(self) -> Dict:
         """Get overall system status."""
         active_teams = self.list_active_teams()
