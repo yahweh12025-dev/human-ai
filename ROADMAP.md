@@ -43,3 +43,9 @@
 - [ ] **Self-Healing Loop**: Integrate `DoctorAgent` to autonomously fix crashes based on log analysis.
 - [ ] **Skill Mining Loop**: Autonomous discovery and deployment of new AgentSkills.
 - [ ] **Social/Trading Swarms**: Deployment of specialized agent squads for content and finance.
+- [ ] **Linter-Fixer Agent**: Background agent that detects and auto-fixes syntax/import errors in agent code.
+- [ ] **Documentation-Scribe Agent**: Automatically updates README/ROADMAP and generates technical docs for new features.
+- [ ] **Dependency-Manager Agent**: Monitors code and auto-installs necessary Python packages.
+- [ ] **Academic-Crawler Agent**: Interfaces with arXiv/PubMed for high-authority research data.
+- [ ] **Competitive-Intelligence Agent**: Monitors GitHub/AI blogs to suggest new skills for the swarm.
+- [ ] **Knowledge-Graph-Architect**: Formats Researcher outputs for Graphify to build a connected knowledge web.

@@ -132,6 +132,26 @@
       "content": "Implement Memory Bridge: Periodically distill Hermes' daily memory into Swarm global MEMORY.md",
       "id": "memory-bridge-1",
       "status": "pending"
+    },
+    {
+      "content": "Linter-Fixer Agent: Background agent that detects and auto-fixes syntax/import errors in agent code.",
+      "id": "linter-fixer-1",
+      "status": "pending"
+    },
+    {
+      "content": "Documentation-Scribe Agent: Automatically updates README/ROADMAP and generates technical docs for new features.",
+      "id": "documentation-scribe-1",
+      "status": "pending"
+    },
+    {
+      "content": "Dependency-Manager Agent: Monitors code and auto-installs necessary Python packages.",
+      "id": "dependency-manager-1",
+      "status": "pending"
+    },
+    {
+      "content": "Academic-Crawler Agent: Interfaces with arXiv/PubMed for high-authority research data.",
+      "id": "academic-crawler-1",
+      "status": "pending
     }
   ]
 }
