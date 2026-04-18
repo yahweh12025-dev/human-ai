@@ -15,6 +15,8 @@ from agents.critic.critic_agent import CriticAgent as ReviewerAgent
 from agents.ant_farm.developer.developer_agent import DeveloperAgent
 from agents.dr_claw_worker.dr_claw_worker_agent import NativeWorker as DrClawWorker
 from agents.generic_agent_wrapper import GenericAgentWrapper
+from agents.converter_agent import ConverterAgent
+from agents.ocr_agent import OCRAgent
 
 
 from utils.master_log import SwarmMasterLog
@@ -65,7 +67,44 @@ class AntFarmOrchestrator:
             self.console_logger.error(f"❌ Brain Error: {e}")
         
         # 2. RESEARCH: If brain context is insufficient, perform deep research
-        if "No answer found" in brain_context or len(brain_context) < 50:
+        # But first, check if we need to process documents/images via Converter/OCR agents
+        needs_processing = (
+            ".pdf" in goal.lower() or ".doc" in goal.lower() or ".pptx" in goal.lower() or
+            ".png" in goal.lower() or ".jpg" in goal.lower() or ".jpeg" in goal.lower() or
+            "extract text" in goal.lower() or "ocr" in goal.lower() or "convert" in goal.lower()
+        )
+        
+        if needs_processing:
+            self.console_logger.info("📄 Document/Image task detected. Activating pre-processing pipeline...")
+            self.master_log.log_event("AntFarm", "PREPROCESS_START", f"Starting document/image processing for: {goal}")
+            
+            # Initialize processors
+            converter = ConverterAgent()
+            ocr_agent = OCRAgent()
+            
+            # For simplicity in this implementation, we'll process the goal as a file reference
+            # In a full implementation, this would extract file paths from the goal/context
+            processed_context = f"Document/image processing initiated for: {goal}. "
+            
+            # Simulate processing - in reality we would identify actual files
+            if ".pdf" in goal.lower() or ".doc" in goal.lower() or ".pptx" in goal.lower():
+                processed_context += "ConverterAgent would extract text from documents. "
+            if ".png" in goal.lower() or ".jpg" in goal.lower() or ".jpeg" in goal.lower():
+                processed_context += "OCRAgent would extract text from images. "
+                
+            # Clean up
+            await converter.close()
+            await ocr_agent.close()
+            
+            # Now use this processed context for research
+            if "No answer found" in brain_context or len(brain_context) < 50:
+                self.console_logger.info("🔍 Brain insufficient after preprocessing. Triggering Deep Research...")
+                self.master_log.log_event("AntFarm", "RESEARCH_START", f"Deep research triggered for: {goal}")
+                research_results = await self.researcher.research(goal)
+                context = processed_context + " " + research_results
+            else:
+                context = processed_context + " " + brain_context
+        elif "No answer found" in brain_context or len(brain_context) < 50:
             self.console_logger.info("🔍 Brain insufficient. Triggering Deep Research...")
             self.master_log.log_event("AntFarm", "RESEARCH_START", f"Deep research triggered for: {goal}")
             research_results = await self.researcher.research(goal)
