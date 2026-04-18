@@ -14,6 +14,8 @@ from agents.ant_farm.writer.writer_agent import WriterAgent
 from agents.critic.critic_agent import CriticAgent as ReviewerAgent
 from agents.ant_farm.developer.developer_agent import DeveloperAgent
 from agents.dr_claw_worker.dr_claw_worker_agent import NativeWorker as DrClawWorker
+from agents.generic_agent_wrapper import GenericAgentWrapper
+
 
 from utils.master_log import SwarmMasterLog
 
@@ -34,6 +36,7 @@ class AntFarmOrchestrator:
         self.researcher = HumanAIResearcher()
         self.developer = DrClawWorker() # Primary implementation engine
         self.reviewer = ReviewerAgent()
+        self.generic_spawner = GenericAgentWrapper()
 
     async def execute_pipeline(self, task: Dict[str, Any]):
         # Handle both dictionary tasks and string tasks (for backward compatibility)
@@ -70,10 +73,22 @@ class AntFarmOrchestrator:
         else:
             context = brain_context
             
-        # 3. IMPLEMENT: Generate code via Dr. Claw (NativeWorker)
-        self.console_logger.info("🛠️ Implementing solution via Dr. Claw...")
-        self.master_log.log_event("AntFarm", "IMPLEMENTATION_START", f"Implementing solution for: {goal}")
-        impl_result = await self.developer.execute_task(f"Implement the following based on context: {context}. Goal: {goal}")
+        # 3. IMPLEMENT: Determine if a specialized GenericAgent is needed
+        if "spawn generic agent" in context.lower() or "specialized agent" in goal.lower():
+            self.console_logger.info("🚀 Specialized task detected. Spawning GenericAgent...")
+            self.master_log.log_event("AntFarm", "GENERIC_AGENT_START", f"Spawning GenericAgent for: {goal}")
+            impl_result = await self.generic_spawner.spawn(
+                role="Specialized Expert", 
+                goal=f"Implement the following: {goal}. Context: {context[:500]}",
+                constraints="Must produce a verifiable output in the swarm workspace"
+            )
+            # Since GenericAgent runs in background, we mark it as 'delegated'
+            if impl_result['status'] == 'spawned':
+                return {"status": "delegated", "agent_pid": impl_result['pid'], "message": "Task delegated to specialized GenericAgent"}
+        else:
+            self.console_logger.info("🛠️ Implementing solution via Dr. Claw...")
+            self.master_log.log_event("AntFarm", "IMPLEMENTATION_START", f"Implementing solution for: {goal}")
+            impl_result = await self.developer.execute_task(f"Implement the following based on context: {context}. Goal: {goal}")
         
         if impl_result['status'] != 'success':
             self.master_log.log_event("AntFarm", "IMPLEMENTATION_FAILURE", impl_result.get('error', 'Unknown error'))
