@@ -155,9 +155,10 @@ class HybridLLMRouter:
         Returns:
             Dict with status, response, and metadata
         """
-        full_task = f"{context}
-
-{task}" if context else task
+        if context:
+            full_task = context + "\n\n" + task
+        else:
+            full_task = task
         
         # Determine which agent to use
         use_gemini = await self._should_use_gemini(full_task)
@@ -264,10 +265,12 @@ class HybridLLMRouter:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get usage statistics."""
+        # Note: We can't use await here, so we'll return the current state
+        # For accurate rate limit status, caller should check _is_gemini_rate_limited() directly
         return {
             "gemini_requests": self.gemini_request_count,
             "deepseek_requests": self.deepseek_request_count,
             "total_requests": self.gemini_request_count + self.deepseek_request_count,
-            "gemini_rate_limited": await self._is_gemini_rate_limited(),
-            "seconds_until_gemini_retry": max(0, self.rate_limit_cooldown - (time.time() - self.last_gemini_rate_limit)) if self.last_gemini_rate_limit > 0 else 0
+            "last_gemini_rate_limit": self.last_gemini_rate_limit,
+            "rate_limit_cooldown": self.rate_limit_cooldown
         }
