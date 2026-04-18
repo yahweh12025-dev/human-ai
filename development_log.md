@@ -21,3 +21,7 @@
 - This enables bidirectional autonomous development between OpenClaw and Hermes
 - Hermes can monitor OpenClaw's progress via shared logs and repos
 
+
+[2026-04-18 01:05 UTC] NEW OBJECTIVE: Implement Rate-Aware Hybrid LLM Router (Gemini <-> DeepSeek) via Browser. Gemini for complex reasoning (respecting rate limits), DeepSeek for high-volume tasks. Coordinate with Hermes to integrate into AntFarm orchestration.
+
+[2026-04-18 01:05 UTC] NEW OBJECTIVE: Implement Rate-Aware Hybrid LLM Router (Gemini <-> DeepSeek) via Browser. Gemini for complex reasoning (respecting rate limits), DeepSeek for high-volume tasks. Coordinate with Hermes to integrate into AntFarm orchestration.
