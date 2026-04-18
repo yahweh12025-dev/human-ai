@@ -54,13 +54,38 @@
       "status": "pending"
     },
     {
-      "id": "gemini-browser-auth-1",
       "content": "Implement DeepSeek-style cookie authentication for Gemini via Playwright (login to gemini.google.com, manage session cookies)",
+      "id": "gemini-browser-auth-1",
       "status": "pending"
     },
     {
-      "id": "gemini-browser-routing-1",
       "content": "Create rate-aware hybrid router: Gemini (browser, vision/reasoning) <-> DeepSeek (unlimited volume) via browser sessions",
+      "id": "gemini-browser-routing-1",
+      "status": "pending"
+    },
+    {
+      "content": "Integrate browser-based Perplexity (Free tier) for real-time search and citation",
+      "id": "perplexity-browser-1",
+      "status": "pending"
+    },
+    {
+      "content": "Integrate browser-based Claude (Free tier) with rate-limit aware routing for coding/nuance",
+      "id": "claude-browser-1",
+      "status": "pending"
+    },
+    {
+      "content": "Implement LangChain Omni-Model Bridge: Standardize browser-based LLM access as ChatModels",
+      "id": "langchain-bridge-1",
+      "status": "pending"
+    },
+    {
+      "content": "Connect Omni-Model Layer to Dify (RAG) and Graphify (Knowledge Graph) via LangChain pipelines",
+      "id": "dify-graphify-langchain-1",
+      "status": "pending"
+    },
+    {
+      "content": "Integrate Mistral Free API key as low-latency fallback logic check",
+      "id": "mistral-api-1",
       "status": "pending"
     }
   ]

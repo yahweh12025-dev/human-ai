@@ -24,7 +24,7 @@
 - [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
 - [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
-- [ ] **Gemini Model Integration**: Add Google Gemini as a vision-capable model fallback with rate-limit aware routing
+- [ ] **Gemini Browser Integration**: Add Google Gemini via browser-first automation (cookie-based auth like DeepSeek), vision-capable with rate-limit aware routing
 - [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
 
 ## Phase 4: Autonomous Super-Agents & Data Synthesis 🌌 (UPCOMING)
