@@ -36,7 +36,16 @@ class AntFarmOrchestrator:
         self.reviewer = ReviewerAgent()
 
     async def execute_pipeline(self, task: Dict[str, Any]):
-        goal = task.get('description', 'Unknown Goal')
+        # Handle both dictionary tasks and string tasks (for backward compatibility)
+        if isinstance(task, str):
+            # If task is a string, treat it as the description/goal directly
+            goal = task
+        elif isinstance(task, dict):
+            # If task is a dictionary, get the description field
+            goal = task.get("description", "Unknown Goal")
+        else:
+            # Fallback for other types
+            goal = str(task)
         
         # Log to Master Log and Console
         self.master_log.log_event("AntFarm", "PIPELINE_START", f"Starting pipeline for: {goal}")

@@ -3,6 +3,8 @@ import json
 from typing import Any, Dict, Optional
 from supabase import create_client, Client
 from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import credentials, firestore, storage
 
 load_dotenv('/home/ubuntu/human-ai/.env')
 
@@ -39,14 +41,19 @@ class StorageOrchestrator:
         Primary: Supabase (Relational/RAG)
         Backup: Firebase Firestore (NoSQL/Recovery)
         """
+        # 1. Save to Supabase (Matches schema: topic, content)
         success_supabase = False
         if self.supabase:
             try:
-                self.supabase.table('research_findings').insert({'topic': topic, 'content': content, 'metadata': metadata}).execute()
+                self.supabase.table('research_findings').insert({
+                    'topic': topic, 
+                    'content': content
+                }).execute()
                 success_supabase = True
             except Exception as e:
                 print(f"⚠️ Supabase Save Failed: {e}")
 
+        # 2. Save to Firebase as Backup (Firestore allows flexible schema)
         if self.firebase_enabled:
             try:
                 doc_ref = self.db.collection('research_findings').document(topic.replace(" ", "_"))

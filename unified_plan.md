@@ -1,61 +1,36 @@
-# 🗺️ Human-AI Project Roadmap & Agent Map
+# 🗺️ Human-AI Swarm Roadmap
 
-This document tracks the development state of the Human-AI agent swarm.
+## Phase 1: Foundation & Stabilization ✅ (COMPLETED)
+- [x] Core Agent Architecture (Researcher, Navigator, Developer).
+- [x] Supabase Logging Integration.
+- [x] Basic Sandbox Execution.
+- [x] OpenClaw Gateway Connectivity.
 
-## 🤖 Agent Registry
+## Phase 2: The "SQUAD" & High-Fidelity Loops ✅ (COMPLETED)
+- [x] **AntFarm Orchestrator**: Implementation of the Retrieve $\rightarrow$ Research $\rightarrow$ Implement $\rightarrow$ Verify loop.
+- [x] **NativeWorker**: Transition to server-less implementation engine.
+- [x] **Browser-First Mandate**: All agents routed through the browser (Playwright) for LLM access.
+- [x] **Researcher Evolution**: Integrated YouTube transcript synthesis and hybrid routing.
+- [x] **Hardened Sandbox**: Custom Docker images for dependency-free execution.
+- [x] **Master Log System**: Global event aggregation for the entire swarm.
 
-| Agent | Status | Purpose | Primary Tool/Skill | Note |
-| :--- | :--- | :--- | :--- | :--- |
-| **Researcher** | 🟢 Stable | Deep web research & synthesis | `DeepSeekBrowserAgent` | Fully verified E2E with Supabase |
-| **Super Agent** | 🟡 Beta | Orchestration & Delegation | `HumanAIResearcher` | Needs better routing logic |
-| **Planner** | 🔴 Incomplete | High-level task decomposition | TBD | Needs structural definition |
-| **Critic** | 🔴 Incomplete | Quality control & Fact-checking | TBD | Not yet integrated into pipeline |
-| **Navigator** | 🔴 Incomplete | Complex UI interaction | `Playwright` | Needs specific workflow skills |
-| **GitHub Scout** | 🟡 Beta | Repo discovery & analysis | `GitHub API` | Needs better filtering logic |
-| **Repo Reviewer** | 🟡 Beta | Code quality & security audit | `GitHub API` | Lacks deep context integration |
-| **Builder** | 🔄 Integrated | Code generation & testing | **OpenClaw Core** | Leveraging main agent for Phase 1 |
-| **Comm-Bridge** | 🟡 Beta | External communication | `Supabase` / `Webhooks` | Basic connectivity only |
-| **Messaging** | 🟡 Beta | User-facing alerts/chat | `Telegram` | Operational via Bot API |
+## Phase 3: Orchestration & Ecosystem 🚀 (IN PROGRESS)
+- [ ] **Swarm Telegram Bot Integration**: Create and configure @Swarm26_bot for inter-agent communication
+- [ ] **Swarm Health Monitoring**: Implement automated health checking for swarm components
+- [ ] **Swarm Session Management**: 90% token usage reset mechanisms for swarm agents
+- [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
+- [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development
+- [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
+- [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
+- [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
+- [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
 
-## 🛠️ Skill Matrix
-
-| Skill Name | Status | Purpose | Agent Dependency |
-| :--- | :--- | :--- | :--- |
-| **Advanced Scraper** | 🟢 Stable | Structured JSON extraction | Researcher, Navigator |
-| **GitHub Intelligence** | 🟡 Beta | Repo analysis patterns | GitHub Scout, Repo Reviewer |
-| **Cloud Vault** | 🟢 Stable | Secure Secret Management | All Agents |
-| **Technical Synthesis** | 🟢 Stable | Professional report formatting | Researcher, Critic |
-| **Navigator Skill** | 🔴 Pending | Multi-step web workflows | Navigator |
-
-## 📈 Development Pipeline
-
-### Phase 1: Foundation (Completed ✅)
-- [x] GUI/XRDP stability.
-- [x] DeepSeek Autonomous Login.
-- [x] Supabase schema and RLS fix.
-- [x] Basic Researcher end-to-end pipeline.
-- [x] **Stateless Architecture**: Implemented Cloud Vault, State Sync, and Bootstrap recovery.
-- [x] **Communication**: Telegram bot integration and pairing verified.
-
-### Phase 2: Capability Expansion (Current 🚀)
-- [x] **Technical Synthesis**: Implemented professional report generation.
-- [ ] **Agent: Navigator**: Develop specialized skills for complex web interaction.
-- [ ] **Agent: Critic**: Implement the "Fact-Check" loop.
-- [ ] **GitHub Integration**: Link Repo Reviewer and GitHub Scout.
-
-**Next Mission**: The Navigator Agent. Designing the core logic for the Navigator agent, focusing on its ability to use Playwright for multi-step, goal-oriented web navigation.
-
-### Phase 3: Orchestration & Ecosystem (Upcoming 📅)
-- [ ] **Omni-Channel Intelligence (Browser/API Hybrid)**: Implement a rotation logic that cycles between direct LLM APIs and Browser-based AI Chat interfaces (Gemini, Claude, Grok) to bypass rate limits and leverage specialized reasoning capabilities.
-- [ ] **Antfarm Integration**: Transition to a "Squad" model (Writer, Reviewer, Developer pipelines).
-- [ ] **Dify Knowledge Hub**: Connect the repo to a RAG-powered "Brain" for interactive querying via Telegram.
-
-## 📝 Backlog & Technical Debt
-- [ ] **Sandbox Environment**: Create a safe container for the `Builder` agent to run code.
-- [ ] **Prompt Library**: Standardize system prompts across all agents for consistency.
-- [ ] **API Key Rotation**: Implement secure secret management for all agent keys.
+## Phase 4: Autonomous Super-Agents & Data Synthesis 🌌 (UPCOMING)
+- [ ] **Legacy Data Ingestion**: Pipeline to categorize and index past AI chat histories into Supabase.
+- [ ] **Self-Healing Loop**: Integrate `DoctorAgent` to autonomously fix crashes based on log analysis.
+- [ ] **Skill Mining Loop**: Autonomous discovery and deployment of new AgentSkills.
+- [ ] **Social/Trading Swarms**: Deployment of specialized agent squads for content and finance.
 
 
 
 ## 📝 Current Todo Queue
-- [ ] Fixed Pulse Task

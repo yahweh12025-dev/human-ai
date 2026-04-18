@@ -1,6 +1,16 @@
 {
   "pending": [
     {
+      "id": "generic-agent-1",
+      "content": "Integrate GenericAgent into AntFarm for dynamic task delegation",
+      "status": "pending"
+    },
+    {
+      "id": "sec-audit-1",
+      "content": "Complete full repository secret scrub and verify token rotation",
+      "status": "pending"
+    },
+    {
       "id": "skill-exp-1",
       "content": "Develop advanced synthesis skills for ResearcherAgent",
       "status": "pending"
@@ -19,15 +29,10 @@
       "id": "legacy-data-1",
       "content": "Ingest historical chat data into Dify Brain (FINAL STEP)",
       "status": "pending"
-    },
-    {
-      "id": "generic-agent-1",
-      "content": "Integrate GenericAgent into AntFarm for dynamic task delegation",
-      "status": "pending"
     }
   ],
   "in_progress": [
-    "Sprints: Infrastructure, Intelligence, Audit"
+    "SECURITY_LOCKDOWN"
   ],
   "completed": [
     "Swarms stabilized",

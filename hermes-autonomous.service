@@ -1,0 +1,14 @@
+[Unit]
+Description=Hermes Autonomous Development Mode
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/human-ai
+ExecStart=/bin/bash /home/ubuntu/human-ai/hermes-autonomous.sh
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
