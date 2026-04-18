@@ -17,6 +17,7 @@ from agents.dr_claw_worker.dr_claw_worker_agent import NativeWorker as DrClawWor
 from agents.generic_agent_wrapper import GenericAgentWrapper
 from agents.converter_agent import ConverterAgent
 from agents.ocr_agent import OCRAgent
+from agents.hybrid_llm_router import HybridLLMRouter
 
 
 from utils.master_log import SwarmMasterLog
@@ -39,6 +40,7 @@ class AntFarmOrchestrator:
         self.developer = DrClawWorker() # Primary implementation engine
         self.reviewer = ReviewerAgent()
         self.generic_spawner = GenericAgentWrapper()
+        self.router = HybridLLMRouter()
 
     async def execute_pipeline(self, task: Dict[str, Any]):
         # Handle both dictionary tasks and string tasks (for backward compatibility)
@@ -98,16 +100,18 @@ class AntFarmOrchestrator:
             
             # Now use this processed context for research
             if "No answer found" in brain_context or len(brain_context) < 50:
-                self.console_logger.info("🔍 Brain insufficient after preprocessing. Triggering Deep Research...")
-                self.master_log.log_event("AntFarm", "RESEARCH_START", f"Deep research triggered for: {goal}")
-                research_results = await self.researcher.research(goal)
+                self.console_logger.info("🔍 Brain insufficient after preprocessing. Triggering Omni-Routed Research...")
+                self.master_log.log_event("AntFarm", "RESEARCH_START", f"Omni-routed research triggered for: {goal}")
+                route_result = await self.router.route_task(f"Research and provide a detailed summary of: {goal}")
+                research_results = route_result.get('response', 'No results found')
                 context = processed_context + " " + research_results
             else:
                 context = processed_context + " " + brain_context
         elif "No answer found" in brain_context or len(brain_context) < 50:
-            self.console_logger.info("🔍 Brain insufficient. Triggering Deep Research...")
-            self.master_log.log_event("AntFarm", "RESEARCH_START", f"Deep research triggered for: {goal}")
-            research_results = await self.researcher.research(goal)
+            self.console_logger.info("🔍 Brain insufficient. Triggering Omni-Routed Research...")
+            self.master_log.log_event("AntFarm", "RESEARCH_START", f"Omni-routed research triggered for: {goal}")
+            route_result = await self.router.route_task(f"Research and provide a detailed summary of: {goal}")
+            research_results = route_result.get('response', 'No results found')
             context = research_results
         else:
             context = brain_context

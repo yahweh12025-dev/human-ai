@@ -21,8 +21,8 @@
     21|- [ ] **Swarm Telegram Logging": Dedicated logging and monitoring for bot interactions
     22|- [ ] **Swarm Development Tracking": Activity logging and progress tracking for swarm development
     23|- [ ] **Hybrid LLM Routing": Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
-    24|- [ ] **Kilo Code Integration": Integrate Kilo Code as the primary engine for autonomous code refactoring and high-fidelity feature implementation
-    25|- [ ] **Document Intelligence Suite": \n    - Develop `ConverterAgent` for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD).\n    - Develop `OCRAgent` for visual text extraction and layout analysis.\n    - Integrate as a pre-processing layer for Researcher and Developer agents.\n- [ ] **Notebook LM Specialist Agent": Create a browser-based agent that uses Google Notebook LM for document upload, summarization, comparison, and insight extraction.\n- [ ] **Outcome Journal Skill": Create a skill that logs the outcomes of tasks and features to OUTCOME_LOG.md for transparency and human-AI collaboration.\n- [ ] **Memory Bridge Implementation": Create a synchronization pipeline to distill "wisdom" and key decisions from Hermes' daily memory into the Swarm's global MEMORY.md\n- [ ] **Omni-Model Intelligence Layer": \n    - Integrate browser-based Perplexity (Search) and Claude (Reasoning) with rate-limit handling.\n    -   Integrate Mistral Free API for low-latency logic checks.\n    - Use LangChain as the orchestration bridge to standardize browser-LLM access.\n- [ ] **Dify & Graphify Synergy": Implement LangChain-based pipelines to route data between Dify (RAG) and Graphify (Knowledge Graph).
+    24|- [x] **Kilo Code Integration": Integrate Kilo Code as the primary engine for autonomous code refactoring and high-fidelity feature implementation
+    25|- [x] **Document Intelligence Suite": \n    - Develop `ConverterAgent` for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD).\n    - Develop `OCRAgent` for visual text extraction and layout analysis.\n    - Integrate as a pre-processing layer for Researcher and Developer agents.\n- [x] **Notebook LM Specialist Agent": Create a browser-based agent that uses Google Notebook LM for document upload, summarization, comparison, and insight extraction.\n- [x] **Outcome Journal Skill": Create a skill that logs the outcomes of tasks and features to OUTCOME_LOG.md for transparency and human-AI collaboration.\n- [x] **Memory Bridge Implementation": Create a synchronization pipeline to distill "wisdom" and key decisions from Hermes' daily memory into the Swarm's global MEMORY.md\n- [x] **Omni-Model Intelligence Layer": \n    - Integrate browser-based Perplexity (Search) and Claude (Reasoning) with rate-limit handling.\n    -   Integrate Mistral Free API for low-latency logic checks.\n    - Use LangChain as the orchestration bridge to standardize browser-LLM access.\n- [x] **Dify & Graphify Synergy": Implement LangChain-based pipelines to route data between Dify (RAG) and Graphify (Knowledge Graph).
     26|- [ ] **Swarm Command Center": Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
     27|- [ ] **Dify Knowledge Hub": Finalize RAG integration and "Remember" phase for verified solutions.
     28|- [ ] **n8n-mcp Integration": Implement deterministic workflows for repetitive tasks.
@@ -31,8 +31,8 @@
     31|
     32|
 - [ ] **Omni-Model Router Expansion**: Extend Hybrid Router to include Perplexity (Search) and Claude (Reasoning) via browser-first automation.
-- [ ] **Outcome $
-ightarrow$ Scribe Feedback Loop**: Automatically trigger ROADMAP/README updates when a SUCCESS is logged in OUTCOME_LOG.md.
+- [x] **Outcome Journal Skill**: Create a skill that logs the outcomes of tasks and features to OUTCOME_LOG.md for transparency and human-AI collaboration.
+
 - [ ] **Kilo Code High-Fidelity Integration**: Implement a specialized KiloCodeAgent for autonomous code refactoring and optimization.
 - [ ] **Parallel Execution via OpenClaw Teams**: Implement a team-spawner to run batch tasks in parallel across multiple sandboxes.
 - [ ] **Notebook LM Specialist Agent**: Build a browser-based agent for advanced document synthesis and comparison via notebooklm.google.com.

@@ -26,6 +26,9 @@ For a detailed view of the agent registry and current development milestones, pl
 
 ## Recent Updates
 - **2026-04-18**: Swarm verification successful
+- **2026-04-18**: Skill Miner Loop Implementation
+- **2026-04-18**: Outcome Scribe: Automatic roadmap/readme updates triggered by Outcome Journal SUCCESS entries
+- **2026-04-18**: Omni-Model LLM Router Expansion Completed
 
 - **2026-04-18**: Implemented a fully autonomous Document Intelligence pipeline including Converter and OCR agents.
 

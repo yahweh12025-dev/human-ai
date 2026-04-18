@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Hybrid LLM Router: Intelligently routes tasks between Gemini and DeepSeek 
-based on rate limits, task complexity, and availability.
+Omni-Model LLM Router: Intelligently routes tasks between Gemini, DeepSeek, Perplexity, and Claude 
+based on task type, rate limits, and availability.
 """
 import asyncio
 import os
@@ -11,39 +11,43 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Tuple
 from agents.researcher.researcher_agent import HumanAIResearcher
 from agents.gemini.gemini_agent import GeminiBrowserAgent
+from agents.perplexity.perplexity_agent import PerplexityBrowserAgent
+from agents.claude.claude_agent import ClaudeBrowserAgent
+
 
 class HybridLLMRouter:
     """
-    Routes LLM tasks between Gemini and DeepSeek browsers.
+    Routes LLM tasks between Gemini, DeepSeek, Perplexity, and Claude browsers.
     
     Routing Logic:
     - Gemini: Preferred for complex reasoning, vision tasks, and when under rate limits
-    - DeepSeek: Used for high-volume tasks, when Gemini is rate-limited, or as fallback
+    - DeepSeek: Used for high-volume tasks, coding, when Gemini is rate-limited, or as fallback
+    - Perplexity: Used for search, research, current events, and factual queries needing citations
+    - Claude: Used for high-nuance reasoning, complex writing, sophisticated analysis, and premium outputs
     
     Rate Limit Tracking:
     - Tracks Gemini usage via browser interactions (not API headers)
     - Implements cooldown periods when rate limits are detected
     """
-    
+
     def __init__(self, 
                  gemini_use_chrome_profile: bool = False,
                  deepseek_use_browser_profile: bool = True,
+                 perplexity_use_browser_profile: bool = True,
+                 claude_use_browser_profile: bool = True,
                  rate_limit_cooldown: int = 300):  # 5 minutes default cooldown
-        """
-        Initialize the hybrid router.
-        
-        Args:
-            gemini_use_chrome_profile: Whether to use the main Chrome profile for Gemini
-            deepseek_use_browser_profile: Whether to use the swarm's browser profile for DeepSeek
-            rate_limit_cooldown: Seconds to wait after detecting a rate limit before retrying Gemini
-        """
+        """Initialize the omni-model router."""
         self.gemini_agent = GeminiBrowserAgent(use_chrome_profile=gemini_use_chrome_profile)
         self.deepseek_agent = HumanAIResearcher()  # Uses DeepSeekBrowserAgent internally
+        self.perplexity_agent = PerplexityBrowserAgent(use_swarm_profile=perplexity_use_browser_profile)
+        self.claude_agent = ClaudeBrowserAgent(use_swarm_profile=claude_use_browser_profile)
         
         self.rate_limit_cooldown = rate_limit_cooldown
         self.last_gemini_rate_limit = 0  # Timestamp of last rate limit detection
         self.gemini_request_count = 0
         self.deepseek_request_count = 0
+        self.perplexity_request_count = 0
+        self.claude_request_count = 0
         
         # Task complexity indicators that favor Gemini
         self.gemini_favored_keywords = [
@@ -53,33 +57,45 @@ class HybridLLMRouter:
             'creative', 'write', 'essay', 'story', 'poem'
         ]
         
-        # Task types that favor DeepSeek (volume/tasks)
+        # Task types that favor DeepSeek (volume/tasks/code)
         self.deepseek_favored_keywords = [
             'code', 'program', 'function', 'class', 'method', 
             'debug', 'fix', 'implement', 'build', 'create',
             'list', 'enumerate', 'simple', 'quick', 'fast'
         ]
         
-        print("🔀 Hybrid LLM Router initialized")
+        # Task types that favor Perplexity (search, research, current info)
+        self.perplexity_favored_keywords = [
+            'search', 'find', 'latest', 'current', 'news', 'research',
+            'statistics', 'data', 'fact', 'cite', 'source', 'reference',
+            'what is', 'who is', 'when did', 'where is', 'how many',
+            'trend', 'price', 'stock', 'weather', 'score'
+        ]
+        
+        # Task types that favor Claude (high-nuance reasoning, complex coding, writing)
+        self.claude_favored_keywords = [
+            'refactor', 'architecture', 'design', 'algorithm', 'optimize',
+            'explain', 'tutorial', 'guide', 'documentation', 'spec',
+            'logic', 'proof', 'theorem', 'philosophy', 'ethics',
+            'nuanced', 'subtle', 'sophisticated', 'elegant', 'premium'
+        ]
+        
+        print("🌀 Omni-Model LLM Router initialized")
         print(f"   Gemini cooldown: {rate_limit_cooldown}s")
         print(f"   Gemini profile: {'Main Chrome' if gemini_use_chrome_profile else 'Swarm Profile'}")
-    
+
     async def _is_gemini_rate_limited(self) -> bool:
-        """
-        Check if we should avoid Gemini due to rate limits.
-        Returns True if we're in cooldown period.
-        """
+        """Check if we should avoid Gemini due to rate limits.
+        Returns True if we're in cooldown period."""
         if self.last_gemini_rate_limit == 0:
             return False
         
         elapsed = time.time() - self.last_gemini_rate_limit
         return elapsed < self.rate_limit_cooldown
-    
+
     def _detect_rate_limit_from_response(self, response: str) -> bool:
-        """
-        Detect if a response indicates a rate limit from Gemini.
-        Looks for common rate limit messages in the response.
-        """
+        """Detect if a response indicates a rate limit from Gemini.
+        Looks for common rate limit messages in the response."""
         rate_limit_indicators = [
             'rate limit', 'quota exceeded', 'too many requests',
             'try again later', 'resource exhausted', 'limit exceeded'
@@ -87,64 +103,92 @@ class HybridLLMRouter:
         
         response_lower = response.lower()
         return any(indicator in response_lower for indicator in rate_limit_indicators)
-    
-    def _assess_task_complexity(self, task: str) -> Tuple[float, float]:
-        """
-        Assess whether a task favors Gemini or DeepSeek.
-        Returns (gemini_score, deepseek_score) where higher is better fit.
-        """
+
+    def _assess_task_complexity(self, task: str) -> Tuple[float, float, float, float]:
+        """Assess which model is best suited for a task.
+        Returns (gemini_score, deepseek_score, perplexity_score, claude_score) where higher is better fit."""
         task_lower = task.lower()
         
         gemini_score = 0
         deepseek_score = 0
+        perplexity_score = 0
+        claude_score = 0
         
         # Check for Gemini-favored keywords
         for keyword in self.gemini_favored_keywords:
             if keyword in task_lower:
                 gemini_score += 1
         
-        # Check for DeepSeek-favored keywords
+        # Check for DeepSeek-favored keywords (weight code higher)
         for keyword in self.deepseek_favored_keywords:
             if keyword in task_lower:
-                deepseek_score += 1
+                # Give extra weight to core coding keywords
+                if keyword in ['code', 'program', 'function', 'class', 'method']:
+                    deepseek_score += 2
+                else:
+                    deepseek_score += 1
         
-        # Length heuristic: longer tasks often favor Gemini (more complex)
+        # Check for Perplexity-favored keywords
+        for keyword in self.perplexity_favored_keywords:
+            if keyword in task_lower:
+                perplexity_score += 1
+        
+        # Check for Claude-favored keywords
+        for keyword in self.claude_favored_keywords:
+            if keyword in task_lower:
+                claude_score += 1
+        
+        # Length heuristic: longer tasks often favor Gemini/Claude (more complex)
         if len(task) > 100:
             gemini_score += 1
+            claude_score += 1
         elif len(task) < 30:
             deepseek_score += 1
-            
+            perplexity_score += 1  # Short factual queries good for search
+        
         # Question marks often indicate complex reasoning
         if task.count('?') > 1:
             gemini_score += 1
+            claude_score += 1
+        
+        # Code-like patterns favor DeepSeek (strong signal)
+        code_chars = ['{', '}', '()', ';', '==', '!=', '+=', '-=', '++', '--']
+        code_score = sum(1 for char in code_chars if char in task)
+        deepseek_score += min(code_score, 3)  # Cap at 3 to avoid overwhelming
+        
+        # Explicit citation/request for sources favors Perplexity
+        if any(phrase in task_lower for phrase in ['source', 'cite', 'reference', 'according to']):
+            perplexity_score += 2
             
-        # Code-like patterns favor DeepSeek
-        if any(char in task for char in ['{', '}', '()', ';', '==', '!=']):
-            deepseek_score += 1
+        # Explicit request for nuanced/sophisticated output favors Claude
+        if any(phrase in task_lower for phrase in ['nuanced', 'sophisticated', 'elegant', 'premium']):
+            claude_score += 2
             
-        return gemini_score, deepseek_score
-    
-    
-    async def _should_use_gemini(self, task: str) -> bool:
-        """
-        Determine whether to use Gemini or DeepSeek for a given task.
-        """
-        # If Gemini is in rate limit cooldown, use DeepSeek
+        # Explicit request for latest/current info favors Perplexity
+        if any(phrase in task_lower for phrase in ['latest', 'current', 'news', 'today', 'recent']):
+            perplexity_score += 2
+        
+        return gemini_score, deepseek_score, perplexity_score, claude_score
+
+    async def _should_use_model(self, task: str) -> str:
+        """Determine which model to use for a given task.
+        Returns 'gemini', 'deepseek', 'perplexity', or 'claude'."""
+        # If Gemini is in rate limit cooldown, avoid it
         if await self._is_gemini_rate_limited():
-            return False
-            
-        # Assess task complexity
-        gemini_score, deepseek_score = self._assess_task_complexity(task)
+            # Route to best alternative
+            _, deepseek, perplexity, claude = self._assess_task_complexity(task)
+            scores = [('deepseek', deepseek), ('perplexity', perplexity), ('claude', claude)]
+            return max(scores, key=lambda x: x[1])[0]
         
-        # If DeepSeek score is equal or higher, use DeepSeek (better for volume/efficiency)
-        if deepseek_score >= gemini_score:
-            return False
+        # Assess task complexity for all models
+        gemini, deepseek, perplexity, claude = self._assess_task_complexity(task)
         
-        # Only use Gemini if it is clearly better suited for the task
-        return True
+        # Return the model with the highest score
+        scores = [('gemini', gemini), ('deepseek', deepseek), ('perplexity', perplexity), ('claude', claude)]
+        return max(scores, key=lambda x: x[1])[0]
+
     async def route_task(self, task: str, context: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Route a task to the appropriate LLM and return the result.
+        """Route a task to the appropriate LLM and return the result.
         
         Args:
             task: The task/prompt to execute
@@ -159,10 +203,10 @@ class HybridLLMRouter:
             full_task = task
         
         # Determine which agent to use
-        use_gemini = await self._should_use_gemini(full_task)
+        selected_model = await self._should_use_model(full_task)
         
         try:
-            if use_gemini:
+            if selected_model == "gemini":
                 print(f"🔀 Routing to GEMINI: {full_task[:50]}...")
                 await self.gemini_agent.start_browser()
                 logged_in = await self.gemini_agent.login()
@@ -177,9 +221,9 @@ class HybridLLMRouter:
                 if self._detect_rate_limit_from_response(response):
                     print("⚠️  Detected rate limit in Gemini response")
                     self.last_gemini_rate_limit = time.time()
-                    # Fall back to DeepSeek for this request
-                    print("🔄 Falling back to DeepSeek due to rate limit")
-                    return await self._route_to_deepseek(full_task, is_fallback=True)
+                    # Fall back to best alternative
+                    print("🔄 Falling back to alternative model due to rate limit")
+                    return await self._route_to_best_alternative(full_task, excluded_model="gemini")
                 
                 return {
                     "status": "success",
@@ -188,7 +232,8 @@ class HybridLLMRouter:
                     "request_count": self.gemini_request_count,
                     "is_fallback": False
                 }
-            else:
+            
+            elif selected_model == "deepseek":
                 print(f"🔀 Routing to DEEPSEEK: {full_task[:50]}...")
                 await self.deepseek_agent.start_browser()
                 # DeepSeek agent handles its own login/session internally via researcher_agent
@@ -202,65 +247,160 @@ class HybridLLMRouter:
                     "request_count": self.deepseek_request_count,
                     "is_fallback": False
                 }
-                
-        except Exception as e:
-            print(f"❌ Error in { 'Gemini' if use_gemini else 'DeepSeek' } agent: {e}")
             
-            # Try fallback to the other agent
+            elif selected_model == "perplexity":
+                print(f"🔀 Routing to PERPLEXITY: {full_task[:50]}...")
+                await self.perplexity_agent.start_browser()
+                logged_in = await self.perplexity_agent.login()
+                
+                if not logged_in:
+                    raise Exception("Failed to authenticate with Perplexity")
+                
+                self.perplexity_request_count += 1
+                response = await self.perplexity_agent.prompt(full_task)
+                
+                return {
+                    "status": "success",
+                    "agent": "perplexity",
+                    "response": response,
+                    "request_count": self.perplexity_request_count,
+                    "is_fallback": False
+                }
+            
+            elif selected_model == "claude":
+                print(f"🔀 Routing to CLAUDE: {full_task[:50]}...")
+                await self.claude_agent.start_browser()
+                logged_in = await self.claude_agent.login()
+                
+                if not logged_in:
+                    raise Exception("Failed to authenticate with Claude")
+                
+                self.claude_request_count += 1
+                response = await self.claude_agent.prompt(full_task)
+                
+                return {
+                    "status": "success",
+                    "agent": "claude",
+                    "response": response,
+                    "request_count": self.claude_request_count,
+                    "is_fallback": False
+                }
+            
+        except Exception as e:
+            print(f"❌ Error in {selected_model.upper()} agent: {e}")
+            
+            # Try fallback to another model
             try:
-                if use_gemini:
-                    print("🔄 Attempting fallback to DeepSeek...")
-                    return await self._route_to_deepseek(full_task, is_fallback=True)
-                else:
-                    print("🔄 Attempting fallback to Gemini...")
-                    return await self._route_to_gemini(full_task, is_fallback=True)
+                print(f"🔄 Attempting fallback to alternative model...")
+                return await self._route_to_best_alternative(full_task, excluded_model=selected_model)
             except Exception as fallback_error:
                 return {
                     "status": "error",
-                    "error": f"Both agents failed. Primary: {str(e)}, Fallback: {str(fallback_error)}",
+                    "error": f"Both primary ({selected_model}) and fallback agents failed. Primary: {str(e)}, Fallback: {str(fallback_error)}",
                     "agent": "none",
                     "response": None
                 }
-    
-    async def _route_to_gemini(self, task: str, is_fallback: bool = False) -> Dict[str, Any]:
-        """Helper to route specifically to Gemini."""
-        await self.gemini_agent.start_browser()
-        logged_in = await self.gemini_agent.login()
+
+    async def _route_to_best_alternative(self, task: str, excluded_model: str) -> Dict[str, Any]:
+        """Route to the best available model, excluding the specified one."""
+        # Assess task complexity for remaining models
+        gemini, deepseek, perplexity, claude = self._assess_task_complexity(task)
         
-        if not logged_in:
-            raise Exception("Failed to authenticate with Gemini")
+        # Set excluded model's score to -inf so it's never chosen
+        scores = {
+            'gemini': gemini if excluded_model != 'gemini' else float('-inf'),
+            'deepseek': deepseek if excluded_model != 'deepseek' else float('-inf'),
+            'perplexity': perplexity if excluded_model != 'perplexity' else float('-inf'),
+            'claude': claude if excluded_model != 'claude' else float('-inf')
+        }
+        
+        # Also exclude Gemini if it's rate limited
+        if await self._is_gemini_rate_limited():
+            scores['gemini'] = float('-inf')
+        
+        # Select the model with highest score
+        selected_model = max(scores, key=scores.get)
+        
+        # Route to the selected model
+        if selected_model == "gemini":
+            print(f"🔀 Fallback routing to GEMINI: {task[:50]}...")
+            await self.gemini_agent.start_browser()
+            logged_in = await self.gemini_agent.login()
             
-        self.gemini_request_count += 1
-        response = await self.gemini_agent.prompt(task)
+            if not logged_in:
+                raise Exception("Failed to authenticate with Gemini")
+            
+            self.gemini_request_count += 1
+            response = await self.gemini_agent.prompt(task)
+            
+            return {
+                "status": "success",
+                "agent": "gemini",
+                "response": response,
+                "request_count": self.gemini_request_count,
+                "is_fallback": True
+            }
         
-        return {
-            "status": "success",
-            "agent": "gemini",
-            "response": response,
-            "request_count": self.gemini_request_count,
-            "is_fallback": is_fallback
-        }
-    
-    async def _route_to_deepseek(self, task: str, is_fallback: bool = False) -> Dict[str, Any]:
-        """Helper to route specifically to DeepSeek."""
-        await self.deepseek_agent.start_browser()
-        response = await self.deepseek_agent.call_llm_via_browser(task)
-        self.deepseek_request_count += 1
+        elif selected_model == "deepseek":
+            print(f"🔀 Fallback routing to DEEPSEEK: {task[:50]}...")
+            await self.deepseek_agent.start_browser()
+            response = await self.deepseek_agent.call_llm_via_browser(task)
+            self.deepseek_request_count += 1
+            
+            return {
+                "status": "success",
+                "agent": "deepseek",
+                "response": response,
+                "request_count": self.deepseek_request_count,
+                "is_fallback": True
+            }
         
-        return {
-            "status": "success",
-            "agent": "deepseek",
-            "response": response,
-            "request_count": self.deepseek_request_count,
-            "is_fallback": is_fallback
-        }
-    
+        elif selected_model == "perplexity":
+            print(f"🔀 Fallback routing to PERPLEXITY: {task[:50]}...")
+            await self.perplexity_agent.start_browser()
+            logged_in = await self.perplexity_agent.login()
+            
+            if not logged_in:
+                raise Exception("Failed to authenticate with Perplexity")
+            
+            self.perplexity_request_count += 1
+            response = await self.perplexity_agent.prompt(task)
+            
+            return {
+                "status": "success",
+                "agent": "perplexity",
+                "response": response,
+                "request_count": self.perplexity_request_count,
+                "is_fallback": True
+            }
+        
+        elif selected_model == "claude":
+            print(f"🔀 Fallback routing to CLAUDE: {task[:50]}...")
+            await self.claude_agent.start_browser()
+            logged_in = await self.claude_agent.login()
+            
+            if not logged_in:
+                raise Exception("Failed to authenticate with Claude")
+            
+            self.claude_request_count += 1
+            response = await self.claude_agent.prompt(task)
+            
+            return {
+                "status": "success",
+                "agent": "claude",
+                "response": response,
+                "request_count": self.claude_request_count,
+                "is_fallback": True
+            }
+
     async def close(self):
         """Close all agent resources."""
         await self.gemini_agent.close()
         if hasattr(self.deepseek_agent, 'close'):
             await self.deepseek_agent.close()
-        print("🔀 Hybrid LLM Router closed")
+        await self.perplexity_agent.close()
+        await self.claude_agent.close()
+        print("🌀 Omni-Model LLM Router closed")
     
     def get_stats(self) -> Dict[str, Any]:
         """Get usage statistics."""
@@ -269,7 +409,9 @@ class HybridLLMRouter:
         return {
             "gemini_requests": self.gemini_request_count,
             "deepseek_requests": self.deepseek_request_count,
-            "total_requests": self.gemini_request_count + self.deepseek_request_count,
+            "perplexity_requests": self.perplexity_request_count,
+            "claude_requests": self.claude_request_count,
+            "total_requests": self.gemini_request_count + self.deepseek_request_count + self.perplexity_request_count + self.claude_request_count,
             "last_gemini_rate_limit": self.last_gemini_rate_limit,
             "rate_limit_cooldown": self.rate_limit_cooldown
         }
