@@ -68,15 +68,13 @@ class GeminiBrowserAgent:
 
     async def _handle_consent_page(self):
         """Handle Google consent page if present."""
-        # Check if we are on a consent page
         if "consent.google.com" in self.page.url:
             print("On consent page, attempting to accept...")
-            # Look for the accept button - common selectors
             accept_selectors = [
                 'button:has-text("I agree")',
                 'button:has-text("Accept all")',
                 'button:has-text("Accept")',
-                '#introAgreeButton',  # common id
+                '#introAgreeButton',
                 'button[aria-label*="Accept"]',
             ]
             accepted = False
@@ -91,7 +89,6 @@ class GeminiBrowserAgent:
                     continue
             
             if not accepted:
-                # Try to find any button with text containing "agree" or "accept" using XPath
                 try:
                     await self.page.click('xpath=//button[contains(translate(text(), "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"), "agree") or contains(translate(text(), "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"), "accept")]')
                     print("Clicked accept button via XPath")
@@ -100,7 +97,6 @@ class GeminiBrowserAgent:
                     pass
             
             if accepted:
-                # Wait for navigation to Gemini
                 try:
                     await self.page.wait_for_url("**/gemini.google.com/**", timeout=10000)
                     print("Navigated to Gemini after consent")
@@ -108,22 +104,19 @@ class GeminiBrowserAgent:
                     print("Timeout waiting for navigation to Gemini after consent")
             else:
                 print("Could not find accept button on consent page")
-        # If not on consent page, do nothing
 
     async def login(self):
         """Ensure we are logged into Google Gemini. Uses persistent session."""
         await self.start_browser()
 
         print("🔐 Checking Gemini login status...")
-        await self.page.goto("https://gemini.google.com", wait_until="networkidle")
+        # FIX: Changed wait_until="networkidle" to "domcontentloaded" to avoid timeout
+        await self.page.goto("https://gemini.google.com", wait_until="domcontentloaded")
         await self.page.wait_for_timeout(3000)
 
-        # Handle consent page if present
         await self._handle_consent_page()
 
-        # After handling consent, check if we're logged in by looking for the input box or user avatar
         try:
-            # Wait for the prompt textarea to appear (indicates logged in)
             await self.page.wait_for_selector('textarea[placeholder*="Message"], textarea, [role="textbox"]', timeout=10000)
             print("✅ Already logged into Gemini (session restored)")
             return True
@@ -136,32 +129,23 @@ class GeminiBrowserAgent:
         if not self.is_initialized:
             await self.start_browser()
 
-        # Ensure we're on the Gemini page
-        await self.page.goto("https://gemini.google.com", wait_until="networkidle")
+        # FIX: Changed wait_until="networkidle" to "domcontentloaded" to avoid timeout
+        await self.page.goto("https://gemini.google.com", wait_until="domcontentloaded")
         await self.page.wait_for_timeout(2000)
 
-        # Handle consent page again in case we were redirected
         await self._handle_consent_page()
 
-        # Find the input textarea
         try:
             input_selector = 'textarea[placeholder*="Message"], textarea, [role="textbox"]'
             await self.page.wait_for_selector(input_selector, timeout=10000)
 
-            # Clear and fill the input
             await self.page.fill(input_selector, "")
             await self.page.fill(input_selector, prompt_text)
-
-            # Submit by pressing Enter
             await self.page.keyboard.press("Enter")
 
-            # Wait for response to start generating
             await self.page.wait_for_timeout(3000)
-
-            # Wait for the response to complete (wait for a reasonable time)
             await self.page.wait_for_timeout(20000)
 
-            # Get all message elements and take the last one
             message_selector = '.message, [data-message-role="assistant"], .chat-message, .assistant-message, .model-response'
             try:
                 await self.page.wait_for_selector(message_selector, timeout=5000)
@@ -173,7 +157,6 @@ class GeminiBrowserAgent:
             except:
                 pass
 
-            # Fallback: get all page text and try to extract
             page_content = await self.page.evaluate("() => document.body.innerText")
             return page_content.strip()
 
