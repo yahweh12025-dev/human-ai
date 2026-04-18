@@ -124,6 +124,7 @@ class HybridLLMRouter:
             
         return gemini_score, deepseek_score
     
+    
     async def _should_use_gemini(self, task: str) -> bool:
         """
         Determine whether to use Gemini or DeepSeek for a given task.
@@ -135,15 +136,12 @@ class HybridLLMRouter:
         # Assess task complexity
         gemini_score, deepseek_score = self._assess_task_complexity(task)
         
-        # If scores are tied or DeepSeek strongly favored, use DeepSeek
-        if deepseek_score > gemini_score:
+        # If DeepSeek score is equal or higher, use DeepSeek (better for volume/efficiency)
+        if deepseek_score >= gemini_score:
             return False
-        elif gemini_score > deepseek_score:
-            return True
-        else:
-            # Tie-breaker: prefer Gemini for variety, but respect cooldown
-            return True
-    
+        
+        # Only use Gemini if it is clearly better suited for the task
+        return True
     async def route_task(self, task: str, context: Optional[str] = None) -> Dict[str, Any]:
         """
         Route a task to the appropriate LLM and return the result.
@@ -260,7 +258,8 @@ class HybridLLMRouter:
     async def close(self):
         """Close all agent resources."""
         await self.gemini_agent.close()
-        await self.deepseek_agent.close()
+        if hasattr(self.deepseek_agent, 'close'):
+            await self.deepseek_agent.close()
         print("🔀 Hybrid LLM Router closed")
     
     def get_stats(self) -> Dict[str, Any]:
