@@ -20,9 +20,11 @@
 - [ ] **Swarm Session Management**: 90% token usage reset mechanisms for swarm agents
 - [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
 - [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development
+- [ ] **Hybrid LLM Routing**: Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
 - [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
 - [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
+- [ ] **Gemini Model Integration**: Add Google Gemini as a vision-capable model fallback with rate-limit aware routing
 - [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
 
 ## Phase 4: Autonomous Super-Agents & Data Synthesis 🌌 (UPCOMING)

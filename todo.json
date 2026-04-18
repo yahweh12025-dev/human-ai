@@ -1,39 +1,4 @@
 {
-  "pending": [
-    {
-      "id": "generic-agent-1",
-      "content": "Integrate GenericAgent into AntFarm for dynamic task delegation",
-      "status": "pending"
-    },
-    {
-      "id": "sec-audit-1",
-      "content": "Complete full repository secret scrub and verify token rotation",
-      "status": "pending"
-    },
-    {
-      "id": "skill-exp-1",
-      "content": "Develop advanced synthesis skills for ResearcherAgent",
-      "status": "pending"
-    },
-    {
-      "id": "worker-stab-1",
-      "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
-      "status": "pending"
-    },
-    {
-      "id": "storage-audit-1",
-      "content": "Implement background consistency check between Supabase and Firebase",
-      "status": "pending"
-    },
-    {
-      "id": "legacy-data-1",
-      "content": "Ingest historical chat data into Dify Brain (FINAL STEP)",
-      "status": "pending"
-    }
-  ],
-  "in_progress": [
-    "SECURITY_LOCKDOWN"
-  ],
   "completed": [
     "Swarms stabilized",
     "Browser-first navigation",
@@ -43,5 +8,60 @@
     "Telegram verified",
     "Researcher evolution: YouTube synthesis",
     "dashboard-1"
+  ],
+  "in_progress": [
+    "SECURITY_LOCKDOWN"
+  ],
+  "pending": [
+    {
+      "content": "Integrate GenericAgent into AntFarm for dynamic task delegation",
+      "id": "generic-agent-1",
+      "status": "pending"
+    },
+    {
+      "content": "Complete full repository secret scrub and verify token rotation",
+      "id": "sec-audit-1",
+      "status": "pending"
+    },
+    {
+      "content": "Develop advanced synthesis skills for ResearcherAgent",
+      "id": "skill-exp-1",
+      "status": "pending"
+    },
+    {
+      "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
+      "id": "worker-stab-1",
+      "status": "pending"
+    },
+    {
+      "content": "Implement background consistency check between Supabase and Firebase",
+      "id": "storage-audit-1",
+      "status": "pending"
+    },
+    {
+      "content": "Ingest historical chat data into Dify Brain (FINAL STEP)",
+      "id": "legacy-data-1",
+      "status": "pending"
+    },
+    {
+      "content": "Configure Browser-based Google Gemini session for Swarm access",
+      "id": "gemini-browser-config-1",
+      "status": "pending"
+    },
+    {
+      "content": "Implement Rate-Aware Hybrid Router: Gemini (Reasoning) <-> DeepSeek (Volume) via Browser",
+      "id": "hybrid-llm-router-1",
+      "status": "pending"
+    },
+    {
+      "id": "gemini-browser-auth-1",
+      "content": "Implement DeepSeek-style cookie authentication for Gemini via Playwright (login to gemini.google.com, manage session cookies)",
+      "status": "pending"
+    },
+    {
+      "id": "gemini-browser-routing-1",
+      "content": "Create rate-aware hybrid router: Gemini (browser, vision/reasoning) <-> DeepSeek (unlimited volume) via browser sessions",
+      "status": "pending"
+    }
   ]
 }
