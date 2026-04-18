@@ -101,7 +101,12 @@
     {
       "content": "Update OpenClaw autopilot to use Kilo Code for the 'Fix' phase of the Triage loop",
       "id": "kilo-autopilot-1",
-      "status,": "pending"
+      "status": "pending"
+    },
+    {
+      "content": "Develop ConverterAgent for multi-format transformation (PDF, Word, PPTX, JSON <-> TXT, MD)",
+      "id": "converter-agent-1",
+      "status": "pending"
     },
     {
       "content": "Develop and integrate OCR Agent for visual data extraction from browser screenshots",
