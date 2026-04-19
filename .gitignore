@@ -5,6 +5,8 @@ migrate_to_vault_final.py
 venv/
 session/
 logs/
+!infrastructure/logs/hermes-autonomous.log
+ !infrastructure/logs/hermes-autonomous.log
 errors/
 autodev.log
 autopilot.log
