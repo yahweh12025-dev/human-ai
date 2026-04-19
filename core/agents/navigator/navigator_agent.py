@@ -71,7 +71,7 @@ class NavigatorAgent:
         from .navigator_skills import NavigatorSkills
         self.skills = NavigatorSkills(self.navigator)
         # AdaptiveRouter is kept for goal classification, but the execution path is now unified to Browser.
-        from utils.adaptive_router import AdaptiveRouter
+        from core.utils.adaptive_router import AdaptiveRouter
         self.router = AdaptiveRouter()
 
     async def run_goal_oriented_loop(self, goal: str, max_steps: int = 10):
@@ -147,7 +147,7 @@ from playwright.async_api import Page, BrowserContext
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from core.utils.hybrid_llm_router import HybridLLMRouter
+from core.agents.hybrid_llm_router import HybridLLMRouter
 
 @dataclass
 class NavigatorState:
@@ -181,14 +181,14 @@ class NavigatorEngine:
         Main public method to execute the navigation task.
         Returns a dictionary with the result status and data.
         """
-        state = self._initialize_state(goal, browser_context)
+        state = await self._initialize_state(goal, browser_context)
         
         while not state.goal_met and state.step_count < state.max_steps:
             state = await self._action_observation_loop(state)
         
         return self._finalize_result(state)
 
-    def _initialize_state(self, goal: str, browser_context: BrowserContext) -> NavigatorState:
+    async def _initialize_state(self, goal: str, browser_context: BrowserContext) -> NavigatorState:
         """Sets up the initial state for the navigation task."""
         # Start on a blank page or a known search engine? For now, we start fresh.
         page = await browser_context.new_page()
