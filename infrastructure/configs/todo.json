@@ -86,7 +86,7 @@
     {
       "id": "sec-audit-1",
       "content": "Complete full repository secret scrub and verify token rotation",
-      "status": "pending"
+      "status": "in_progress"
     },
     {
       "id": "skill-exp-1",

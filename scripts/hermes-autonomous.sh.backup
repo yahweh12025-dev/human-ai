@@ -73,11 +73,11 @@ while true; do
         
         # 1. Review Roadmap and Todo List
         log_message "📋 Reviewing Roadmap and Todo List..."
-        python3 /home/ubuntu/human-ai/scripts_archive/plan_aggregator.py >> $LOG_FILE 2>&1
+        /home/ubuntu/human-ai/venv/bin/python3 /home/ubuntu/human-ai/scripts_archive/plan_aggregator.py >> $LOG_FILE 2>&1
         
         # 2. Check for pending tasks in todo.json
         log_message "🔍 Checking for pending tasks..."
-        PENDING_TASK_COUNT=$(grep -c '"status": "pending"' /home/ubuntu/human-ai/infrastructure/configs/todo.json 2>/dev/null || echo "0")
+        PENDING_TASK_COUNT=$(grep -c '"status": "pending"' /home/ubuntu/human-ai/todo.json 2>/dev/null || echo "0")
         log_message "   Found $PENDING_TASK_COUNT pending tasks"
         
         if [ "$PENDING_TASK_COUNT" -gt 0 ]; then
@@ -85,7 +85,7 @@ while true; do
             log_message "⚡ Executing pending task via Hermes agent..."
             
             # Use the OpenClaw interface to delegate to Hermes for task execution
-            python3 << EOF
+            /home/ubuntu/human-ai/venv/bin/python3 << EOF
 import asyncio
 import sys
 import json
@@ -95,7 +95,7 @@ from agents.ant_farm.orchestrator import AntFarmOrchestrator
 async def execute_task():
     orchestrator = AntFarmOrchestrator()
     # Read pending tasks from todo.json
-    with open('/home/ubuntu/human-ai/infrastructure/configs/todo.json', 'r') as f:
+    with open('/home/ubuntu/human-ai/todo.json', 'r') as f:
         todo_data = json.load(f)
     
     pending_tasks = todo_data.get('pending', [])
@@ -136,13 +136,13 @@ EOF
             
             # 4. Self-improvement: Review logs for patterns and create skills
             log_message "🔧 Performing self-improvement log analysis..."
-            python3 << EOF
+            /home/ubuntu/human-ai/venv/bin/python3 << EOF
 import json
 import os
 from datetime import datetime, timedelta
 
 # Analyze recent logs for patterns
-    log_file = '/home/ubuntu/human-ai/infrastructure/logs/master_log.json'
+log_file = '/home/ubuntu/human-ai/master_log.json'
 if os.path.exists(log_file):
     with open(log_file, 'r') as f:
         try:
@@ -192,7 +192,7 @@ if os.path.exists(log_file):
 else:
     print('Log file not found')
     with open('/home/ubuntu/human-ai/improvement.log', 'a') as logf:
-        logf.write("[$(date): [HERMES-AUTONOMOUS] Log file not found for self-improvement analysis\\n")
+        logf.write("[$(date): [HERMES-AUTONOMOUS] Log file not found for self-improvement analysis\\n"
 EOF
             
             log_message "   Self-improvement analysis completed"
