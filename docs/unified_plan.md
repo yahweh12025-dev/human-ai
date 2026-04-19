@@ -52,3 +52,7 @@
 
 
 ## 📝 Current Todo Queue
+
+### Repository Structure Reference
+For navigation, refer to the  section titled "Repository Organization (Updated 2026-04-19)".
+This defines the canonical file locations for all agents and scripts.
