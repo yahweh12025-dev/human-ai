@@ -48,3 +48,28 @@
 ## 📝 Current Todo Queue
 
 
+
+## Repository Organization (Updated 2026-04-19)
+- ****: Intelligence Layer
+    - : All agent brains.
+    - : Core utilities.
+    - : Task coordination.
+- ****: System Support
+    - : Browser profiles.
+    - : Secrets, , .
+    - : State files (, etc.).
+    - : System logs.
+    - : Failure analysis.
+    - : .
+    - : .
+    - : Frontend assets.
+    - , : External utilities.
+- ****: Data & Insights
+    - : Final results.
+    - : Tests.
+    - : Obsidian knowledge.
+    - : Daily logs.
+- ****: Source of Truth
+    - , , etc.
+- ****: Active Automation
+- ****: Legacy code and triage.
