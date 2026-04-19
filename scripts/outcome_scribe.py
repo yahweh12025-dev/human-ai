@@ -36,7 +36,7 @@ class OutcomeScribe:
     
     def _extract_timestamp_from_entry(self, entry: str) -> float:
         """Extract timestamp from a SUCCESS entry."""
-        timestamp_match = re.search(r'\*\*Timestamp\*\*: (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+)', entry)
+        timestamp_match = re.search(r'\*\*Timestamp\*\*: (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?)', entry)
         if timestamp_match:
             try:
                 dt = datetime.fromisoformat(timestamp_match.group(1))
@@ -151,7 +151,7 @@ class OutcomeScribe:
             return
             
         success_title = title_match.group(1).strip()
-        timestamp_match = re.search(r'\*\*Timestamp\*\*: (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+)', entry)
+        timestamp_match = re.search(r'\*\*Timestamp\*\*: (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?)', entry)
         timestamp_str = timestamp_match.group(1) if timestamp_match else datetime.now().isoformat()
         
         # Format date for README
