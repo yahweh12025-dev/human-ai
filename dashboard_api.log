@@ -1,0 +1,15 @@
+INFO:     Started server process [1497322]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:50001 (Press CTRL+C to quit)
+⚠️ Warning: omnichannel_router.py not found. Falling back to local LLM logic.
+INFO:     127.0.0.1:33010 - "GET /api/status HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:48570 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33296 - "GET /api/status HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:36028 - "GET /status HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:52300 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35482 - "GET /health HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1497322]

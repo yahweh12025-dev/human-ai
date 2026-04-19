@@ -1,0 +1,1 @@
+Verification of ObsidianAgent functionality

@@ -26,27 +26,13 @@
     "Omni-Model LLM Router expanded to 4 models (Gemini, DeepSeek, Perplexity, Claude)",
     "kilo-code-wrapper-1: Implement KiloCodeAgent wrapper for high-fidelity refactoring",
     "openclaw-team-spawner-1: Implement parallel task execution using OpenClaw Agent Teams (v6 with Outcome Integration)",
-    "Build browser-based Notebook LM agent for document synthesis"
+    "Build browser-based Notebook LM agent for document synthesis",
+    "Obsidian vault integration implemented with ObsidianAgent skill for long-term swarm memory and linked knowledge management"
   ],
   "in_progress": [
     "SECURITY_LOCKDOWN"
   ],
   "pending": [
-    {
-      "id": "obsidian-integration-1",
-      "content": "Integrate Obsidian vault for long-term swarm memory and linked knowledge management",
-      "status": "pending",
-      "notes": [
-        {
-          "timestamp": "2026-04-18T22:46:00SAST",
-          "action": "implemented_obsidian_agent",
-          "description": "Implemented ObsidianAgent skill for linked Markdown vault management (read/write/links/backlinks)",
-          "files_created": [
-            "/home/ubuntu/human-ai/agents/obsidian/obsidian_agent.py"
-          ]
-        }
-      ]
-    },
     {
       "id": "swarm-optimizer-skill-1",
       "content": "Create a Swarm Optimizer skill to analyze development patterns and suggest swarm improvements",
