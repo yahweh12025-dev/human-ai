@@ -73,3 +73,36 @@
     - , , etc.
 - ****: Active Automation
 - ****: Legacy code and triage.
+
+## Phase 3: Orchestration & Ecosystem 🚀 (STATUS UPDATE - 2026-04-19)
+- [x] **AntFarm Orchestrator**: Implementation of the Retrieve $ Research $ Implement $ Verify loop.
+- [x] **NativeWorker**: Transition to server-less implementation engine.
+- [x] **Browser-First Mandate**: All agents routed through the browser (Playwright) for LLM access.
+- [x] **Researcher Evolution**: Integrated YouTube transcript synthesis and hybrid routing.
+- [x] **Hardened Sandbox**: Custom Docker images for dependency-free execution.
+- [x] **Master Log System**: Global event aggregation for the entire swarm.
+- [x] **Navigator Agent State-Machine**: Implemented the core architecture for multi-step goal tracking using an Action-Observation Loop.
+- [x] **Action-Observation Loop for Navigator**: Built the Observe-Plan-Act-Evaluate cycle using the Hybrid LLM Router for reasoning.
+- [ ] **Swarm Telegram Bot Integration**: Create and configure @Swarm26_bot for inter-agent communication
+- [ ] **Swarm Health Monitoring**: Implement automated health checking for swarm components
+- [ ] **Swarm Session Management**: 90% token usage reset mechanisms for swarm agents
+- [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
+- [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development
+- [ ] **Hybrid LLM Routing**: Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
+- [ ] **Kilo Code Integration**: Integrate Kilo Code as the primary engine for autonomous code refactoring and high-fidelity feature implementation
+- [ ] **Document Intelligence Suite**: 
+    - Develop  for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD).
+    - Develop  for visual text extraction and layout analysis.
+    - Integrate as a pre-processing layer for Researcher and Developer agents.
+- [ ] **Notebook LM Specialist Agent**: Create a browser-based agent that uses Google Notebook LM for document upload, summarization, comparison, and insight extraction.
+- [ ] **Memory Bridge Implementation**: Create a synchronization pipeline to distill "wisdom" and key decisions from Hermes' daily memory into the Swarm's global MEMORY.md
+- [ ] **Omni-Model Intelligence Layer**: 
+    - Integrate browser-based Perplexity (Search) and Claude (Reasoning) with rate-limit handling.
+    - Integrate Mistral Free API for low-latency logic checks.
+    - Use LangChain as the orchestration bridge to standardize browser-LLM access.
+- [ ] **Dify & Graphify Synergy**: Implement LangChain-based pipelines to route data between Dify (RAG) and Graphify (Knowledge Graph).
+- [ ] **Swarm Command Center**: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend).
+- [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
+- [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
+- [ ] **Gemini Browser Integration**: Add Google Gemini via browser-first automation (cookie-based auth like DeepSeek), vision-capable with rate-limit aware routing
+- [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
