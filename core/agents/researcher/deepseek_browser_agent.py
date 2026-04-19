@@ -129,7 +129,8 @@ class DeepSeekBrowserAgent:
             
             # Polling loop to detect when generation is finished
             # We'll monitor the last assistant message for content stability
-            max_wait = 90  # Increased timeout for complex responses
+            # AND check for the disappearance of a "Stop" button.
+            max_wait = 120  # Increased timeout for very long responses
             elapsed = 0
             last_content = ""
             stable_count = 0  # Need multiple stable readings
@@ -145,41 +146,45 @@ class DeepSeekBrowserAgent:
             ]
             
             while elapsed < max_wait:
-                await asyncio.sleep(2)
-                elapsed += 2
+                await asyncio.sleep(3)
+                elapsed += 3
                 
                 try:
-                    # Try each selector until we find one that works
+                    # 1. Check for "Stop" button (Strong indicator of generation)
+                    # Search for any button containing "Stop"
+                    stop_button = await self.page.get_by_role("button", name="Stop").is_visible()
+                    if stop_button:
+                        print(f"🔄 Response still generating (Stop button visible)... ({elapsed}s)")
+                        last_content = "" # Reset content check since we know it's still moving
+                        stable_count = 0
+                        continue
+
+                    # 2. Content Stability Check
                     current_content = ""
                     for selector in message_selectors:
                         try:
                             elements = await self.page.locator(selector).all()
                             if elements:
-                                # Get the last element (most recent message)
                                 last_element = elements[-1]
                                 current_content = await last_element.inner_text()
-                                if current_content.strip():  # Non-empty content
+                                if current_content.strip():
                                     break
                         except:
                             continue
                     
                     if current_content and current_content == last_content and len(current_content.strip()) > 10:
-                        # Content has stabilized and is substantial
                         stable_count += 1
-                        if stable_count >= 3:  # Require 3 consecutive stable readings
-                            print("✅ Response generation complete (stable content detected).")
+                        if stable_count >= 3: 
+                            print("✅ Response generation complete (No stop button & stable content).")
                             return current_content.strip()
                     elif current_content and current_content != last_content:
-                        # Content is still changing
-                        stable_count = 0  # Reset counter
+                        stable_count = 0
                         last_content = current_content
-                        print(f"🔄 Response still generating... ({len(current_content)} chars)")
+                        print(f"🔄 Response content changing... ({len(current_content)} chars)")
                     elif not current_content and elapsed > 10:
-                        # No content yet after reasonable wait
                         print("⚠️ No response content detected yet...")
                         
                 except Exception as e:
-                    # Continue polling even if individual checks fail
                     pass
 
             print(f"⚠️ Response generation timed out after {max_wait}s. Returning best available result.")

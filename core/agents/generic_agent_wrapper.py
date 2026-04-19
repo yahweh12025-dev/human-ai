@@ -12,18 +12,39 @@ class GenericAgentWrapper:
         # Use ga.py as the primary entry point if main.py is not available
         self.entry_point = os.path.join(self.path, "ga.py")
 
+    def _sanitize_for_shell(self, text: str) -> str:
+        """
+        Sanitize text for shell execution by:
+        1. Stripping leading and trailing whitespace
+        2. Removing any leading whitespace from each line (to fix indentation issues)
+        3. Ensuring the text is not empty
+        """
+        if not text:
+            return ""
+        # Split into lines, strip each line, and rejoin with newline
+        lines = text.split('\n')
+        stripped_lines = [line.lstrip() for line in lines]
+        # Join and strip again to remove any trailing newline that might become leading
+        result = '\n'.join(stripped_lines).strip()
+        return result
+
     async def spawn(self, role: str, goal: str, constraints: str = "") -> Dict[str, Any]:
         """
         Spawns a GenericAgent instance as a background process.
         """
         print(f"🚀 [GenericAgent] Spawning agent: Role={role}, Goal={goal}")
         
+        # Sanitize goal and constraints to fix indentation issues
+        # Strip leading/trailing whitespace and normalize internal whitespace for shell commands
+        sanitized_goal = self._sanitize_for_shell(goal) if role in ["security_auditor", "devops_engineer", "sre"] else goal.strip()
+        sanitized_constraints = self._sanitize_for_shell(constraints) if role in ["security_auditor", "devops_engineer", "sre"] else constraints.strip()
+        
         cmd = [
             "python3", 
             self.entry_point, 
             "--role", role, 
-            "--goal", goal, 
-            "--constraints", constraints
+            "--goal", sanitized_goal, 
+            "--constraints", sanitized_constraints
         ]
         
         try:

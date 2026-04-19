@@ -106,3 +106,10 @@
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
 - [ ] **Gemini Browser Integration**: Add Google Gemini via browser-first automation (cookie-based auth like DeepSeek), vision-capable with rate-limit aware routing
 - [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
+
+## Phase 4: Financial Intelligence & Trading (Future Consideration)
+- [ ] **FinceptTerminal Integration**: Explore integrating the FinceptTerminal repository (https://github.com/Fincept-Corporation/FinceptTerminal) as a specialized financial data and trading analysis agent.
+    *   This would involve assessing its capabilities for real-time market data, technical analysis, and trading signal generation.
+    *   If compatible, it could be integrated as a specialized agent within the swarm for Phase 4 tasks related to financial analysis, trading strategy development, and market prediction.
+    *   Integration would require evaluating its API, data formats, and compatibility with the swarm's browser-first mandate and Hybrid LLM Router.
+    *   This is a placeholder for future investigation and is not part of the current active development cycle.
