@@ -1,0 +1,10 @@
+=== TELEGRAM CHAT LOG EXPORT ===
+Exported from: OpenClaw Telegram Bot Chat
+Date: $(date)
+User: Cdreamer (ID: 8412298553)
+Chat Type: Direct with OpenClaw Bot
+
+=== RECENT EXCHANGES ===
+No memory file for today yet.
+
+=== END OF LOG ===
