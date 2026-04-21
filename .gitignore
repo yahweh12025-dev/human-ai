@@ -17,3 +17,4 @@ improvement.log
 .env
 master_log.json
 firebase-key.json
+__pycache__/

@@ -133,6 +133,12 @@
       "content": "Implement /export-chat command to export current conversation to master_log.json",
       "status": "pending",
       "notes": []
+    },
+    {
+      "id": "manus-integration",
+      "content": "Integrate Manus AI browser agent for complex tasks (SSO login, credit limit management)",
+      "status": "pending",
+      "notes": []
     }
   ]
 }

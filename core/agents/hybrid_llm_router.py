@@ -9,10 +9,10 @@ import time
 import json
 from pathlib import Path
 from typing import Dict, Any, Optional, Tuple
-from agents.researcher.researcher_agent import HumanAIResearcher
-from agents.gemini.gemini_agent import GeminiBrowserAgent
-from agents.perplexity.perplexity_agent import PerplexityBrowserAgent
-from agents.claude.claude_agent import ClaudeBrowserAgent
+from core.agents.researcher.researcher_agent import HumanAIResearcher
+from core.agents.gemini.gemini_agent import GeminiBrowserAgent
+from core.agents.perplexity.perplexity_agent import PerplexityBrowserAgent
+from core.agents.claude.claude_agent import ClaudeBrowserAgent
 
 
 class HybridLLMRouter:
@@ -296,7 +296,7 @@ class HybridLLMRouter:
             except Exception as fallback_error:
                 return {
                     "status": "error",
-                    "error": f"Both primary ({selected_model}) and fallback agents failed. Primary: {str(e)}, Fallback: {str(fallback_error)}",
+                    "error": f"Both primary ({selected_model}) and fallback fallback agents failed. Primary: {str(e)}, Fallback: {str(fallback_error)}",
                     "agent": "none",
                     "response": None
                 }

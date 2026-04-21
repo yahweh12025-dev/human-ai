@@ -1,0 +1,1 @@
+=== Supabase/Firebase Configuration Check ===

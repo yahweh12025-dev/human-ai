@@ -14,8 +14,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Add project root to path to import local agents
-sys.path.append('/home/ubuntu/human-ai')
-from agents.researcher.researcher_agent import DeepSeekBrowserAgent
+sys.path.append('/home/ubuntu/human-ai/core/agents')
+from researcher.deepseek_browser_agent import DeepSeekBrowserAgent
 
 load_dotenv('/home/ubuntu/human-ai/.env')
 
