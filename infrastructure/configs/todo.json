@@ -27,7 +27,10 @@
     "kilo-code-wrapper-1: Implement KiloCodeAgent wrapper for high-fidelity refactoring",
     "openclaw-team-spawner-1: Implement parallel task execution using OpenClaw Agent Teams (v6 with Outcome Integration)",
     "Build browser-based Notebook LM agent for document synthesis",
-    "Obsidian vault integration implemented with ObsidianAgent skill for long-term swarm memory and linked knowledge management"
+    "Obsidian vault integration implemented with ObsidianAgent skill for long-term swarm memory and linked knowledge management",
+    "Update HybridLLMRouter to handle Omni-Model routing (DeepSeek, Gemini, Perplexity, Claude)",
+    "Integrate Omni-Router into the core Agent Swarm loop",
+    "Researcher Evolution: Playwright browsing + YouTube synthesis"
   ],
   "in_progress": [
     "SECURITY_LOCKDOWN"
@@ -119,16 +122,6 @@
       "status": "pending"
     },
     {
-      "id": "omni-router-update-1",
-      "content": "Update HybridLLMRouter to handle Omni-Model routing (DeepSeek, Gemini, Perplexity, Claude)",
-      "status": "completed"
-    },
-    {
-      "id": "omni-swarm-integration-1",
-      "content": "Integrate Omni-Router into the core Agent Swarm loop",
-      "status": "completed"
-    },
-    {
       "id": "export-chat-impl-1",
       "content": "Implement /export-chat command to export current conversation to master_log.json",
       "status": "pending",
@@ -137,6 +130,54 @@
     {
       "id": "manus-integration",
       "content": "Integrate Manus AI browser agent for complex tasks (SSO login, credit limit management)",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "self-improvement-deploy",
+      "content": "Universal Self-Improvement: Deploy self_improvement skill",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "memory-core-caching",
+      "content": "Memory Core: Implement Hermes-style context caching",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "kilo-code-verify",
+      "content": "Kilo-Code Integration: Verify read/write/edit delegation",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "n8n-mcp-integration",
+      "content": "n8n-mcp Integration: Implement deterministic workflows",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "omni-channel-intel",
+      "content": "Omni-Channel Intelligence: Implement API/Browser rotation",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "dify-knowledge-hub",
+      "content": "Dify Knowledge Hub: RAG integration",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "chat-history-supabase",
+      "content": "Phase 4: Categorize and push past AI chat history/data to Supabase",
+      "status": "pending",
+      "notes": []
+    },
+    {
+      "id": "dashboard-gui-vercel",
+      "content": "Phase 4: Build Dashboard GUI for agent/swarm control (Vercel connected)",
       "status": "pending",
       "notes": []
     }
