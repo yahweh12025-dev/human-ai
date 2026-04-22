@@ -1,0 +1,49 @@
+
+# General settings
+general:
+  agent_name: "trading_agent"
+  log_level: "INFO"
+  timezone: "UTC"
+  paper_trading: true
+
+# Data settings
+data:
+  default_symbols:
+    - "BTC-USD"
+    - "ETH-USD"
+    - "AAPL"
+  fetch_interval: 5
+  history_length: 50
+  provider: "yfinance"
+  use_mock_data: true
+
+# Strategy settings
+strategy:
+  default_strategy: "sma_crossover"
+  sma_crossover:
+    fast_period: 5
+    slow_period: 15
+    rsi_period: 10
+    rsi_overbought: 70
+    rsi_oversold: 30
+
+# Execution settings
+execution:
+  broker: "paper"
+  order_size_percent: 10
+  slippage_tolerance: 0.001
+
+# Risk management settings
+risk:
+  max_risk_per_trade: 2.0
+  max_open_positions: 5
+  stop_loss_percent: 5.0
+  take_profit_percent: 15.0
+  max_daily_loss_percent: 10.0
+
+# Notification settings (optional)
+notifications:
+  telegram:
+    enabled: false
+    bot_token: ""
+    chat_id: ''

@@ -20,6 +20,7 @@ A self-evolving, autonomous multi-agent system capable of continuous development
 - [ ] **Universal Self-Improvement**: Deploy `self_improvement` skill for autonomous loop.
 - [ ] **Memory Core**: Implement Hermes-style context caching for faster reasoning.
 - [ ] **Kilo-Code Integration**: Verify high-fidelity read/write/edit delegation.
+- [ ] **Trading Agent**: Develop Binance futures trading agent with technical analysis, risk management, and file conversion (markitdown).
 
 ### Phase 3: Enterprise Integration
 - [ ] **n8n-mcp Integration**: Implement deterministic workflows for complex business logic.
