@@ -2,7 +2,7 @@
 Data Fetcher Module
 
 Responsible for fetching market data from various providers.
-Currently supports CCXT (for Binance futures) and mock data for testing.
+Currently supports CCXT (for Binance futures).
 """
 import pandas as pd
 import ccxt
@@ -18,18 +18,23 @@ class DataFetcher:
         """
         self.provider = config.get('provider', 'binance')
         self.history_length = config.get('history_length', 200)
-        self.use_mock_data = config.get('use_mock_data', False)
         self.timeframe = config.get('timeframe', '1h')  # Default to 1-hour candles
         self.logger = logging.getLogger(__name__)
         
-        # Initialize exchange if not using mock data
-        if not self.use_mock_data and self.provider == 'binance':
+        # PROXY SUPPORT: Load from config
+        self.proxies = config.get('proxies', {})
+        
+        # Initialize exchange
+        if self.provider == 'binance':
             self.exchange = ccxt.binance({
                 'enableRateLimit': True,
                 'options': {
-                    'defaultType': 'future',  # Use futures market
-                }
+                    'defaultType': 'future',
+                },
             })
+            # Apply proxy if configured
+            if self.proxies:
+                self.exchange.proxies = self.proxies
 
     def fetch_latest_data(self, symbol):
         """
@@ -37,9 +42,7 @@ class DataFetcher:
         :param symbol: Trading symbol (e.g., 'BTC/USDT', 'ETH/USDT')
         :return: pandas DataFrame with OHLCV data or None if error.
         """
-        if self.use_mock_data:
-            return self._generate_mock_data(symbol)
-        
+        # Only proceed to real API since we removed mock data support
         try:
             if self.provider == 'binance':
                 return self._fetch_binance_futures(symbol)
@@ -103,6 +106,7 @@ class DataFetcher:
             start_date = end_date - timedelta(days=period_days)
 
             # Fetch data from yfinance
+            import yfinance as yf
             ticker = yf.Ticker(symbol)
             data = ticker.history(start=start_date, end=end_date, interval='1d')
             if data.empty:
@@ -125,53 +129,3 @@ class DataFetcher:
         except Exception as e:
             self.logger.exception(f"Error fetching yfinance data for {symbol}: {e}")
             return None
-
-    def _generate_mock_data(self, symbol):
-        """
-        Generate mock OHLCV data for testing purposes.
-        :param symbol: Trading symbol.
-        :return: pandas DataFrame with mock OHLCV data.
-        """
-        self.logger.debug(f"Generating mock data for {symbol}")
-        
-        # Generate dates for the last `history_length` days
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=self.history_length)
-        dates = pd.date_range(start=start_date, end=end_date, periods=self.history_length)
-        
-        # Generate realistic price data based on symbol
-        np.random.seed(hash(symbol) % 2**32)  # Deterministic seed based on symbol
-        
-        # Base price for different symbols
-        if 'BTC' in symbol:
-            base_price = 50000
-            volatility = 0.05
-        elif 'ETH' in symbol:
-            base_price = 3000
-            volatility = 0.06
-        else:  # Default for stocks like AAPL
-            base_price = 150
-            volatility = 0.02
-        
-        # Generate random walks for prices
-        returns = np.random.normal(0, volatility, self.history_length)
-        price_series = base_price * np.exp(np.cumsum(returns))
-        
-        # Generate OHLCV data
-        data = pd.DataFrame(index=dates)
-        data['Close'] = price_series
-        # Generate daily volatility for high/low spread
-        daily_vol = np.abs(np.random.normal(0, volatility/2, self.history_length))
-        data['High'] = data['Close'] * (1 + daily_vol)
-        data['Low'] = data['Close'] * (1 - daily_vol)
-        # Open price is between previous close and current close
-        open_prices = np.roll(data['Close'], 1)
-        open_prices[0] = data['Close'].iloc[0]
-        # Add some noise to open
-        open_prices *= (1 + np.random.normal(0, volatility/4, self.history_length))
-        data['Open'] = open_prices
-        # Volume - random but realistic
-        data['Volume'] = np.random.lognormal(10, 1, self.history_length)
-        
-        self.logger.debug(f"Generated {len(data)} rows of mock data for {symbol}")
-        return data

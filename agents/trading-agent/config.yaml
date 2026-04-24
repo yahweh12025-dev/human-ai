@@ -1,67 +1,41 @@
-# Trading Agent Configuration
-
-# General settings
-general:
-  agent_name: "trading_agent"
-  log_level: "INFO"
-  timezone: "UTC"
-  paper_trading: true  # Set to false for live trading
-
-# Data settings
 data:
-  # Default symbols to trade (can be overridden per strategy)
-  # Using Binance futures format (e.g., BTC/USDT)
-  default_symbols:
-    - "BTC/USDT"   # Bitcoin perpetual futures
-    - "ETH/USDT"   # Ethereum perpetual futures
-  # Data fetch interval (seconds)
   fetch_interval: 60
-  # Historical data length for indicator calculation
-  history_length: 200
-  # Data provider (binance for futures, yfinance for stocks)
-  provider: "binance"
-  # Timeframe for candles (1m, 5m, 15m, 1h, 4h, 1d, etc.)
-  timeframe: "1h"
-  # Use mock data for testing (set to true to avoid API issues)
-  use_mock_data: true
-
-# Strategy settings
-strategy:
-  # Default strategy to run
-  default_strategy: "sma_crossover"
-  # Strategy-specific parameters
+execution:
+  broker: paper
+  api_key: h9Dj9ohkgoROPYy8xzw219lxs82dD7MyMYt4qhobAOuGq0t649JLUQnGqeqZHHH9
+  api_secret: uJXGeCY1LwwppsGwZ2RMHU8g2gdE9QSW7ocLFTUsqHhwMAqSCzg5xIpCNmJiorD8
+  leverage: 5
+  paper_trading: true
+  testnet: true
+futures:
+  default_symbols:
+  - BTC/USDT
+  - ETH/USDT
+  enabled: true
+  grid:
+    atr_period: 14
+    grid_multiplier: 1.5
   sma_crossover:
     fast_period: 10
     slow_period: 30
     rsi_period: 14
     rsi_overbought: 70
     rsi_oversold: 30
-
-# Execution settings
-execution:
-  # Broker for order execution (paper, binance, etc.)
-  broker: "paper"
-  # Order size (percentage of available capital per trade)
-  order_size_percent: 10
-  # Slippage tolerance (for paper trading simulation)
-  slippage_tolerance: 0.001
-
-# Risk management settings
+    volume_threshold: 1.5
+  testnet: true
+general:
+  log_level: INFO
 risk:
-  # Maximum portfolio risk per trade (as % of equity)
-  max_risk_per_trade: 2.0
-  # Maximum number of open positions
-  max_open_positions: 5
-  # Stop loss percentage (if used)
-  stop_loss_percent: 5.0
-  # Take profit percentage (if used)
-  take_profit_percent: 15.0
-  # Maximum daily loss (as % of starting equity)
+  leverage: 5
+  margin_call_threshold: 60.0
   max_daily_loss_percent: 10.0
-
-# Notification settings (optional)
-notifications:
-  telegram:
-    enabled: false
-    bot_token: ""
-    chat_id: ""
+  max_open_positions: 5
+  max_risk_per_trade: 2.0
+  stop_loss_percent: 5.0
+  take_profit_percent: 15.0
+  use_kelly_sizing: true
+  max_correlation_exposure: 0.7
+strategy:
+  grid:
+    atr_period: 14
+    grid_multiplier: 1.5

@@ -4,25 +4,68 @@ Risk Manager Module
 Handles risk management: position sizing, stop-loss, portfolio limits, etc.
 """
 import logging
+import numpy as np
 
 class RiskManager:
     def __init__(self, config):
         """
-        Initialize the risk manager.
+        Initialize the risk manager with high leverage defaults and trend filters.
         :param config: Dictionary containing risk configuration.
         """
         self.max_risk_per_trade = config.get('max_risk_per_trade', 2.0)  # % of equity
         self.max_open_positions = config.get('max_open_positions', 5)
         self.stop_loss_percent = config.get('stop_loss_percent', 5.0)  # % of entry price
         self.take_profit_percent = config.get('take_profit_percent', 15.0)  # % of entry price
-        self.max_daily_loss_percent = config.get('max_daily_loss_percent', 10.0)  # % of starting equity
+        self.max_daily_loss_percent = config.get('max_daily_loss_percent', 10.0)
+        
+        # Dynamic Leverage & Margin
+        self.base_leverage = config.get('leverage', 5)
+        self.current_leverage = self.base_leverage
+        self.margin_call_threshold = config.get('margin_call_threshold', 60.0)  # % loss before auto-liquidation
+        
         self.logger = logging.getLogger(__name__)
 
-        # Internal state
-        self.open_positions = {}  # symbol -> {entry_price, quantity, stop_loss, take_profit}
+        # --- GROWTH ENGINE STATE ---
+        self.open_positions = {}
         self.daily_pnl = 0.0
-        self.starting_equity = 10000.0  # Default starting equity, should be updated from account
+        self.starting_equity = config.get('starting_equity', 1.0)  # Start with $1
         self.current_equity = self.starting_equity
+        self.atr_values = []  # Store ATR for volatility calculation
+        
+        self.logger.info(f"GROWTH ENGINE STARTED: ${self.starting_equity} → Goal: Maximum Compound Growth")
+        
+    def calculate_dynamic_leverage(self, current_atr, historical_atr_mean):
+        """
+        Adjust leverage based on volatility to avoid liquidation.
+        High Volatility -> Lower Leverage (2x)
+        Low Volatility -> Higher Leverage (5x)
+        """
+        if historical_atr_mean == 0:
+            return self.base_leverage
+            
+        vol_ratio = current_atr / historical_atr_mean
+        
+        # If current volatility is 2x the historical average, drop leverage to 2x
+        if vol_ratio > 2.0:
+            self.current_leverage = 2.0
+        elif vol_ratio > 1.5:
+            self.current_leverage = 3.0
+        else:
+            self.current_leverage = self.base_leverage
+            
+        self.logger.info(f"Volatility Ratio: {vol_ratio:.2f} -> Setting Leverage to {self.current_leverage}x")
+        return self.current_leverage
+        
+    def calculate_atr(self, high, low, close, period=14):
+        """
+        Calculate Average True Range for dynamic grid sizing.
+        """
+        tr1 = high - low
+        tr2 = abs(high - close.shift(1))
+        tr3 = abs(low - close.shift(1))
+        tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+        atr = tr.rolling(window=period).mean().iloc[-1]
+        return atr
 
     def update_portfolio(self, data, symbol):
         """
@@ -138,17 +181,34 @@ class RiskManager:
 
         return exit_signal
 
-    def close_position(self, symbol, exit_price):
+    def check_margin_calls(self, data):
         """
-        Close a position and update PnL.
-        :param symbol: Trading symbol.
-        :param exit_price: Exit price.
+        Check all open positions for margin call risk (60% loss threshold).
+        Auto-liquidates if unrealized loss exceeds 60% of position value.
+        :param data: DataFrame with latest market prices.
         """
-        if symbol not in self.open_positions:
-            return
-
-        pos = self.open_positions[symbol]
-        # Calculate PnL for the position
+        positions_to_close = []
+        for symbol, pos in self.open_positions.items():
+            current_price = data['Close'].iloc[-1]
+            entry_price = pos['entry_price']
+            quantity = pos['quantity']
+            
+            # Calculate unrealized loss percentage
+            if pos['signal'] == 1:  # long
+                loss_pct = (entry_price - current_price) / entry_price * 100
+            else:  # short
+                loss_pct = (current_price - entry_price) / entry_price * 100
+            
+            # Check against margin call threshold
+            if loss_pct >= self.margin_call_threshold:
+                self.logger.warning(f"MARGIN CALL: {symbol} loss {loss_pct:.2f}% exceeds threshold. Liquidating.")
+                positions_to_close.append((symbol, current_price))
+        
+        # Close positions
+        for symbol, price in positions_to_close:
+            self.close_position(symbol, price)
+        
+        return len(positions_to_close) > 0        # Calculate PnL for the position
         if pos['signal'] == 1:  # long
             pnl = (exit_price - pos['entry_price']) * pos['quantity']
         else:  # short
@@ -158,3 +218,25 @@ class RiskManager:
         self.current_equity += pnl  # Simplistic: assume we can reinvest immediately
         del self.open_positions[symbol]
         self.logger.info(f"Closed position for {symbol} with PnL: {pnl:.2f}. Daily PnL: {self.daily_pnl:.2f}")
+    def close_position(self, symbol, exit_price):
+        """
+        Close a position and update PnL.
+        :param symbol: Trading symbol.
+        :param exit_price: Price at which the position is closed.
+        """
+        if symbol not in self.open_positions:
+            self.logger.warning(f"No open position for {symbol} to close.")
+            return
+
+        pos = self.open_positions[symbol]
+
+        # Calculate PnL for the position
+        if pos['signal'] == 1:  # long
+            pnl = (exit_price - pos['entry_price']) * pos['quantity']
+        else:  # short
+            pnl = (pos['entry_price'] - exit_price) * pos['quantity']
+
+        self.daily_pnl += pnl
+        self.current_equity += pnl
+        del self.open_positions[symbol]
+        self.logger.info(f"Closed position for {symbol} at {exit_price:.2f} with PnL: {pnl:.2f}. Equity: {self.current_equity:.2f}. Daily PnL: {self.daily_pnl:.2f}")

@@ -21,14 +21,27 @@ class PaperTrader:
         
         # Initialize real exchange if needed
         if self.broker == 'binance':
+            api_key = config.get('api_key', '')
+            api_secret = config.get('api_secret', '')
+            testnet = config.get('testnet', True)
             self.exchange = ccxt.binance({
                 'enableRateLimit': True,
+                'apiKey': api_key,
+                'secret': api_secret,
                 'options': {
                     'defaultType': 'future',  # Use futures market
                 }
             })
-        # In a more complete implementation, we would track positions and equity here.
-        # For now, we just log the orders.
+            if testnet:
+                # Set testnet URL for futures
+                self.exchange.urls['fapi'] = 'https://testnet.binancefuture.com/fapi'
+                self.logger.info("Binance Testnet Futures mode enabled.")
+            else:
+                self.logger.info("Binance Live mode enabled.")
+        
+        # Track paper trade equity
+        self.equity = 10000.0  # Default starting equity
+        self.positions = {}  # Track open positions
 
     def create_order(self, symbol, signal, data):
         """
@@ -40,7 +53,7 @@ class PaperTrader:
         """
         if signal == 0:
             return None
-
+        
         # Get the latest close price
         latest_close = data['Close'].iloc[-1]
         # Apply slippage: for buy, we assume we pay a bit more; for sell, we get a bit less.
@@ -48,18 +61,18 @@ class PaperTrader:
             price = latest_close * (1 + self.slippage_tolerance)
         else:  # sell
             price = latest_close * (1 - self.slippage_tolerance)
-
+        
         order = {
             'symbol': symbol,
             'signal': signal,  # 1 for buy, -1 for sell
             'price': price,
             'quantity': 0,  # To be set by risk manager
             'timestamp': datetime.now(),
-            'order_type': 'market',
+            'order_type': 'MARKET',
             'status': 'created'
         }
         return order
-
+    
     def execute_order(self, order):
         """
         Execute an order - either simulate (paper) or send to exchange (binance).
@@ -67,16 +80,16 @@ class PaperTrader:
         """
         if order is None:
             return
-
+        
         if self.broker == 'paper':
-            # In a paper trader, we simulate the fill and update our internal records.
+            # Simulate the fill and update our internal records.
             # For now, we just log the execution.
             self.logger.info(f"Executing paper order: {order}")
-            # Update order status
+            # Record fill
             order['status'] = 'filled'
             order['filled_price'] = order['price']
             order['filled_timestamp'] = datetime.now()
-            # In a more complete system, we would update a position tracker here.
+        
         elif self.broker == 'binance':
             # Execute real order on Binance futures
             try:
@@ -91,21 +104,30 @@ class PaperTrader:
                 # Determine order side
                 side = 'buy' if order['signal'] == 1 else 'sell'
                 
-                # Create market order
+                # For futures, we need to specify the position side or use reduceOnly for closing
                 params = {}
-                # For Binance futures, we might need to specify reduceOnly etc. for closing positions
-                # But for now, we'll keep it simple
+                # If closing a position, set reduceOnly to true
+                if order.get('closing', False):
+                    params['reduceOnly'] = True
                 
-                order_result = self.exchange.create_market_order(
+                # Execute the order
+                order_result = self.exchange.create_order(
                     symbol=ccxt_symbol,
-                    type='market',
+                    type='MARKET',
                     side=side,
                     amount=order['quantity'],
                     params=params
                 )
                 
-                self.logger.info(f"Executed real order on Binance: {order_result}")
-                # Update order with exchange result
+                # Update order and position tracking
+                self.positions[ccxt_symbol] = {
+                    'entry_price': order_result.get('average', order['price']),
+                    'quantity': order_result.get('amount', '0'),
+                    'timestamp': datetime.fromtimestamp(order_result['timestamp'] / 1000) if 'timestamp' in order_result else datetime.now()
+                }
+                
+                self.logger.info(f"Executed real Binance order: {order_result}")
+                # Update order info
                 order.update({
                     'status': 'filled',
                     'filled_price': order_result.get('average', order['price']),
@@ -114,7 +136,7 @@ class PaperTrader:
                     'exchange_info': order_result
                 })
             except Exception as e:
-                self.logger.exception(f"Error executing order on Binance: {e}")
+                self.logger.exception(f"Error executing Binance order: {e}")
                 order['status'] = 'failed'
                 order['error'] = str(e)
         else:

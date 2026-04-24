@@ -6,7 +6,7 @@ Handles Google account login and Gemini AI interaction
 
 import asyncio
 import os
-from patchright_base_agent import PatchrightBaseAgent
+from .patchright_base_agent import PatchrightBaseAgent
 
 
 class GoogleAgent(PatchrightBaseAgent):
@@ -22,7 +22,7 @@ class GoogleAgent(PatchrightBaseAgent):
         try:
             # First check if we're already on a Google page
             await self.page.goto(self.login_url, wait_until="domcontentloaded")
-            await self._human_delay(2000)
+            await self._human_delay(2000, 2000)
             
             # Look for signs we're logged in (profile icon, Gmail link, etc.)
             logged_in_indicators = [
@@ -42,7 +42,7 @@ class GoogleAgent(PatchrightBaseAgent):
             
             # If not on accounts page, check Gemini directly
             await self.page.goto(self.gemini_url, wait_until="domcontentloaded")
-            await self._human_delay(3000)
+            await self._human_delay(3000, 3000)
             
             # Check if Gemini chat input is available
             gemini_selectors = [
@@ -72,7 +72,7 @@ class GoogleAgent(PatchrightBaseAgent):
             raise Exception("Google/Gemini session invalid - manual re-seeding required")
 
         await self.page.goto(self.gemini_url, wait_until="domcontentloaded")
-        await self._human_delay(3000)
+        await self._human_delay(3000, 3000)
 
         # Find Gemini input area
         input_selectors = [
@@ -96,7 +96,7 @@ class GoogleAgent(PatchrightBaseAgent):
 
         # Submit prompt (usually Enter or send button)
         await self.page.keyboard.press("Enter")
-        await self._human_delay(3000)
+        await self._human_delay(3000, 3000)
         
         # Wait for response with stability detection
         return await self._wait_for_gemini_response()

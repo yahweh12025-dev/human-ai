@@ -3,7 +3,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-def analyze_logs(log_path="/home/ubuntu/human-ai/infrastructure/logs/master_log.json"):
+def analyze_logs(log_path="/home/yahwehatwork/human-ai/infrastructure/logs/master_log.json"):
     print(f"Analyzing logs from: {log_path}")
     errors = []
     

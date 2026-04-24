@@ -48,6 +48,7 @@ class SwarmHealthBot:
         self.application.add_handler(CommandHandler("prioritize", self.prioritize_command))
         self.application.add_handler(CommandHandler("stop", self.stop_command))
         self.application.add_handler(CommandHandler("export_logs", self.export_logs_command))
+        self.application.add_handler(CommandHandler("save", self.save_command))
     
     async def start_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Send a message when the command /start is issued."""
@@ -69,6 +70,7 @@ Available commands:
 /outcomes - Get recent SUCCESS entries from Outcome Journal
 /prioritize <task_id> - Prioritize a specific task in the queue
 /stop <team_id> - Stop a specific agent team
+/save - Save current swarm state to a file
 /help - Show this help message
         """
         await update.message.reply_text(help_text)
@@ -306,6 +308,70 @@ Use /agents to see current active teams.
             await update.message.reply_text("❌ Error exporting logs.")
 
     
+
+    async def save_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Save current swarm state to a file."""
+        try:
+            # Create a save file with current timestamp and state
+            from datetime import datetime
+            import json
+
+            save_data = {
+                "timestamp": datetime.now().isoformat(),
+                "bot_type": "SwarmHealthBot",
+                "status": "saved_via_command",
+                "master_log_exists": self.master_log_path.exists(),
+                "outcome_log_exists": self.outcome_log_path.exists(),
+                "todo_exists": self.todo_path.exists(),
+                "roadmap_exists": self.roadmap_path.exists()
+            }
+
+            # Add recent master log entries if available
+            if self.master_log_path.exists():
+                with open(self.master_log_path, "r") as f:
+                    master_log = json.load(f)
+                save_data["recent_master_log_entries"] = master_log[-5:] if len(master_log) >= 5 else master_log
+
+            # Add recent outcome log if available
+            if self.outcome_log_path.exists():
+                with open(self.outcome_log_path, "r") as f:
+                    content = f.read()
+                # Extract last SUCCESS section
+                if "## ✅ SUCCESS:" in content:
+                    success_sections = content.split("## ✅ SUCCESS:")
+                    if len(success_sections) > 1:
+                        save_data["last_success_entry"] = "## ✅ SUCCESS:" + success_sections[-1]
+
+            # Save to file
+            save_path = Path("/home/ubuntu/human-ai/swarm_state_save.json")
+            with open(save_path, "w") as f:
+                json.dump(save_data, f, indent=2)
+
+            await update.message.reply_text(
+                f"💾 *Swarm State Saved*
+
+"
+                f"Saved to: {save_path}\"
+"
+                f"Timestamp: {save_data['timestamp']}\"
+"
+                f"Master Log: {'Available' if save_data['master_log_exists'] else 'Missing'}\"
+"
+                f"Outcome Log: {'Available' if save_data['outcome_log_exists'] else 'Missing'}\"
+"
+                f"TODO: {'Available' if save_data['todo_exists'] else 'Missing'}\"
+"
+                f"Roadmap: {'Available' if save_data['roadmap_exists'] else 'Missing'}\"
+
+"
+                f"Use /status to see current swarm health.",
+                parse_mode='Markdown'
+            )
+
+        except Exception as e:
+            logger.error(f"Error in save command: {e}")
+            await update.message.reply_text("❌ Error saving swarm state. Please try again later.")
+
     def run(self):
         """Start the bot."""
         logger.info("Starting Swarm Health Bot...")

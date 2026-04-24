@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 """
 Trading Agent Main Module
 
@@ -7,11 +10,14 @@ signal generation, order execution, and risk management.
 import time
 import yaml
 import logging
+import os
 from pathlib import Path
 from data.fetcher import DataFetcher
 from strategies.sma_crossover import SMACrossover
 from execution.paper_trader import PaperTrader
 from risk.manager import RiskManager
+from controller import TradingController, ensure_bridge_dir
+from market_intel import MarketIntel
 
 class TradingAgent:
     def __init__(self, config_path='config.yaml'):
@@ -21,12 +27,24 @@ class TradingAgent:
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
+        # Override data settings from environment variables
+        data_config = self.config.get('data', {})
+        data_config['provider'] = os.getenv('DATA_PROVIDER', data_config.get('provider', 'binance'))
+        data_config['history_length'] = int(os.getenv('DATA_HISTORY_LENGTH', data_config.get('history_length', 200)))
+        data_config['timeframe'] = os.getenv('TIMEFRAME', data_config.get('timeframe', '1h'))
+        data_config['use_mock_data'] = os.getenv('USE_MOCK_DATA', str(data_config.get('use_mock_data', False))).lower() == 'true'
+        self.config['data'] = data_config
+        
+        # Initialize components
         self.data_fetcher = DataFetcher(self.config['data'])
-        self.strategy = SMACrossover(self.config['strategy']['sma_crossover'])
+        self.strategy = SMACrossover(self.config['futures']['sma_crossover'])
         self.executor = PaperTrader(self.config['execution'])
         self.risk_manager = RiskManager(self.config['risk'])
         
-        self.symbols = self.config['data']['default_symbols']
+        self.symbols = self.config['futures']['default_symbols']
+        self.controller = TradingController()
+        self.paused = False
+        ensure_bridge_dir()
         self.logger.info(f"Trading Agent initialized for symbols: {self.symbols}")
 
     def _load_config(self, config_path):
@@ -38,22 +56,34 @@ class TradingAgent:
     def _setup_logging(self):
         """Setup logging configuration."""
         log_level = self.config['general']['log_level']
+        log_file = os.path.join(os.path.dirname(__file__), 'logs', 'trading_agent.log')
         logging.basicConfig(
             level=getattr(logging, log_level),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler("logs/trading_agent.log"),
+                logging.FileHandler(log_file),
                 logging.StreamHandler()
             ]
         )
 
     def run(self):
-        """Main trading loop."""
+        """Main trading loop with synchronous controller integration."""
         self.logger.info("Starting trading agent main loop")
         try:
             while True:
+                # Poll for commands from the bridge (synchronous)
+                cmd = self.controller.check_for_commands()
+                if cmd:
+                    self.controller.apply_command(self, cmd)
+
+                if self.paused:
+                    self.logger.info("Trading paused. Waiting for resume command...")
+                    time.sleep(self.config['data']['fetch_interval'] * 2)
+                    continue
+
                 for symbol in self.symbols:
                     self._process_symbol(symbol)
+                
                 # Wait for the next iteration
                 time.sleep(self.config['data']['fetch_interval'])
         except KeyboardInterrupt:
@@ -71,6 +101,8 @@ class TradingAgent:
             if data is None or len(data) < 2:
                 self.logger.warning(f"Insufficient data for {symbol}")
                 return
+            # Generate trading signal
+            signal = self.strategy.generate_signal(data)
 
             # Update risk manager with latest data (for portfolio value, etc.)
             self.risk_manager.update_portfolio(data, symbol)
@@ -90,11 +122,19 @@ class TradingAgent:
                     self.executor.execute_order(order)
                     # Update risk manager (this will close the position and update PnL)
                     self.risk_manager.close_position(symbol, order['filled_price'])
-                return  # Don't open new positions if we're closing
+                # We don't return here; we continue to see if a new entry is immediately possible
+            else:
+                # If order creation failed, we still might want to try entering later
+                pass
+            
+            # Check if we can enter a new position
+            # This is only relevant if we're not currently in a position
+            if symbol not in self.risk_manager.open_positions:
+                # Proceed to signal generation
+                pass
+            else:
+                return # Already in a position, skip entry signal
 
-            # Generate trading signal for new entries
-            signal = self.strategy.generate_signal(data)
-            self.logger.debug(f"Signal for {symbol}: {signal}")
 
             # Check if we can trade based on risk limits
             if not self.risk_manager.can_trade(symbol):
