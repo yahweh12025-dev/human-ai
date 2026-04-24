@@ -8,7 +8,7 @@ import asyncio
 import os
 from datetime import datetime
 from core.agents.browser_base.google_agent import GoogleAgent
-from core.agents.browser_base.deepseek_browser_agent import DeepSeekBrowserAgent
+from core.agents.researcher.deepseek_browser_agent import DeepSeekBrowserAgent
 
 
 class TradingResearchAgent:

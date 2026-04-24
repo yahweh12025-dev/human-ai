@@ -27,7 +27,17 @@ class TradingBacktester:
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
-        self.strategy = GridStrategy(self.config['strategy']['grid'])
+        # Initialize strategy based on config
+        strategy_type = self.config.get('futures', {}).get('grid', {}).get('enabled', True) and 'grid' or 'sma_crossover'
+        if strategy_type == 'grid':
+            self.strategy = GridStrategy(self.config['futures']['grid'])
+        elif strategy_type == 'sma_crossover':
+            self.strategy = SMACrossover(self.config['futures']['sma_crossover'])
+        elif strategy_type == 'hybrid':
+            self.strategy = HybridScalpingStrategy(self.config['futures']['hybrid'])
+        else:
+            # Default to grid strategy
+            self.strategy = GridStrategy(self.config['futures']['grid'])
         self.risk_config = self.config.get('risk', {})
         self.initial_equity = self.risk_config.get('starting_equity', 10000.0)
         self.equity = self.initial_equity
