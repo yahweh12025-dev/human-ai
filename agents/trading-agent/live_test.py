@@ -27,7 +27,7 @@ logger = logging.getLogger("LiveTest")
 
 def mock_data_fetcher_fetch(symbol):
     """Create mock data for testing."""
-    dates = pd.date_range(end=datetime.now(), periods=50, freq='H')
+    dates = pd.date_range(end=datetime.now(), periods=50, freq='h')
     data = pd.DataFrame({
         'Open': np.random.normal(50000, 1000, 50),
         'High': np.random.normal(50500, 1000, 50),
