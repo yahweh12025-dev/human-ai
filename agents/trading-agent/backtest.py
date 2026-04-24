@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from trading_agent import TradingAgent
-from strategies.sma_crossover import SMACrossover
+from strategies.grid import GridStrategy
 from risk.manager import RiskManager
 
 logging.basicConfig(
@@ -25,7 +25,7 @@ class TradingBacktester:
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
-        self.strategy = SMACrossover(self.config['futures']['sma_crossover'])
+        self.strategy = GridStrategy(self.config['strategy']['grid'])
         self.risk_config = self.config.get('risk', {})
         self.initial_equity = self.risk_config.get('starting_equity', 10000.0)
         self.equity = self.initial_equity
@@ -34,6 +34,7 @@ class TradingBacktester:
 
     def load_historical_data(self, symbol, start_date, end_date, timeframe='1h'):
         import ccxt
+
         try:
             exchange = ccxt.binance({'enableRateLimit': True, 'options': {'defaultType': 'future'}})
             ohlcv = exchange.fetch_ohlcv(
@@ -42,19 +43,24 @@ class TradingBacktester:
                 since=int(start_date.timestamp() * 1000),
                 limit=1000
             )
-            if not ohlcv: return None
+
+            if not ohlcv: 
+                return None
+
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
             df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
             df.set_index('timestamp', inplace=True)
             df = df[(df.index >= start_date) & (df.index <= end_date)]
             return df
+
         except Exception as e:
-            self.logger.error(f"Error loading {symbol}: {e}")
+            self.logger.warning(f"Error loading {symbol}: {e}")
             return None
 
     def run_backtest(self, symbol, start_date, end_date, timeframe='1h'):
         data = self.load_historical_data(symbol, start_date, end_date, timeframe)
-        if data is None or len(data) < 50: return None
+        if data is None or len(data) < 50: 
+            return None
 
         risk_manager = RiskManager(self.risk_config)
         risk_manager.current_equity = self.initial_equity
@@ -76,6 +82,7 @@ class TradingBacktester:
                         'entry_time': open_position['entry_time'],
                         'exit_time': current_slice.index[-1],
                         'symbol': symbol,
+            'timeframe': timeframe,
                         'signal': open_position['signal'],
                         'entry_price': open_position['entry_price'],
                         'exit_price': current_price,
@@ -92,8 +99,11 @@ class TradingBacktester:
                     quantity = risk_manager.calculate_position_size(symbol, current_price, stop_loss_price)
                     if quantity > 0:
                         open_position = {
-                            'signal': signal, 'entry_price': current_price, 'quantity': quantity,
-                            'entry_time': current_slice.index[-1], 'stop_loss': stop_loss_price
+                            'signal': signal, 
+                            'entry_price': current_price, 
+                            'quantity': quantity,
+                            'entry_time': current_slice.index[-1], 
+                            'stop_loss': stop_loss_price
                         }
 
             equity_curve.append({'timestamp': current_slice.index[-1], 'equity': self.equity})
@@ -115,9 +125,9 @@ class TradingBacktester:
                 'duration_mins': (data.index[-1] - open_position['entry_time']).total_seconds() / 60
             })
 
-        return self._calculate_metrics(symbol, start_date, end_date, equity_curve)
+        return self._calculate_metrics(symbol, start_date, end_date, equity_curve, timeframe)
 
-    def _calculate_metrics(self, symbol, start, end, curve):
+    def _calculate_metrics(self, symbol, start, end, curve, timeframe):
         if not self.trades: return None
         df_equity = pd.DataFrame(curve).set_index('timestamp')
         returns = df_equity['equity'].pct_change().dropna()
@@ -129,12 +139,17 @@ class TradingBacktester:
         wins = trades_df[trades_df['pnl'] > 0]
         losses = trades_df[trades_df['pnl'] <= 0]
         return {
-            'symbol': symbol, 'start_date': str(start), 'end_date': str(end),
-            'initial_equity': self.initial_equity, 'final_equity': self.equity,
+            'symbol': symbol, 
+            'start_date': str(start), 
+            'end_date': str(end),
+            'initial_equity': self.initial_equity, 
+            'final_equity': self.equity,
             'total_return_pct': (self.equity - self.initial_equity) / self.initial_equity * 100,
-            'max_drawdown_pct': max_drawdown * 100, 'sharpe_ratio': sharpe,
+            'max_drawdown_pct': max_drawdown * 100, 
+            'sharpe_ratio': sharpe,
             'win_rate': (len(wins) / len(trades_df) * 100) if len(trades_df) > 0 else 0,
-            'num_trades': len(trades_df), 'avg_win': wins['pnl'].mean() if not wins.empty else 0,
+            'num_trades': len(trades_df), 
+            'avg_win': wins['pnl'].mean() if not wins.empty else 0,
             'avg_loss': losses['pnl'].mean() if not losses.empty else 0,
             'profit_factor': abs(wins['pnl'].sum() / losses['pnl'].sum()) if not losses.empty and losses['pnl'].sum() != 0 else float('inf'),
             'trades': self.trades
@@ -150,19 +165,17 @@ def main():
     backtester = TradingBacktester(config_path)
     scenarios = [
         # Grid strategy focus: lower value coins with higher leverage potential
-        {'symbol': 'DOGE/USDT', 'timeframe': '1h', 'days': 60},
-        {'symbol': 'XRP/USDT', 'timeframe': '1h', 'days': 60},
-        {'symbol': 'ADA/USDT', 'timeframe': '1h', 'days': 60},
-        {'symbol': 'SOL/USDT', 'timeframe': '1h', 'days': 60},
-        {'symbol': 'MATIC/USDT', 'timeframe': '1h', 'days': 60},
-        {'symbol': 'DOT/USDT', 'timeframe': '1h', 'days': 60},
+        {'symbol': 'DOGE/USDT', 'timeframe': '1h', 'days': 30},  # Reduced time for faster testing
+        {'symbol': 'XRP/USDT', 'timeframe': '1h', 'days': 30},
+        {'symbol': 'ADA/USDT', 'timeframe': '1h', 'days': 30},
+        {'symbol': 'SOL/USDT', 'timeframe': '1h', 'days': 30},
+        {'symbol': 'DOT/USDT', 'timeframe': '1h', 'days': 30},
         # Test different timeframes for grid sensitivity
-        {'symbol': 'DOGE/USDT', 'timeframe': '15m', 'days': 30},
-        {'symbol': 'XRP/USDT', 'timeframe': '15m', 'days': 30},
-        {'symbol': 'ADA/USDT', 'timeframe': '15m', 'days': 30},
-        # Also test the majors for comparison with different leverage
-        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 90},
-        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 90},
+        {'symbol': 'DOGE/USDT', 'timeframe': '15m', 'days': 15},
+        {'symbol': 'XRP/USDT', 'timeframe': '15m', 'days': 15},
+        # Also test the majors for comparison
+        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 60},
+        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 60},
     ]
     all_results = []
     end = datetime.utcnow()

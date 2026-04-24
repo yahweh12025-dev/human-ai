@@ -1,0 +1,15 @@
+{
+  "BTC_USDT": {
+    "price": 27500.91,
+    "timestamp": "2026-04-23T19:27:18:000Z"
+  },
+  "ETH_USDT": {
+    "price": 1824.73,
+    "timestamp": "2026-04-23T19:26:15:000Z"
+  },
+  "XRP_USDT": {
+    "price": 0.4972,
+    "timestamp": "2026-04-23T19:26:20:000Z"
+  },
+  "LAST_CRAWLED_AT": "2026-04-23T19:26:23.123Z"
+}

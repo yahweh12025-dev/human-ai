@@ -1,0 +1,89 @@
+[
+  {
+    "symbol": "BTC/USDT",
+    "start_date": "2026-04-10 10:48:58.388320",
+    "end_date": "2026-04-24 10:48:58.388320",
+    "initial_equity": 10000.0,
+    "final_equity": 9802.496223779248,
+    "total_return_pct": -1.975037762207521,
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": 0,
+    "win_rate": 0.0,
+    "num_trades": 1,
+    "avg_win": 0,
+    "avg_loss": -197.50377622075194,
+    "profit_factor": 0.0,
+    "trades": [
+      {
+        "entry_time": "2026-04-15 13:00:00",
+        "exit_time": "2026-04-24 10:00:00",
+        "symbol": "BTC/USDT",
+        "signal": -1,
+        "entry_price": 74015.8,
+        "exit_price": 77670.4,
+        "quantity": 0.05404251524674449,
+        "pnl": -197.50377622075194,
+        "equity": 9802.496223779248,
+        "duration_mins": 12780.0
+      }
+    ]
+  },
+  {
+    "symbol": "BTC/USDT",
+    "start_date": "2026-03-25 10:48:58.388320",
+    "end_date": "2026-04-24 10:48:58.388320",
+    "initial_equity": 10000.0,
+    "final_equity": 9802.496223779248,
+    "total_return_pct": -1.975037762207521,
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": 0,
+    "win_rate": 0.0,
+    "num_trades": 1,
+    "avg_win": 0,
+    "avg_loss": -197.50377622075194,
+    "profit_factor": 0.0,
+    "trades": [
+      {
+        "entry_time": "2026-04-15 13:00:00",
+        "exit_time": "2026-04-24 10:00:00",
+        "symbol": "BTC/USDT",
+        "signal": -1,
+        "entry_price": 74015.8,
+        "exit_price": 77670.4,
+        "quantity": 0.05404251524674449,
+        "pnl": -197.50377622075194,
+        "equity": 9802.496223779248,
+        "duration_mins": 12780.0
+      }
+    ]
+  },
+  {
+    "symbol": "ETH/USDT",
+    "start_date": "2026-04-10 10:48:58.388320",
+    "end_date": "2026-04-24 10:48:58.388320",
+    "initial_equity": 10000.0,
+    "final_equity": 9802.496223779248,
+    "total_return_pct": -1.975037762207521,
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": 0,
+    "win_rate": 0.0,
+    "num_trades": 1,
+    "avg_win": 0,
+    "avg_loss": -197.50377622075194,
+    "profit_factor": 0.0,
+    "trades": [
+      {
+        "entry_time": "2026-04-15 13:00:00",
+        "exit_time": "2026-04-24 10:00:00",
+        "symbol": "BTC/USDT",
+        "signal": -1,
+        "entry_price": 74015.8,
+        "exit_price": 77670.4,
+        "quantity": 0.05404251524674449,
+        "pnl": -197.50377622075194,
+        "equity": 9802.496223779248,
+        "duration_mins": 12780.0
+      }
+    ]
+  }
+]
