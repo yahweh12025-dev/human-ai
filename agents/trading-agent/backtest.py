@@ -149,17 +149,20 @@ def main():
     config_path = 'config.yaml'
     backtester = TradingBacktester(config_path)
     scenarios = [
-        # Extended time periods for different market conditions
-        {'symbol': 'BTC/USDT', 'timeframe': '1h', 'days': 90},   # 3 months
-        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 180},  # 6 months
-        {'symbol': 'ETH/USDT', 'timeframe': '1h', 'days': 90},   # 3 months
-        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 180},  # 6 months
-        # Additional symbols
+        # Grid strategy focus: lower value coins with higher leverage potential
+        {'symbol': 'DOGE/USDT', 'timeframe': '1h', 'days': 60},
+        {'symbol': 'XRP/USDT', 'timeframe': '1h', 'days': 60},
         {'symbol': 'ADA/USDT', 'timeframe': '1h', 'days': 60},
         {'symbol': 'SOL/USDT', 'timeframe': '1h', 'days': 60},
-        # Different timeframes for same symbols
-        {'symbol': 'BTC/USDT', 'timeframe': '15m', 'days': 30},
-        {'symbol': 'ETH/USDT', 'timeframe': '15m', 'days': 30},
+        {'symbol': 'MATIC/USDT', 'timeframe': '1h', 'days': 60},
+        {'symbol': 'DOT/USDT', 'timeframe': '1h', 'days': 60},
+        # Test different timeframes for grid sensitivity
+        {'symbol': 'DOGE/USDT', 'timeframe': '15m', 'days': 30},
+        {'symbol': 'XRP/USDT', 'timeframe': '15m', 'days': 30},
+        {'symbol': 'ADA/USDT', 'timeframe': '15m', 'days': 30},
+        # Also test the majors for comparison with different leverage
+        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 90},
+        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 90},
     ]
     all_results = []
     end = datetime.utcnow()

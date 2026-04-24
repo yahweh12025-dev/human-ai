@@ -13,7 +13,7 @@ import logging
 import os
 from pathlib import Path
 from data.fetcher import DataFetcher
-from strategies.sma_crossover import SMACrossover
+from strategies.grid import GridStrategy
 from execution.paper_trader import PaperTrader
 from risk.manager import RiskManager
 from controller import TradingController, ensure_bridge_dir
@@ -37,7 +37,7 @@ class TradingAgent:
         
         # Initialize components
         self.data_fetcher = DataFetcher(self.config['data'])
-        self.strategy = SMACrossover(self.config['futures']['sma_crossover'])
+        self.strategy = GridStrategy(self.config['futures']['grid'])
         self.executor = PaperTrader(self.config['execution'])
         self.risk_manager = RiskManager(self.config['risk'])
         
