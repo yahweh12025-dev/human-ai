@@ -22,6 +22,8 @@ logger = logging.getLogger("Backtester")
 
 class TradingBacktester:
     def __init__(self, config_path='config.yaml'):
+        if not os.path.isabs(config_path):
+            config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), config_path)
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
@@ -164,18 +166,30 @@ def main():
     config_path = 'config.yaml'
     backtester = TradingBacktester(config_path)
     scenarios = [
-        # Grid strategy focus: lower value coins with higher leverage potential
-        {'symbol': 'DOGE/USDT', 'timeframe': '1h', 'days': 30},  # Reduced time for faster testing
-        {'symbol': 'XRP/USDT', 'timeframe': '1h', 'days': 30},
-        {'symbol': 'ADA/USDT', 'timeframe': '1h', 'days': 30},
-        {'symbol': 'SOL/USDT', 'timeframe': '1h', 'days': 30},
-        {'symbol': 'DOT/USDT', 'timeframe': '1h', 'days': 30},
-        # Test different timeframes for grid sensitivity
-        {'symbol': 'DOGE/USDT', 'timeframe': '15m', 'days': 15},
-        {'symbol': 'XRP/USDT', 'timeframe': '15m', 'days': 15},
-        # Also test the majors for comparison
-        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 60},
-        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 60},
+        # 5m timeframe for very short-term scalping
+        {'symbol': 'DOGE/USDT', 'timeframe': '5m', 'days': 3},
+        {'symbol': 'XRP/USDT', 'timeframe': '5m', 'days': 3},
+        {'symbol': 'ADA/USDT', 'timeframe': '5m', 'days': 3},
+        {'symbol': 'SOL/USDT', 'timeframe': '5m', 'days': 3},
+        {'symbol': 'DOT/USDT', 'timeframe': '5m', 'days': 3},
+        # 15m timeframe for short-term scalping
+        {'symbol': 'DOGE/USDT', 'timeframe': '15m', 'days': 7},
+        {'symbol': 'XRP/USDT', 'timeframe': '15m', 'days': 7},
+        {'symbol': 'ADA/USDT', 'timeframe': '15m', 'days': 7},
+        {'symbol': 'SOL/USDT', 'timeframe': '15m', 'days': 7},
+        {'symbol': 'DOT/USDT', 'timeframe': '15m', 'days': 7},
+        # 1h timeframe for intraday scalping
+        {'symbol': 'DOGE/USDT', 'timeframe': '1h', 'days': 14},
+        {'symbol': 'XRP/USDT', 'timeframe': '1h', 'days': 14},
+        {'symbol': 'ADA/USDT', 'timeframe': '1h', 'days': 14},
+        {'symbol': 'SOL/USDT', 'timeframe': '1h', 'days': 14},
+        {'symbol': 'DOT/USDT', 'timeframe': '1h', 'days': 14},
+        # 4h timeframe for swing scalping (holdings for a few hours)
+        {'symbol': 'BTC/USDT', 'timeframe': '4h', 'days': 30},
+        {'symbol': 'ETH/USDT', 'timeframe': '4h', 'days': 30},
+        # Also include some majors on 1h for comparison
+        {'symbol': 'BTC/USDT', 'timeframe': '1h', 'days': 14},
+        {'symbol': 'ETH/USDT', 'timeframe': '1h', 'days': 14},
     ]
     all_results = []
     end = datetime.utcnow()
@@ -185,7 +199,7 @@ def main():
         res = backtester.run_backtest(sc['symbol'], start, end, sc['timeframe'])
         if res:
             all_results.append(res)
-            print(f"Result: Return {res['total_return_pct']:.2f}%, Max DD {res['max_drawdown_pct']:.2f}%")
+            print(f'Result: Return {res["total_return_pct"]:.2f}%, Max DD {res["max_drawdown_pct"]:.2f}%')
     if all_results:
         output_dir = 'backtest_logs'
         os.makedirs(output_dir, exist_ok=True)
