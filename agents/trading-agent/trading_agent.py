@@ -71,10 +71,16 @@ class TradingAgent:
         self.logger.info("Starting trading agent main loop")
         try:
             while True:
-                # Poll for commands from the bridge (synchronous)
+                # Poll for commands from the bridge
                 cmd = self.controller.check_for_commands()
                 if cmd:
                     self.controller.apply_command(self, cmd)
+
+                # HARD STOP: Termination at $10.00
+                if self.risk_manager.current_equity >= 10.0:
+                    self.logger.info(f"🎯 ULTIMATE TARGET REACHED: Equity ${self.risk_manager.current_equity:.2f}. Terminating for total profit protection.")
+                    self.generate_final_report()
+                    break
 
                 if self.paused:
                     self.logger.info("Trading paused. Waiting for resume command...")
@@ -84,7 +90,6 @@ class TradingAgent:
                 for symbol in self.symbols:
                     self._process_symbol(symbol)
                 
-                # Wait for the next iteration
                 time.sleep(self.config['data']['fetch_interval'])
         except KeyboardInterrupt:
             self.logger.info("Trading agent stopped by user")

@@ -12,6 +12,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from trading_agent import TradingAgent
 from strategies.grid import GridStrategy
+from strategies.sma_crossover import SMACrossover
+from strategies.hybrid_scalper import HybridScalpingStrategy
 from risk.manager import RiskManager
 
 logging.basicConfig(
@@ -21,23 +23,25 @@ logging.basicConfig(
 logger = logging.getLogger("Backtester")
 
 class TradingBacktester:
-    def __init__(self, config_path='config.yaml'):
-        if not os.path.isabs(config_path):
-            config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), config_path)
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
-        
-        # Initialize strategy based on config
-        strategy_type = self.config.get('futures', {}).get('grid', {}).get('enabled', True) and 'grid' or 'sma_crossover'
-        if strategy_type == 'grid':
+    def __init__(self, config=None, config_path='config.yaml'):
+        if config is None:
+            if not os.path.isabs(config_path):
+                config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), config_path)
+            with open(config_path, 'r') as f:
+                self.config = yaml.safe_load(f)
+        else:
+            self.config = config
+
+        # Initialize strategy based on active_strategy in futures
+        active_strategy = self.config.get('futures', {}).get('active_strategy', 'grid')
+        if active_strategy == 'grid':
             self.strategy = GridStrategy(self.config['futures']['grid'])
-        elif strategy_type == 'sma_crossover':
+        elif active_strategy == 'sma_crossover':
             self.strategy = SMACrossover(self.config['futures']['sma_crossover'])
-        elif strategy_type == 'hybrid':
+        elif active_strategy == 'hybrid':
             self.strategy = HybridScalpingStrategy(self.config['futures']['hybrid'])
         else:
-            # Default to grid strategy
-            self.strategy = GridStrategy(self.config['futures']['grid'])
+            raise ValueError(f"Unknown active_strategy: {active_strategy}")
         self.risk_config = self.config.get('risk', {})
         self.initial_equity = self.risk_config.get('starting_equity', 10000.0)
         self.equity = self.initial_equity
@@ -174,7 +178,7 @@ class TradingBacktester:
 
 def main():
     config_path = 'config.yaml'
-    backtester = TradingBacktester(config_path)
+    backtester = TradingBacktester(config_path=config_path)
     scenarios = [
         # 5m timeframe for very short-term scalping
         {'symbol': 'DOGE/USDT', 'timeframe': '5m', 'days': 3},

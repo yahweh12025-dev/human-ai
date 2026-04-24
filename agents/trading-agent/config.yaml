@@ -12,6 +12,7 @@ futures:
   - BTC/USDT
   - ETH/USDT
   enabled: true
+  active_strategy: hybrid
   grid:
     atr_period: 14
     grid_multiplier: 1.5
