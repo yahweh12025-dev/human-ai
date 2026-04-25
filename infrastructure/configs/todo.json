@@ -23,63 +23,42 @@
     "Integrate Omni-Router into core Agent Swarm loop (AntFarm Orchestrator)",
     "Outcome Scribe: Automatic roadmap/readme updates triggered by Outcome Journal SUCCESS entries",
     "Autonomous Skill Mining Loop: Discovers and deploys new AgentSkills from trusted sources",
-    "Omni-Model LLM Router expanded to 4 models (Gemini, DeepSeek, Perplexity, Claude)",
     "kilo-code-wrapper-1: Implement KiloCodeAgent wrapper for high-fidelity refactoring",
     "openclaw-team-spawner-1: Implement parallel task execution using OpenClaw Agent Teams (v6 with Outcome Integration)",
     "Build browser-based Notebook LM agent for document synthesis",
     "Obsidian vault integration implemented with ObsidianAgent skill for long-term swarm memory and linked knowledge management",
-    "Update HybridLLMRouter to handle Omni-Model routing (DeepSeek, Gemini, Perplexity, Claude)",
-    "Integrate Omni-Router into the core Agent Swarm loop",
     "Researcher Evolution: Playwright browsing + YouTube synthesis"
   ],
-  "in_progress": [
-    "SECURITY_LOCKDOWN"
-  ],
+  "in_progress": [],
   "pending": [
     {
-      "id": "swarm-optimizer-skill-1",
-      "content": "Create a Swarm Optimizer skill to analyze development patterns and suggest swarm improvements",
-      "status": "pending",
-      "notes": []
-    },
-    {
-      "id": "swarm-health-bot-1",
-      "content": "Implement Telegram bot for swarm health monitoring and steering",
+      "id": "kilo-code-verify",
+      "content": "Kilo-Code Integration: Verify read/write/edit delegation and establish high-fidelity implementation protocol",
       "status": "in_progress",
       "notes": [
         {
-          "timestamp": "2026-04-19T00:16:00SAST",
-          "action": "created_bot_structure",
-          "description": "Created basic Swarm Health Bot structure with command handlers for /status, /agents, /logs, /outcomes, and /help",
-          "files_created": [
-            "/home/ubuntu/human-ai/agents/swarm_health_bot/swarm_health_bot.py"
-          ]
-        },
-        {
-          "timestamp": "2026-04-19T00:39:00SAST",
-          "action": "implemented_telegram_integration",
-          "description": "Implemented actual Telegram API integration for Swarm Health Bot, added error handling and logging, tested basic command responsiveness",
-          "files_updated": [
-            "/home/ubuntu/human-ai/agents/swarm_health_bot/swarm_health_bot.py"
-          ]
-        },
-        {
-          "timestamp": "2026-04-19T01:09:00SAST",
-          "action": "added_steering_commands",
-          "description": "Added steering command framework for /prioritize and /stop with basic implementation and error handling",
-          "files_updated": [
-            "/home/ubuntu/human-ai/agents/swarm_health_bot/swarm_health_bot.py"
-          ]
-        },
-        {
-          "timestamp": "2026-04-19T02:50:00SAST",
-          "action": "prepared_team_spawner_integration",
-          "description": "Prepared Swarm Health Bot for Team Spawner integration to enable real-time agent team listings in /agents command",
-          "files_updated": [
-            "/home/ubuntu/human-ai/agents/swarm_health_bot/swarm_health_bot.py"
-          ]
+          "timestamp": "2026-04-25T13:52:00UTC",
+          "action": "prioritized",
+          "reason": "Primary Phase 3 priority for autonomous code implementation"
         }
       ]
+    },
+    {
+      "id": "memory-bridge-pipeline-1",
+      "content": "Create Memory Bridge synchronization pipeline to distill wisdom and key decisions from Hermes daily memory into the Swarm's global MEMORY.md",
+      "status": "in_progress",
+      "notes": [
+        {
+          "timestamp": "2026-04-25T13:52:00UTC",
+          "action": "prioritized",
+          "reason": "Critical for Phase 3: enables swarm-wide knowledge retention and decision distillation"
+        }
+      ]
+    },
+    {
+      "id": "hybrid-llm-routing",
+      "content": "Implement rate-aware Hybrid LLM Routing (Gemini for reasoning, DeepSeek for volume)",
+      "status": "pending"
     },
     {
       "id": "dify-graphify-bridge-1",
@@ -87,18 +66,23 @@
       "status": "pending"
     },
     {
-      "id": "sec-audit-1",
-      "content": "Complete full repository secret scrub and verify token rotation",
-      "status": "in_progress"
-    },
-    {
-      "id": "skill-exp-1",
-      "content": "Develop advanced synthesis skills for ResearcherAgent",
+      "id": "worker-stab-1",
+      "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
       "status": "pending"
     },
     {
-      "id": "worker-stab-1",
-      "content": "Eliminate browser timeouts in NativeWorker via dynamic polling",
+      "id": "document-intelligence-suite",
+      "content": "Document Intelligence Suite: Develop ConverterAgent for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD) and OCRAgent for visual text extraction",
+      "status": "pending"
+    },
+    {
+      "id": "notebook-lm-agent",
+      "content": "Notebook LM Specialist Agent: Create browser-based agent for document upload, summarization, comparison, and insight extraction using Google Notebook LM",
+      "status": "pending"
+    },
+    {
+      "id": "omni-model-intelligence-layer",
+      "content": "Omni-Model Intelligence Layer: Integrate Perplexity (Search), Claude (Reasoning), Mistral (logic checks) with LangChain orchestration",
       "status": "pending"
     },
     {
@@ -112,74 +96,54 @@
       "status": "pending"
     },
     {
-      "id": "vector-memory-1",
-      "content": "Vector Memory Integration: Index repo Markdown and logs into a local ChromaDB",
-      "status": "pending"
-    },
-    {
-      "id": "env-request-manager-1",
-      "content": "Env-Request Manager: Controlled process for requesting .env keys",
-      "status": "pending"
-    },
-    {
       "id": "export-chat-impl-1",
       "content": "Implement /export-chat command to export current conversation to master_log.json",
       "status": "pending",
       "notes": []
     },
     {
-      "id": "manus-integration",
-      "content": "Integrate Manus AI browser agent for complex tasks (SSO login, credit limit management)",
-      "status": "pending",
-      "notes": []
-    },
-    {
-      "id": "self-improvement-deploy",
-      "content": "Universal Self-Improvement: Deploy self_improvement skill",
-      "status": "pending",
-      "notes": []
-    },
-    {
-      "id": "memory-core-caching",
-      "content": "Memory Core: Implement Hermes-style context caching",
-      "status": "pending",
-      "notes": []
-    },
-    {
-      "id": "kilo-code-verify",
-      "content": "Kilo-Code Integration: Verify read/write/edit delegation",
-      "status": "pending",
-      "notes": []
-    },
-    {
       "id": "n8n-mcp-integration",
-      "content": "n8n-mcp Integration: Implement deterministic workflows",
-      "status": "pending",
-      "notes": []
+      "content": "n8n-mcp Integration: Implement deterministic workflows for repetitive tasks",
+      "status": "pending"
+    },
+    {
+      "id": "deferred-swarm-health-bot",
+      "content": "Swarm Health Bot Integration [DEFERRED to Phase 5]: Implement Telegram bot for swarm health monitoring and steering",
+      "status": "deferred",
+      "notes": [
+        {
+          "timestamp": "2026-04-25T13:52:00UTC",
+          "action": "deferred",
+          "reason": "Pushed to Phase 5 (Swarm Bot Testing) - not required for current development"
+        }
+      ]
+    },
+    {
+      "id": "deferred-security-audit",
+      "content": "Security Audit & Lockdown [DEFERRED to Phase 5]: Complete full repository secret scrub and verify token rotation",
+      "status": "deferred",
+      "notes": [
+        {
+          "timestamp": "2026-04-25T13:52:00UTC",
+          "action": "deferred",
+          "reason": "Pushed to Phase 5 final cleanup - not blocking current development"
+        }
+      ]
     },
     {
       "id": "omni-channel-intel",
       "content": "Omni-Channel Intelligence: Implement API/Browser rotation",
-      "status": "pending",
-      "notes": []
+      "status": "pending"
     },
     {
       "id": "dify-knowledge-hub",
       "content": "Dify Knowledge Hub: RAG integration",
-      "status": "pending",
-      "notes": []
+      "status": "pending"
     },
     {
-      "id": "chat-history-supabase",
-      "content": "Phase 4: Categorize and push past AI chat history/data to Supabase",
-      "status": "pending",
-      "notes": []
-    },
-    {
-      "id": "dashboard-gui-vercel",
-      "content": "Phase 4: Build Dashboard GUI for agent/swarm control (Vercel connected)",
-      "status": "pending",
-      "notes": []
+      "id": "swarm-command-center",
+      "content": "Swarm Command Center: Develop Vercel-hosted GUI (Frontend) and FastAPI Bridge (Backend)",
+      "status": "pending"
     }
   ]
 }

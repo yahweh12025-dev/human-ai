@@ -11,6 +11,13 @@ from pathlib import Path
 from playwright.async_api import async_playwright
 from dotenv import load_dotenv
 
+# Import Cloudflare Bypass Manager
+try:
+    from ..utils.cloudflare_bypass import CloudflareBypassManager
+except ImportError:
+    # Fallback if utils is not available (e.g., when running standalone)
+    CloudflareBypassManager = None
+
 load_dotenv()
 
 class PerplexityBrowserAgent:
@@ -57,6 +64,33 @@ class PerplexityBrowserAgent:
             locale='en-US',
             timezone_id='America/New_York',
         )
+        
+        # Apply Cloudflare bypass if available
+        if CloudflareBypassManager is not None:
+            try:
+                bypass_manager = CloudflareBypassManager()
+                target_url = "https://www.perplexity.ai"
+                cf_cookies, cf_ua = bypass_manager.get_cloudflare_cookies(target_url)
+                if cf_cookies:
+                    print(f"☁️ Injecting Cloudflare cookies for {target_url}")
+                    # Convert cookies to the format expected by add_cookies
+                    cookie_list = []
+                    for name, value in cf_cookies.items():
+                        cookie_list.append({
+                            "name": name,
+                            "value": value,
+                            "domain": ".perplexity.ai",  # Note: leading dot for subdomain
+                            "path": "/"
+                        })
+                    await self.context.add_cookies(cookie_list)
+                    if cf_ua and cf_ua != self.user_agent:
+                        print(f"🔄 User agent from bypass service: {cf_ua}")
+                        print(f"   Current user agent: {self.user_agent}")
+                        print(f"   Consider updating the user agent for better bypass effectiveness.")
+                else:
+                    print(f"⚠️ No Cloudflare cookies received for {target_url}")
+            except Exception as e:
+                print(f"⚠️ Failed to apply Cloudflare bypass: {e}")
 
         # Get the first page (or create new)
         pages = self.context.pages

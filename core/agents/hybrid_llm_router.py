@@ -13,6 +13,7 @@ from core.agents.researcher.researcher_agent import HumanAIResearcher
 from core.agents.gemini.gemini_agent import GeminiBrowserAgent
 from core.agents.perplexity.perplexity_agent import PerplexityBrowserAgent
 from core.agents.claude.claude_agent import ClaudeBrowserAgent
+from core.utils.cloudflare_bypass import CloudflareBypassManager
 
 
 class HybridLLMRouter:
