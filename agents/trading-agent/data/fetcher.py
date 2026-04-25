@@ -2,10 +2,12 @@
 Data Fetcher Module
 
 Responsible for fetching market data from various providers.
-Currently supports CCXT (for Binance futures).
+Currently supports CCXT (Binance) and Alpaca Markets.
 """
+
 import pandas as pd
 import ccxt
+import alpaca_trade_api as tradeapi
 from datetime import datetime, timedelta
 import numpy as np
 import logging
@@ -13,119 +15,112 @@ import logging
 class DataFetcher:
     def __init__(self, config):
         """
-        Initialize the data fetcher.
-        :param config: Dictionary containing data configuration.
+        Initialize the data fetcher with dual-source support.
         """
+        self.config = config
         self.provider = config.get('provider', 'binance')
         self.history_length = config.get('history_length', 200)
-        self.timeframe = config.get('timeframe', '1h')  # Default to 1-hour candles
+        self.timeframe = config.get('timeframe', '1h')
         self.logger = logging.getLogger(__name__)
         
-        # PROXY SUPPORT: Load from config
+        # Proxy Support
         self.proxies = config.get('proxies', {})
         
-        # Initialize exchange
+        # Initialize Binance
+        self.exchange = None
         if self.provider == 'binance':
-            self.exchange = ccxt.binance({
-                'enableRateLimit': True,
-                'options': {
-                    'defaultType': 'future',
-                },
-            })
-            # Apply proxy if configured
-            if self.proxies:
-                self.exchange.proxies = self.proxies
+            try:
+                # Get API keys from execution config if available
+                execution_config = config.get('execution', {})
+                api_key = execution_config.get('api_key')
+                api_secret = execution_config.get('api_secret')
+                exchange_id = execution_config.get('exchange', 'binance')
+                # Determine if testnet: either exchange name contains 'testnet' or futures.testnet is true
+                testnet = ('testnet' in exchange_id.lower()) or \
+                          config.get('futures', {}).get('testnet', False)
+                
+                self.exchange = ccxt.binance({
+                    'apiKey': api_key,
+                    'secret': api_secret,
+                    'enableRateLimit': True,
+                    'options': {'defaultType': 'future'},
+                })
+                if testnet:
+                    self.exchange.set_sandbox_mode(True)
+                    self.logger.info("Binance testnet mode enabled.")
+                else:
+                    self.logger.info("Binance live mode enabled.")
+            except Exception as e:
+                self.logger.error(f"Binance Init Error: {e}")
+
+        # Initialize Alpaca Fallback
+        self.alpaca = None
+        # Check for alpaca_enabled or just use keys if provided in config
+        if config.get('alpaca_enabled', False) or config.get('alpaca_trading', {}):
+            try:
+                # Prefer alpaca_trading keys from config
+                alpaca_cfg = config.get('alpaca_trading', {})
+                api_key = alpaca_cfg.get('api_key') or config.get('alpaca_key')
+                api_secret = alpaca_cfg.get('api_secret') or config.get('alpaca_secret')
+                base_url = alpaca_cfg.get('base_url', config.get('alpaca_base_url', 'https://paper-api.alpaca.markets')).replace('/v2', '')
+                
+                self.alpaca = tradeapi.REST(
+                    api_key,
+                    api_secret,
+                    base_url=base_url
+                )
+                self.logger.info("Alpaca Fallback initialized successfully.")
+            except Exception as e:
+                self.logger.error(f"Alpaca Init Error: {e}")
 
     def fetch_latest_data(self, symbol):
         """
-        Fetch the latest historical data for a symbol.
-        :param symbol: Trading symbol (e.g., 'BTC/USDT', 'ETH/USDT')
-        :return: pandas DataFrame with OHLCV data or None if error.
+        Fetch latest data with an automatic fallback to Alpaca.
         """
-        # Only proceed to real API since we removed mock data support
         try:
-            if self.provider == 'binance':
+            if self.provider == 'binance' and self.exchange:
                 return self._fetch_binance_futures(symbol)
+            elif self.alpaca:
+                return self._fetch_alpaca_data(symbol)
             else:
-                # Fallback to yfinance for other providers (for backwards compatibility)
-                return self._fetch_yfinance(symbol)
+                raise ConnectionError("No active data providers available.")
         except Exception as e:
-            self.logger.exception(f"Error fetching data for {symbol}: {e}")
-            return None
+            self.logger.error(f"Fetch failed for {symbol}: {e}")
+            # Final attempt: Alpaca
+            if self.alpaca:
+                return self._fetch_alpaca_data(symbol)
+            raise ConnectionError(f"CRITICAL: All data sources failed for {symbol}")
 
     def _fetch_binance_futures(self, symbol):
         """
-        Fetch futures data from Binance using CCXT.
-        :param symbol: Trading symbol in CCXT format (e.g., 'BTC/USDT')
-        :return: pandas DataFrame with OHLCV data
+        Fetch data from Binance via CCXT.
         """
+        ohlcv = self.exchange.fetch_ohlcv(symbol, self.timeframe, limit=self.history_length)
+        df = pd.DataFrame(ohlcv, columns=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
+        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+        df.set_index('timestamp', inplace=True)
+        return df
+
+    def _fetch_alpaca_data(self, symbol):
+        """
+        Fetch data from Alpaca API.
+        """
+        # Map Binance symbol (BTC/USDT) to Alpaca (BTC/USD)
+        alpaca_symbol = symbol.replace('USDT', 'USD').replace('/', '').upper()
         try:
-            # Convert symbol to CCXT format if needed (e.g., BTC-USD -> BTC/USDT)
-            ccxt_symbol = symbol.replace('-', '/')
-            if '/' not in ccxt_symbol and 'USDT' not in ccxt_symbol:
-                # Assume it's a crypto pair and add USDT
-                if ccxt_symbol.endswith('USD'):
-                    ccxt_symbol = ccxt_symbol[:-3] + '/USDT'
-                elif len(ccxt_symbol) >= 3:  # Add USDT to the end
-                    ccxt_symbol = ccxt_symbol + '/USDT'
+            # Fetch bars using Alpaca SDK
+            # Ensure timeframe is compatible with Alpaca (e.g., '1Hour', '1Day', '1Min')
+            alpaca_tf = self.timeframe.replace('h', 'Hour').replace('m', 'Min').replace('d', 'Day')
             
-            # Fetch OHLCV data
-            ohlcv = self.exchange.fetch_ohlcv(
-                ccxt_symbol, 
-                timeframe=self.timeframe,
-                limit=self.history_length
-            )
-            
-            if not ohlcv:
-                self.logger.warning(f"No OHLCV data returned for symbol {ccxt_symbol}")
+            bars = self.alpaca.get_crypto_bars(alpaca_symbol, alpaca_tf).df
+            if bars is None or bars.empty:
                 return None
-                
-            # Convert to pandas DataFrame
-            df = pd.DataFrame(ohlcv, columns=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
-            df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-            df.set_index('timestamp', inplace=True)
             
-            self.logger.debug(f"Fetched {len(df)} rows for {ccxt_symbol} from Binance futures")
+            # Normalize to Binance format
+            # Alpaca's get_crypto_bars().df has a DatetimeIndex and columns: open, high, low, close, volume, trade_count
+            df = bars[['open', 'high', 'low', 'close', 'volume']].copy()
+            df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
             return df
-            
         except Exception as e:
-            self.logger.exception(f"Error fetching Binance futures data for {symbol}: {e}")
-            return None
-
-    def _fetch_yfinance(self, symbol):
-        """
-        Fetch data from Yahoo Finance (fallback for non-crypto or testing).
-        :param symbol: Trading symbol (e.g., 'BTC-USD', 'AAPL')
-        :return: pandas DataFrame with OHLCV data or None if error.
-        """
-        try:
-            # Calculate the period needed: we want enough data for indicators.
-            # We'll fetch a bit more than history_length to ensure we have enough after any potential NaNs.
-            period_days = max(self.history_length, 100)  # at least 100 days
-            end_date = datetime.now()
-            start_date = end_date - timedelta(days=period_days)
-
-            # Fetch data from yfinance
-            import yfinance as yf
-            ticker = yf.Ticker(symbol)
-            data = ticker.history(start=start_date, end=end_date, interval='1d')
-            if data.empty:
-                self.logger.warning(f"No data returned for symbol {symbol}")
-                return None
-
-            # Keep only the last `history_length` rows for consistency
-            if len(data) > self.history_length:
-                data = data.tail(self.history_length)
-
-            # Ensure we have the expected columns
-            expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-            if not all(col in data.columns for col in expected_cols):
-                self.logger.warning(f"Unexpected columns in data for {symbol}: {data.columns}")
-                return None
-
-            self.logger.debug(f"Fetched {len(data)} rows for {symbol} from yfinance")
-            return data
-
-        except Exception as e:
-            self.logger.exception(f"Error fetching yfinance data for {symbol}: {e}")
+            self.logger.error(f"Alpaca fetch failed for {symbol} ({alpaca_symbol}): {e}")
             return None

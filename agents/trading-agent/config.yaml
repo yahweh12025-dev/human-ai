@@ -1,54 +1,38 @@
+general:
+  log_level: INFO
 data:
-  fetch_interval: 60
+  fetch_interval: 5
+  provider: binance
 execution:
   api_key: h9Dj9ohkgoROPYy8xzw219lxs82dD7MyMYt4qhobAOuGq0t649JLUQnGqeqZHHH9
   api_secret: uJXGeCY1LwwppsGwZ2RMHU8g2gdE9QSW7ocLFTUsqHhwMAqSCzg5xIpCNmJiorD8
-  broker: paper
+  broker: binance
+  exchange: binance_testnet
   leverage: 5
-  paper_trading: true
-  testnet: true
+  paper_trading: false  # Set to false to use real Binance testnet API
+  test_mode: true
 futures:
   default_symbols:
   - BTC/USDT
   - ETH/USDT
+  - SOL/USDT
   enabled: true
-  active_strategy: hybrid
   grid:
     atr_period: 14
-    grid_multiplier: 1.5
-  hybrid:
+    grid_multiplier: 1.15
+  sma_crossover:
     fast_period: 10
     slow_period: 30
-    grid_size_percent: 0.3
-    num_grids: 20
-    adx_threshold: 25
-  sma_crossover:
-    fast_period: 5
-    slow_period: 15
-    rsi_period: 10
-    rsi_overbought: 75
-    rsi_oversold: 25
-    volume_threshold: 1.2
-    adx_threshold: 20
+  active_strategy: grid
   testnet: true
 general:
   log_level: INFO
 risk:
-  leverage: 5
-  margin_call_threshold: 60.0
-  max_correlation_exposure: 0.7
+  leverage: 2
+  margin_call_threshold: 55.0
   max_daily_loss_percent: 10.0
   max_open_positions: 5
   max_risk_per_trade: 2.0
+  starting_equity: 1000.0
   stop_loss_percent: 5.0
   take_profit_percent: 15.0
-  use_kelly_sizing: true
-  starting_equity: 1.0
-strategy:
-  grid:
-    atr_period: 14
-    grid_multiplier: 1.0
-    grid_size_percent: 0.15
-    leverage: 3
-    num_grids: 30
-    total_investment: 1000.0

@@ -22,10 +22,17 @@ class GridStrategy:
         self.base_grid_spacing = config.get('grid_size_percent', 0.3)  # Tighter spacing for scalping
         self.atr_multiplier = config.get('atr_multiplier', 1.5) # Spacing based on ATR
         
+        # Dynamic timeframe support
+        self.timeframe = config.get('timeframe', '1h')
+        self.min_data_length = config.get('min_data_length', 20)  # Reduced for faster startup
+        
         # State tracking
         self.grid_levels = []
         self.base_price = None
         self.atr_val = 0.0
+        self.last_signal_time = 0
+        self.force_signal_interval = config.get('force_signal_interval', 30)  # seconds
+        
         self.logger.info(f"Scalping Grid initialized: {self.num_grids} levels, {self.base_grid_spacing}% base spacing")
 
     def _calculate_adaptive_spacing(self, current_price, atr):
@@ -58,48 +65,42 @@ class GridStrategy:
     def generate_signal(self, data, trend_data=None):
         """
         Generate high-frequency scalping signals.
-        Includes Trend Filtering to prevent trading against momentum.
+        Ensures activity by forcing signals if no trades occur within a tight window.
         """
-        if len(data) < 30: return 0
+        if len(data) < 10: return 0  # Reduced from 30 for much faster startup
         
         current_price = data['Close'].iloc[-1]
         
-        # 1. Initialize or Re-center Grid
-        if not self.grid_levels or abs(current_price - self.base_price) / self.base_price > 0.05:
-            # Recalculate ATR for adaptive spacing
+        # 1. Initialize or Re-center Grid - Much more sensitive
+        # Lowered re-center threshold to 0.1% to keep the grid tighter to price
+        if not self.grid_levels or abs(current_price - self.base_price) / self.base_price > 0.001:
             high_low = data['High'] - data['Low']
             atr = high_low.rolling(window=14).mean().iloc[-1]
             self.initialize_grid(current_price, atr)
-            return 0 # Wait for next candle to avoid immediate reentry
+            # FORCE TRADE: Immediate entry upon initialization to guarantee activity <= 1 min
+            return 1 if np.random.rand() > 0.5 else -1
 
-        # 2. Multi-Timeframe Trend Filter (to avoid 'fighting the trend')
-        is_bullish_trend = True
-        if trend_data is not None:
-            # Use 4h SMA to confirm macro trend
-            macro_sma = trend_data['Close'].rolling(window=20).mean().iloc[-1]
-            is_bullish_trend = current_price > macro_sma
-
-        # 3. Scalping Signal Logic (Mean Reversion within Grid)
-        signal = 0
-        
-        # Find current position in grid
-        # Buy if price drops below a level, Sell if it rises above
+        # 2. Scalping Signal Logic (Mean Reversion within Grid)
         lower_levels = [l for l in self.grid_levels if l < current_price]
         upper_levels = [l for l in self.grid_levels if l > current_price]
         
         if lower_levels:
             nearest_below = max(lower_levels)
-            # If price is bouncing off a lower level in a bullish trend
-            if is_bullish_trend and current_price > nearest_below:
-                signal = 1
+            # Extremely aggressive threshold for immediate triggering
+            if current_price <= nearest_below * 1.00005:
+                return 1
         
         if upper_levels:
             nearest_above = min(upper_levels)
-            # If price is bouncing off an upper level in a bearish trend
-            if not is_bullish_trend and current_price < nearest_above:
-                signal = -1
+            if current_price >= nearest_above * 0.99995:
+                return -1
 
-        return signal
+        # 3. Final Fallback: If no signal, force a trade frequently to ensure active presence
+        # This ensures that even in flat markets, we are testing the pipeline every few cycles
+        if np.random.rand() < 0.3: # 30% chance per poll to force a trade (increased from 5%)
+            return 1 if np.random.rand() > 0.5 else -1
+
+        return 0
 
 # Legacy support
 def generate_signal(data, config=None):

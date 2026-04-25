@@ -1,0 +1,15 @@
+2026/04/23-19:30:16.295 8824e Reusing MANIFEST /home/yahwehatwork/human-ai/browser_profiles/deepseek/Default/IndexedDB/https_chat.deepseek.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/04/23-19:30:16.295 8824e Recovering log #10
+2026/04/23-19:30:16.295 8824e Reusing old log /home/yahwehatwork/human-ai/browser_profiles/deepseek/Default/IndexedDB/https_chat.deepseek.com_0.indexeddb.leveldb/000010.log 
+2026/04/23-19:30:16.295 8824e Delete type=2 #8
+2026/04/23-19:30:16.300 88251 Level-0 table #15: started
+2026/04/23-19:30:16.305 88251 Level-0 table #15: 1600 bytes OK
+2026/04/23-19:30:16.308 88251 Delete type=0 #10
+2026/04/23-19:30:16.308 8824e Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x05\x00\x00\xc8 \x00l\x00o\x00c\x00a\x00l\x00-\x00f\x00o\x00r\x00a\x00g\x00e\x00-\x00d\x00e\x00t\x00e\x00c\x00t\x00-\x00b\x00l\x00o\x00b\x00-\x00s\x00u\x00p\x00p\x00o\x00r\x00t' @ 457 : 1
+2026/04/23-19:30:16.309 8824e Compacting 1@0 + 1@1 files
+2026/04/23-19:30:16.312 8824e Generated table #16@0: 55 keys, 915 bytes
+2026/04/23-19:30:16.312 8824e Compacted 1@0 + 1@1 files => 915 bytes
+2026/04/23-19:30:16.315 8824e compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/23-19:30:16.315 8824e Delete type=2 #15
+2026/04/23-19:30:16.315 88251 Manual compaction at level-0 from '\x00\x05\x00\x00\xc8 \x00l\x00o\x00c\x00a\x00l\x00-\x00f\x00o\x00r\x00a\x00g\x00e\x00-\x00d\x00e\x00t\x00e\x00c\x00t\x00-\x00b\x00l\x00o\x00b\x00-\x00s\x00u\x00p\x00p\x00o\x00r\x00t' @ 457 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/04/23-19:30:58.855 8824e Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)
