@@ -23,7 +23,7 @@ import random
 import traceback
 
 # Local import for the browser agent
-from .deepseek_browser_agent import DeepSeekBrowserAgent
+from .claude_browser_agent import ClaudeBrowserAgent
 
 # Load environment variables
 load_dotenv()
@@ -44,19 +44,22 @@ class HumanAIResearcher:
     async def start_browser(self):
         if not self.browser_agent:
             # Initialize the real DeepSeekBrowserAgent
-            self.browser_agent = DeepSeekBrowserAgent()
+            self.browser_agent = ClaudeBrowserAgent()
             await self.browser_agent.start_browser()
             print("🌐 Browser Agent initialized.")
             
     async def call_llm_via_browser(self, prompt: str) -> str:
-        # Route prompt to DeepSeek Browser Agent
-        print(f"🌐 Routing prompt to DeepSeek Browser: {prompt[:50]}...")
+        # Route prompt to Claude Browser Agent (Botasaurus)
+        print(f"🌐 Routing prompt to Claude Browser: {prompt[:50]}...")
         await self.start_browser()
         # Ensure login (uses cookies if available)
-        await self.browser_agent.login()
-        
+        # Since the Botasaurus agent's login is synchronous, we run it in a thread
+        loop = asyncio.get_event_loop()
+        logged_in = await loop.run_in_executor(None, self.browser_agent.login)
+        if not logged_in:
+            raise Exception("Claude session invalid. Please manually re-seed the session.")
         # Get the response from the LLM via the browser
-        response = await self.browser_agent.prompt(prompt)
+        response = await loop.run_in_executor(None, self.browser_agent.prompt, prompt)
         return response
 
     async def research_with_notebooklm(self, topic: str, documents: List[Path], queries: List[str]) -> List[Dict[str, Any]]:
