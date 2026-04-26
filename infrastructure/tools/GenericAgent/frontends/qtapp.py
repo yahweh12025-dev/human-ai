@@ -1674,9 +1674,8 @@ class ChatPanel(QWidget):
 
 def main():
     # High-DPI support
-    QApplication.[REDACTED_TOKEN](
-        Qt.[REDACTED_TOKEN].PassThrough
-    )
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
     app.setApplicationName("GenericAgent")

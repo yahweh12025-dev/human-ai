@@ -178,7 +178,7 @@ class TestMiniMaxAutoMakeUrl(unittest.TestCase):
         self.assertEqual(url, 'https://api.minimax.io/v1/chat/completions')
 
 
-class [REDACTED_TOKEN](unittest.TestCase):
+class TestThinkTag(unittest.TestCase):
     """Test <think> tag handling in NativeOAISession."""
 
     def test_think_tag_extracted_in_native_oai(self):
@@ -249,7 +249,7 @@ class TestMiniMaxLLMSessionConfig(unittest.TestCase):
         self.assertEqual(session.model, 'MiniMax-M2.7-highspeed')
 
 
-class [REDACTED_TOKEN](unittest.TestCase):
+class TestNativeToolClientThinkTag(unittest.TestCase):
     """Test <think> tag handling in NativeToolClient.chat."""
 
     def test_native_tool_client_think_tag(self):

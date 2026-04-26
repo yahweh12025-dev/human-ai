@@ -1,1 +1,0 @@
-# Dr. Claw Worker Agent Package
