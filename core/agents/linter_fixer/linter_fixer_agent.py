@@ -16,7 +16,7 @@ from pathlib import Path
 import time
 
 # --- Configuration ---
-PROJECT_ROOT = Path("/home/ubuntu/human-ai")
+PROJECT_ROOT = Path("/home/yahwehatwork/human-ai")
 SCAN_INTERVAL = 300  # 5 minutes
 LOG_FILE = PROJECT_ROOT / "linter_fixer.log"
 

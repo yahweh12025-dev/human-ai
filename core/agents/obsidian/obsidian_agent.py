@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 
 class ObsidianAgent:
-    def __init__(self, vault_path: str = "/home/ubuntu/human-ai/swarm_vault"):
+    def __init__(self, vault_path: str = "/home/yahwehatwork/human-ai/swarm_vault"):
         self.vault_path = Path(vault_path)
         self.vault_path.mkdir(parents=True, exist_ok=True)
 

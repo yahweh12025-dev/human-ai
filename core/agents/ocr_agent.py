@@ -1,46 +1,63 @@
+#!/usr/bin/env python3
+"""
+Human AI: OCRAgent - v1.0
+Specialized agent for Optical Character Recognition (OCR).
+Extracts text from images (PNG, JPG, JPEG) to provide structured text for the swarm.
+"""
 
 import os
-from typing import Dict, Any
+from typing import Optional
 from pathlib import Path
 
-class OCRAgent:
-    """
-    OCRAgent: Extracts visual text and layout analysis from screenshots.
-    Used as a pre-processing layer for the Researcher and Developer agents.
-    """
-    def __init__(self, output_dir: str = "/home/ubuntu/human-ai/outputs/ocr"):
-        self.output_dir = Path(output_dir)
-        self.output_dir.mkdir(parents=True, exist_ok=True)
+# Third-party library imports
+try:
+    from PIL import Image
+    import pytesseract
+except ImportError:
+    # These will be installed via the venv
+    pass
 
-    async def extract_text(self, image_path: str) -> Dict[str, Any]:
+class OCRAgent:
+    def __init__(self, output_dir: str = "/home/yahwehatwork/human-ai/docs/converted"):
+        self.output_dir = output_dir
+        os.makedirs(self.output_dir, exist_ok=True)
+
+    def extract_text(self, image_path: str) -> Optional[str]:
         """
-        Extract text from a given image path.
+        Performs OCR on the provided image file and returns the extracted text.
         """
-        print(f"👁️ [OCRAgent] Extracting text from {image_path}...")
-        
+        if not os.path.exists(image_path):
+            print(f"❌ Error: Image {image_path} not found.")
+            return None
+
+        ext = Path(image_path).suffix.lower()
+        if ext not in ['.png', '.jpg', '.jpeg', '.bmp', '.tiff']:
+            print(f"⚠️ Unsupported image format {ext}. Attempting OCR anyway...")
+
+        filename = Path(image_path).stem
+        target_path = os.path.join(self.output_dir, f"{filename}_ocr.txt")
+
         try:
-            # Mock implementation using Gemini Vision via the Hybrid Router in reality.
-            # For this standalone class, we define the interface.
-            # In full integration, this would call: 
-            # result = await hybrid_router.route_task(f"Extract all text from this image: {image_path}", context="vision")
+            # Use Tesseract for OCR
+            text = pytesseract.image_to_string(Image.open(image_path))
             
-            extracted_text = f"[Simulated OCR Result for {image_path}]\nDetected text: 'Example extracted content from image'"
-            
-            # Save the result
-            out_filename = Path(image_path).stem + "_ocr.txt"
-            out_path = self.output_dir / out_filename
-            
-            with open(out_path, 'w') as f:
-                f.write(extracted_text)
+            if text and text.strip():
+                with open(target_path, 'w', encoding='utf-8') as f:
+                    f.write(text)
+                return text
+            else:
+                print(f"⚠️ No text extracted from {image_path}")
+                return None
                 
-            return {
-                "status": "success",
-                "text": extracted_text,
-                "output_path": str(out_path)
-            }
         except Exception as e:
-            print(f"❌ [OCRAgent] OCR failed: {e}")
-            return {"status": "error", "error": str(e)}
+            print(f"❌ OCR error for {image_path}: {e}")
+            return None
 
     async def close(self):
+        """Placeholder for async cleanup."""
         pass
+
+if __name__ == "__main__":
+    # Basic internal test
+    agent = OCRAgent()
+    print("OCRAgent initialized. Ready to process images.")

@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 class SwarmHealthMonitor:
-    def __init__(self, base_dir="/home/ubuntu/human-ai"):
+    def __init__(self, base_dir="/home/yahwehatwork/human-ai"):
         self.base_dir = Path(base_dir)
 
     def get_gateway_status(self):

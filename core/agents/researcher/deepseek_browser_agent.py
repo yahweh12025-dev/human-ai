@@ -37,7 +37,7 @@ class DeepSeekBrowserAgent:
         self.user_agent = self._get_realistic_user_agent()
         
         # Use WORK_DIR if provided, else default to project root
-        work_dir = os.getenv('WORK_DIR', '/home/ubuntu/human-ai')
+        work_dir = os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai')
         # Separate profile for DeepSeek identity (as recommended)
         self.session_dir = os.path.join(work_dir, 'browser_profiles', 'deepseek')
         self.is_initialized = False

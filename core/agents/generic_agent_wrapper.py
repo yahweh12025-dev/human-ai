@@ -7,7 +7,7 @@ class GenericAgentWrapper:
     """
     Wrapper for the GenericAgent framework to allow integration into the Swarm Orchestrator.
     """
-    def __init__(self, generic_agent_path: str = "/home/ubuntu/human-ai/infrastructure/tools/GenericAgent"):
+    def __init__(self, generic_agent_path: str = "/home/yahwehatwork/human-ai/infrastructure/tools/GenericAgent"):
         self.path = generic_agent_path
         # Use ga.py as the primary entry point if main.py is not available
         self.entry_point = os.path.join(self.path, "ga.py")

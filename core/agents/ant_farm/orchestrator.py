@@ -7,20 +7,23 @@ Integrates Dify Knowledge Hub, Docker Sandbox, and Master Logging for high-fidel
 import asyncio
 import logging
 from typing import Dict, Any
-from utils.dify_brain import DifyBrain
-from utils.sandbox_runner import SandboxRunner
-from agents.researcher.researcher_agent import HumanAIResearcher
-from agents.ant_farm.writer.writer_agent import WriterAgent
-from agents.critic.critic_agent import CriticAgent as ReviewerAgent
-from agents.ant_farm.developer.developer_agent import DeveloperAgent
-from agents.dr_claw_worker.dr_claw_worker_agent import NativeWorker as DrClawWorker
-from agents.generic_agent_wrapper import GenericAgentWrapper
-from agents.converter_agent import ConverterAgent
-from agents.ocr_agent import OCRAgent
-from agents.hybrid_llm_router import HybridLLMRouter
+from core.utils.dify_brain import DifyBrain
+from core.utils.local_executor import LocalSafeExecutor
+from core.agents.researcher.researcher_agent import HumanAIResearcher
+from core.agents.ant_farm.writer.writer_agent import WriterAgent
+from core.agents.critic.critic_agent import CriticAgent as ReviewerAgent
+from core.native_worker import NativeWorker
+from core.agents.generic_agent_wrapper import GenericAgentWrapper
+from core.agents.converter_agent import ConverterAgent
+from core.agents.ocr_agent import OCRAgent
+from core.agents.hybrid_llm_router import HybridLLMRouter
+from core.utils.storage_orchestrator import StorageOrchestrator
+from core.utils.mcp_bridge import MCPBridge
+from core.agents.notebook_lm_agent import NotebookLMAgent
+from core.utils.storage_orchestrator import StorageOrchestrator
 
 
-from utils.master_log import SwarmMasterLog
+from core.utils.master_log import SwarmMasterLog
 
 class AntFarmOrchestrator:
     def __init__(self):
@@ -33,14 +36,16 @@ class AntFarmOrchestrator:
         
         # Infrastructure
         self.brain = DifyBrain()
-        self.sandbox = SandboxRunner()
+        self.sandbox = LocalSafeExecutor()
         
         # The Squad
         self.researcher = HumanAIResearcher()
-        self.developer = DrClawWorker() # Primary implementation engine
+        self.developer = NativeWorker() # Primary implementation engine
         self.reviewer = ReviewerAgent()
         self.generic_spawner = GenericAgentWrapper()
         self.router = HybridLLMRouter()
+        self.notebook_lm = NotebookLMAgent()
+        self.mcp_bridge = MCPBridge()
 
     async def execute_pipeline(self, task: Dict[str, Any]):
         # Handle both dictionary tasks and string tasks (for backward compatibility)
@@ -58,9 +63,19 @@ class AntFarmOrchestrator:
         self.master_log.log_event("AntFarm", "PIPELINE_START", f"Starting pipeline for: {goal}")
         self.console_logger.info(f"🚀 Starting High-Fidelity Pipeline for: {goal}")
         
-        # 1. RETRIEVE: Check the Brain
+        # 1. RETRIEVE: Check the Brain and Supabase
         try:
+            # First, check the Brain (Dify)
             brain_context = self.brain.query(goal)
+            
+            # Second, check the Supabase Storage for previously verified findings
+            storage = StorageOrchestrator()
+            supabase_findings = storage.retrieve_findings(goal)
+            
+            if supabase_findings:
+                findings_text = "\n".join([f"- {f['content']}" for f in supabase_findings])
+                brain_context += f"\n\nPreviously Verified Findings from Supabase:\n{findings_text}"
+            
             self.master_log.log_event("AntFarm", "BRAIN_QUERY", f"Context retrieved for: {goal}")
             self.console_logger.info(f"🧠 Brain Context: {brain_context[:100]}...")
         except Exception as e:
@@ -84,25 +99,37 @@ class AntFarmOrchestrator:
             converter = ConverterAgent()
             ocr_agent = OCRAgent()
             
-            # For simplicity in this implementation, we'll process the goal as a file reference
-            # In a full implementation, this would extract file paths from the goal/context
-            processed_context = f"Document/image processing initiated for: {goal}. "
+            # Extract actual file paths from the goal or context
+            # Look for paths ending in supported extensions
+            file_paths = re.findall(r'(/home/yahwehatwork/human-ai/\S+?\.(?:pdf|docx|pptx|json|png|jpg|jpeg|bmp|tiff))', goal + " " + context)
             
-            # Simulate processing - in reality we would identify actual files
-            if ".pdf" in goal.lower() or ".doc" in goal.lower() or ".pptx" in goal.lower():
-                processed_context += "ConverterAgent would extract text from documents. "
-            if ".png" in goal.lower() or ".jpg" in goal.lower() or ".jpeg" in goal.lower():
-                processed_context += "OCRAgent would extract text from images. "
+            processed_context = ""
+            for path in file_paths:
+                self.console_logger.info(f"Processing file: {path}")
+                ext = Path(path).suffix.lower()
                 
+                if ext in ['.pdf', '.docx', '.pptx', '.json']:
+                    result_path = converter.convert(path)
+                    if result_path:
+                        with open(result_path, 'r', encoding='utf-8') as f:
+                            processed_context += f"\n--- Content from {path} ---\n{f.read()}\n"
+                elif ext in ['.png', '.jpg', '.jpeg', '.bmp', '.tiff']:
+                    text = ocr_agent.extract_text(path)
+                    if text:
+                        processed_context += f"\n--- OCR Content from {path} ---\n{text}\n"
+            
             # Clean up
             await converter.close()
             await ocr_agent.close()
+            
+            if not processed_context:
+                processed_context = "No extractable content found in provided files. "
             
             # Now use this processed context for research
             if "No answer found" in brain_context or len(brain_context) < 50:
                 self.console_logger.info("🔍 Brain insufficient after preprocessing. Triggering Omni-Routed Research...")
                 self.master_log.log_event("AntFarm", "RESEARCH_START", f"Omni-routed research triggered for: {goal}")
-                route_result = await self.router.route_task(f"Research and provide a detailed summary of: {goal}")
+                route_result = await self.router.route_task(f"Research and provide a detailed summary of: {goal}\n\nRelevant Context:\n{processed_context}")
                 research_results = route_result.get('response', 'No results found')
                 context = processed_context + " " + research_results
             else:
@@ -129,9 +156,14 @@ class AntFarmOrchestrator:
             if impl_result['status'] == 'spawned':
                 return {"status": "delegated", "agent_pid": impl_result['pid'], "message": "Task delegated to specialized GenericAgent"}
         else:
-            self.console_logger.info("🛠️ Implementing solution via Dr. Claw...")
+            self.console_logger.info("🛠️ Implementing solution via NativeWorker (Autonomous Mode)...")
             self.master_log.log_event("AntFarm", "IMPLEMENTATION_START", f"Implementing solution for: {goal}")
-            impl_result = await self.developer.execute_task(f"Implement the following based on context: {context}. Goal: {goal}")
+            
+            # Trigger High-Fidelity Implementation (Generate + Apply via Kilo-Code)
+            impl_result = await self.developer.execute_task(
+                f"Implement the following based on context: {context}. Goal: {goal}",
+                apply_changes=True
+            )
         
         if impl_result['status'] != 'success':
             self.master_log.log_event("AntFarm", "IMPLEMENTATION_FAILURE", impl_result.get('error', 'Unknown error'))
@@ -153,15 +185,23 @@ class AntFarmOrchestrator:
         self.console_logger.info(f"✅ Verified! Output: {stdout[:100]}")
         self.master_log.log_event("AntFarm", "VERIFICATION_SUCCESS", f"Code verified for: {goal}")
         
-        # 5. REMEMBER: Index the verified solution back into the Brain
+        # 5. REMEMBER: Index the verified solution back into the Brain and Graph
         try:
             self.brain.index_finding(
                 content=f"Goal: {goal}\\nSolution: {code}\\nVerification: {stdout}",
                 metadata={"title": f"Verified Solution: {goal}"}
             )
             self.master_log.log_event("AntFarm", "BRAIN_INDEX", f"Verified solution indexed for: {goal}")
+            
+            # Sync to Graphify for relational intelligence
+            from core.utils.graphify_bridge import GraphifyBridge
+            bridge = GraphifyBridge()
+            if bridge.enabled:
+                bridge.bridge_dify_to_graph(goal)
+                self.master_log.log_event("AntFarm", "GRAPH_SYNC", f"Relational data synced to Graphify for: {goal}")
+                
         except Exception as e:
-            self.console_logger.error(f"⚠️ Brain indexing failed: {e}")
+            self.console_logger.error(f"⚠️ Brain/Graph Indexing failed: {e}")
             self.master_log.log_event("AntFarm", "BRAIN_INDEX_ERROR", str(e))
         
         return {

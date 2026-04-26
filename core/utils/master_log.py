@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 class SwarmMasterLog:
-    def __init__(self, log_path="/home/ubuntu/human-ai/master_log.json"):
+    def __init__(self, log_path="/home/yahwehatwork/human-ai/master_log.json"):
         self.log_path = Path(log_path)
         self.log_file = self.log_path
 

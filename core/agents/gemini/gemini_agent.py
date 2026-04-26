@@ -24,7 +24,7 @@ class GeminiBrowserAgent:
         if use_chrome_profile:
             self.session_dir = os.path.expanduser('~/.config/google-chrome')
         else:
-            self.session_dir = os.path.join(os.getenv('WORK_DIR', '/home/ubuntu/human-ai'), 'session', 'browser_profile_gemini')
+            self.session_dir = os.path.join(os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai'), 'session', 'browser_profile_gemini')
         self.is_initialized = False
 
     async def start_browser(self):

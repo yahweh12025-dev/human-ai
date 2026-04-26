@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 # Import the shared browser agent
 import sys
-sys.path.append('/home/ubuntu/human-ai')
-from agents.researcher.researcher_agent import DeepSeekBrowserAgent
+sys.path.append('/home/yahwehatwork/human-ai')
+from core.agents.researcher.researcher_agent import DeepSeekBrowserAgent
 
-load_dotenv('/home/ubuntu/human-ai/.env')
+load_dotenv('/home/yahwehatwork/human-ai/.env')
 
 class CriticAgent:
     def __init__(self):
@@ -41,7 +41,7 @@ class CriticAgent:
             await self.browser_agent.start_browser()
             
             # Ensure login (uses cookies if available)
-            session_path = os.getenv("SESSION_PATH", "/home/ubuntu/human-ai/session/state.json")
+            session_path = os.getenv("SESSION_PATH", "/home/yahwehatwork/human-ai/session/state.json")
             if not os.path.exists(session_path):
                 await self.browser_agent.login()
             

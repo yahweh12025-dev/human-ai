@@ -27,7 +27,7 @@ class DeepSeekBrowserAgentEnhanced:
         self.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         
         # Use WORK_DIR if provided, else default to project root
-        work_dir = os.getenv('WORK_DIR', '/home/ubuntu/human-ai')
+        work_dir = os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai')
         self.session_dir = os.path.join(work_dir, 'session', 'browser_profile_enhanced')
         self.is_initialized = False
         self.keep_browser_open = keep_browser_open
@@ -147,7 +147,7 @@ class DeepSeekBrowserAgentEnhanced:
                     print("🚨 CAPTCHA/Human Verification detected!")
                     if self.alert_on_captcha:
                         # Take a screenshot for manual solving
-                        screenshot_path = f"/home/ubuntu/human-ai/scripts/captcha_alert_{int(time.time())}.png"
+                        screenshot_path = f"/home/yahwehatwork/human-ai/scripts/captcha_alert_{int(time.time())}.png"
                         await self.page.screenshot(path=screenshot_path, full_page=True)
                         print(f"📸 CAPTCHA screenshot saved: {screenshot_path}")
                         print("🔐 Please solve the CAPTCHA manually in the browser.")

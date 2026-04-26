@@ -20,7 +20,7 @@ class SkillMiner:
             "https://clawhub.ai/api/skills", # Hypothetical API
             "https://github.com/openclaw/community-skills"
         ]
-        self.state_file = Path("/home/ubuntu/human-ai/.skill_miner_state.json")
+        self.state_file = Path("/home/yahwehatwork/human-ai/.skill_miner_state.json")
         self.load_state()
 
     def load_state(self):

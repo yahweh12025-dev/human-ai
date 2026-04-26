@@ -1,7 +1,7 @@
 
 import asyncio
 import sys
-sys.path.insert(0, '/home/ubuntu/human-ai/agents/notebook_lm')
+sys.path.insert(0, '/home/yahwehatwork/human-ai/agents/notebook_lm')
 
 from agent import NotebookLMAgent
 

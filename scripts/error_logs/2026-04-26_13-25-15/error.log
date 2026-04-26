@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/yahwehatwork/human-ai/botasaurus/botasaurus/browser_decorator.py", line 199, in run_task
+    result = func(driver, data)
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/yahwehatwork/human-ai/scripts/check_claude_login.py", line 66, in check_login_status
+    if "login" in driver.get_current_url().lower():
+                  ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Driver' object has no attribute 'get_current_url'

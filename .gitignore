@@ -18,3 +18,13 @@ improvement.log
 master_log.json
 firebase-key.json
 __pycache__/
+
+# Browser profile caches
+browser_profiles/**/Cache/
+browser_profiles/**/Code Cache/
+browser_profiles/**/GPUCache/
+browser_profiles/**/DawnGraphiteCache/
+browser_profiles/**/DawnWebGPUCache/
+# Misc
+.DS_Store
+Thumbs.db

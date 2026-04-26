@@ -13,7 +13,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 
 # Load environment variables
 from dotenv import load_dotenv
-load_dotenv("/home/ubuntu/human-ai/.env")
+load_dotenv("/home/yahwehatwork/human-ai/.env")
 
 # Configure logging
 logging.basicConfig(
@@ -25,11 +25,11 @@ logger = logging.getLogger(__name__)
 class SwarmHealthBot:
     def __init__(self):
         self.token = os.getenv('SWARM_BOT_TOKEN')  # Swarm bot token for @Swarm26_bot
-        self.master_log_path = Path("/home/ubuntu/human-ai/master_log.json")
-        self.outcome_log_path = Path("/home/ubuntu/human-ai/OUTCOME_LOG.md")
-        self.todo_path = Path("/home/ubuntu/human-ai/todo.json")
-        self.roadmap_path = Path("/home/ubuntu/human-ai/ROADMAP.md")
-        self.team_spawner_path = Path("/home/ubuntu/human-ai/teams/team_spawner.py")
+        self.master_log_path = Path("/home/yahwehatwork/human-ai/master_log.json")
+        self.outcome_log_path = Path("/home/yahwehatwork/human-ai/OUTCOME_LOG.md")
+        self.todo_path = Path("/home/yahwehatwork/human-ai/todo.json")
+        self.roadmap_path = Path("/home/yahwehatwork/human-ai/ROADMAP.md")
+        self.team_spawner_path = Path("/home/yahwehatwork/human-ai/teams/team_spawner.py")
         
         if not self.token:
             raise ValueError("TELEGRAM_BOT_TOKEN not found in environment variables")
@@ -343,7 +343,7 @@ Use /agents to see current active teams.
                         save_data["last_success_entry"] = "## ✅ SUCCESS:" + success_sections[-1]
 
             # Save to file
-            save_path = Path("/home/ubuntu/human-ai/swarm_state_save.json")
+            save_path = Path("/home/yahwehatwork/human-ai/swarm_state_save.json")
             with open(save_path, "w") as f:
                 json.dump(save_data, f, indent=2)
 

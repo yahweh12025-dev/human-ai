@@ -135,7 +135,7 @@ class SkillMinerAgent:
             return
 
         print(f"✨ Discovered new skill: {skill_data['name']}")
-        draft_path = Path(f"/home/ubuntu/human-ai/agents/skill_miner/drafts/{skill_data['name']}.md")
+        draft_path = Path(f"/home/yahwehatwork/human-ai/agents/skill_miner/drafts/{skill_data['name']}.md")
         draft_path.parent.mkdir(parents=True, exist_ok=True)
         with open(draft_path, 'w') as f:
             f.write(skill_data['content'])

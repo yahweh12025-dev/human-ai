@@ -64,7 +64,7 @@ class PatchrightBaseAgent:
         self.last_session_check = 0
 
         # Profile directory
-        work_dir = os.getenv('WORK_DIR', '/home/ubuntu/human-ai')
+        work_dir = os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai')
         self.profile_dir = os.path.join(work_dir, 'browser_profiles', self.identity)
         os.makedirs(self.profile_dir, exist_ok=True)
 

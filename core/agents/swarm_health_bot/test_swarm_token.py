@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv("/home/ubuntu/human-ai/.env")
+load_dotenv("/home/yahwehatwork/human-ai/.env")
 
 # Check what token the Swarm Health Bot would use
 swarm_token = os.getenv('SWARM_BOT_TOKEN')

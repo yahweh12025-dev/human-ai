@@ -9,7 +9,7 @@ class DocumentationScribe:
     DocumentationScribe: Automatically updates swarm documentation.
     Maintains ROADMAP.md and README.md to reflect current system state.
     """
-    def __init__(self, repo_root: str = "/home/ubuntu/human-ai"):
+    def __init__(self, repo_root: str = "/home/yahwehatwork/human-ai"):
         self.repo_root = Path(repo_root)
         self.roadmap_path = self.repo_root / "ROADMAP.md"
         self.readme_path = self.repo_root / "README.md"

@@ -5,11 +5,11 @@ from typing import List, Dict, Any
 from dotenv import load_dotenv
 from utils.sandbox_runner import SandboxRunner
 
-load_dotenv('/home/ubuntu/human-ai/.env')
+load_dotenv('/home/yahwehatwork/human-ai/.env')
 
 class DoctorAgent:
     def __init__(self):
-        self.error_dir = "/home/ubuntu/human-ai/errors/"
+        self.error_dir = "/home/yahwehatwork/human-ai/errors/"
         self.sandbox = SandboxRunner()
 
     async def scan_for_errors(self) -> List[Dict[str, Any]]:

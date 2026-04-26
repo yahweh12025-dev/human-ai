@@ -24,7 +24,7 @@ class ManusBrowserAgent:
         self.page = None
         self.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         
-        work_dir = os.getenv('WORK_DIR', '/home/ubuntu/human-ai')
+        work_dir = os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai')
         self.session_dir = os.path.join(work_dir, 'session', 'manus_profile')
         self.credit_log_path = os.path.join(work_dir, 'infrastructure/configs/manus_credits.json')
         self.is_initialized = False

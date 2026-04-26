@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 
-load_dotenv('/home/ubuntu/human-ai/.env')
+load_dotenv('/home/yahwehatwork/human-ai/.env')
 
 class StorageOrchestrator:
     def __init__(self):
@@ -68,20 +68,25 @@ class StorageOrchestrator:
 
         return success_supabase
 
-    def upload_large_file(self, file_path: str, destination_blob_name: str):
+    def retrieve_findings(self, topic: str, limit: int = 5) -> Optional[list]:
         """
-        Saves large files exclusively to Firebase Storage to avoid Supabase bloat.
+        Retrieve previously saved research findings from Supabase.
         """
-        if not self.firebase_enabled:
-            print("❌ Firebase not enabled. Cannot upload large file.")
+        if not self.supabase:
+            print("❌ Supabase not enabled. Cannot retrieve findings.")
             return None
             
         try:
-            blob = self.bucket.blob(destination_blob_name)
-            blob.upload_from_filename(file_path)
-            return blob.public_url
+            # Query the research_findings table for entries matching the topic
+            response = self.supabase.table('research_findings')\
+                .select('*')\
+                .ilike('topic', f'%{topic}%')\
+                .limit(limit)\
+                .execute()
+            
+            return response.data
         except Exception as e:
-            print(f"❌ Firebase Upload Failed: {e}")
+            print(f"⚠️ Supabase Retrieval Failed: {e}")
             return None
 
 if __name__ == "__main__":

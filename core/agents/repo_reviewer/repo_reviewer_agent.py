@@ -56,13 +56,13 @@ class RepoReviewerAgent:
         """
         Crawl the entire repository and generate a comprehensive audit report.
         """
-        print("🔍 Starting Recursive Sovereign Audit of /home/ubuntu/human-ai...")
+        print("🔍 Starting Recursive Sovereign Audit of /home/yahwehatwork/human-ai...")
         full_report = []
         
         # Folders to ignore during the audit
         ignore_list = ['.git', 'venv', 'node_modules', '__pycache__', 'archive', '.infrastructure_vault']
         
-        for root, dirs, files in os.walk('/home/ubuntu/human-ai'):
+        for root, dirs, files in os.walk('/home/yahwehatwork/human-ai'):
             # Filter out ignored directories
             dirs[:] = [d for d in dirs if d not in ignore_list]
             

@@ -31,7 +31,7 @@ class PerplexityBrowserAgent:
         self.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         # Use the swarm's browser profile by default to maintain login state
         if use_swarm_profile:
-            self.session_dir = os.path.join(os.getenv('WORK_DIR', '/home/ubuntu/human-ai'), 'session', 'browser_profile_perplexity')
+            self.session_dir = os.path.join(os.getenv('WORK_DIR', '/home/yahwehatwork/human-ai'), 'session', 'browser_profile_perplexity')
         else:
             self.session_dir = os.path.expanduser('~/.config/google-chrome')
         self.is_initialized = False

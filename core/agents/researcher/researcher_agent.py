@@ -29,8 +29,8 @@ from .deepseek_browser_agent import DeepSeekBrowserAgent
 load_dotenv()
 
 # Ensure essential directories exist
-Path('/home/ubuntu/human-ai/outputs').mkdir(parents=True, exist_ok=True)
-Path('/home/ubuntu/human-ai/logs').mkdir(parents=True, exist_ok=True)
+Path('/home/yahwehatwork/human-ai/outputs').mkdir(parents=True, exist_ok=True)
+Path('/home/yahwehatwork/human-ai/logs').mkdir(parents=True, exist_ok=True)
 
 class HumanAIResearcher:
     def __init__(self):

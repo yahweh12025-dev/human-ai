@@ -18,7 +18,7 @@ from core.utils.swarm_logger import get_logger
 logger = get_logger("SwarmHealthBot")
 
 class SwarmHealthMonitor:
-    def __init__(self, base_dir="/home/ubuntu/human-ai"):
+    def __init__(self, base_dir="/home/yahwehatwork/human-ai"):
         self.base_dir = Path(base_dir)
 
     def get_gateway_status(self):

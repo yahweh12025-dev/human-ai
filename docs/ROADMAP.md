@@ -15,14 +15,14 @@
 - [x] **Master Log System**: Global event aggregation for the entire swarm.
 
 ## Phase 3: Orchestration & Ecosystem 🚀 (IN PROGRESS)
-- [ ] **Hybrid LLM Routing**: Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
-- [ ] **Kilo Code Integration**: Integrate Kilo Code as the primary engine for autonomous code refactoring and high-fidelity feature implementation
+- [x] **Hybrid LLM Routing**: Implement rate-aware switching between Gemini and DeepSeek via browser (Gemini for reasoning, DeepSeek for volume)
+- [x] **Kilo Code Integration**: Integrate Kilo Code as the primary engine for autonomous code refactoring and high-fidelity feature implementation
 - [ ] **Document Intelligence Suite**: 
-    - Develop `ConverterAgent` for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD).
-    - Develop `OCRAgent` for visual text extraction and layout analysis.
-    - Integrate as a pre-processing layer for Researcher and Developer agents.
+    - [x] Develop `ConverterAgent` for multi-format transformation (PDF, Word, PPTX, JSON $\leftrightarrow$ TXT, MD).
+    - [ ] Develop `OCRAgent` for visual text extraction and layout analysis.
+    - [ ] Integrate as a pre-processing layer for Researcher and Developer agents.
 - [ ] **Notebook LM Specialist Agent**: Create a browser-based agent that uses Google Notebook LM for document upload, summarization, comparison, and insight extraction.
-- [ ] **Memory Bridge Implementation**: Create a synchronization pipeline to distill "wisdom" and key decisions from Hermes' daily memory into the Swarm's global MEMORY.md
+- [x] **Memory Bridge Implementation**: Create a synchronization pipeline to distill "wisdom" and key decisions from Hermes' daily memory into the Swarm's global MEMORY.md
 - [ ] **Omni-Model Intelligence Layer**: 
     - Integrate browser-based Perplexity (Search) and Claude (Reasoning) with rate-limit handling.
     - Integrate Mistral Free API for low-latency logic checks.

@@ -12,7 +12,7 @@ from playwright.async_api import async_playwright
 from dotenv import load_dotenv
 
 load_dotenv()
-WORK_DIR = os.getenv("WORK_DIR", "/home/ubuntu/human-ai")
+WORK_DIR = os.getenv("WORK_DIR", "/home/yahwehatwork/human-ai")
 
 class WebNavigator:
     def __init__(self):
