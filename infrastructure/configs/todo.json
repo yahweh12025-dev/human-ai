@@ -117,11 +117,6 @@
       "notes": []
     },
     {
-      "id": "deferred-swarm-health-bot",
-      "content": "Swarm Health Bot Integration [DEFERRED to Phase 5]",
-      "status": "deferred"
-    },
-    {
       "id": "deferred-security-audit",
       "content": "Security Audit & Lockdown [DEFERRED to Phase 5]",
       "status": "deferred"

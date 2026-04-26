@@ -36,7 +36,6 @@
 
 ## Phase 4: Swarm Bot Testing & Lifecycle 🔬 (DEFERRED)
 - [ ] **Swarm Telegram Bot Integration**: Create and configure @Swarm26_bot for inter-agent communication
-- [ ] **Swarm Health Monitoring**: Implement automated health checking for swarm components
 - [ ] **Swarm Session Management**: 90% token usage reset mechanisms for swarm agents
 - [ ] **Swarm Telegram Logging**: Dedicated logging and monitoring for bot interactions
 - [ ] **Swarm Development Tracking**: Activity logging and progress tracking for swarm development

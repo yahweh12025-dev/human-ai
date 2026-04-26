@@ -10,11 +10,10 @@ class YouTubeSummarizer:
         self.api_key = os.getenv("YOUTUBE_API_KEY")
         
     def get_transcript(self, video_id: str) -> str:
-        \"\"\"
-        Fetches the transcript of a YouTube video.
+        """Fetches the transcript of a YouTube video.
         In a production environment, this would use the YouTube Transcript API.
-        \"\"\"
-        print(f"📺 Extracting transcript for video: {video_id}...")
+        """
+        print(f"[YouTube] Extracting transcript for video: {video_id}...")
         # Placeholder for actual transcript extraction logic
         # In reality, we'd use `youtube-transcript-api`
         return f"[Transcript for {video_id}]: This video discusses the evolution of AI swarms and the implementation of autonomous orchestration..."
