@@ -28,3 +28,5 @@ browser_profiles/**/DawnWebGPUCache/
 # Misc
 .DS_Store
 Thumbs.db
+venv-kilo/
+venv-telethon/
