@@ -1,0 +1,76 @@
+.secrets/
+*.bak
+*.test.py
+migrate_to_vault_final.py
+venv/
+session/
+logs/
+!infrastructure/logs/hermes-autonomous.log
+ !infrastructure/logs/hermes-autonomous.log
+errors/
+autodev.log
+autopilot.log
+routing.log
+researcher_login.log
+improvement.log
+
+.env
+master_log.json
+firebase-key.json
+__pycache__/
+
+# Browser profile caches
+browser_profiles/**/Cache/
+browser_profiles/**/Code Cache/
+browser_profiles/**/GPUCache/
+browser_profiles/**/DawnGraphiteCache/
+browser_profiles/**/DawnWebGPUCache/
+# Misc
+.DS_Store
+Thumbs.db
+venv-kilo/
+venv-telethon/
+
+# Additional security - sensitive files and directories
+.env
+*.env
+*.env.*
+!infrastructure/logs/hermes-autonomous.log  # Keep the log file but ignore others
+logs/*
+!logs/hermes-autonomous.log  # Allow the autonomous log
+configs/*.json
+configs/*.yaml
+configs/*.yml
+agents/*/configs/*_secrets.py
+agents/*/tests/*_keys.py
+agents/*/tests/*_key*
+scripts/*sync_*key*.py
+scripts/*sync_*secret*.py
+secrets/
+*.key
+*.pem
+*.p12
+*.keystore
+firebase-key.json
+google-service-account.json
+service-account.json
+
+# Browser profile directories
+.browser-profile/
+browser_profiles/
+__pycache__/
+venv-vector/
+backtest_logs/
+master_logs/
+saves/
+exhaustive_logs/
+memory/*
+!memory/.gitignore
+agents/freqtrade/
+__init__.py
+.aider*
+*.backup
+.hermes/
+node_modules/
+/archive
+.github/

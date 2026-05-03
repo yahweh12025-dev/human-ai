@@ -1,0 +1,4 @@
+  File "/home/yahwehatwork/human-ai/agents/linter_fixer/linter_fixer_agent.py", line 105
+    """
+    ^
+SyntaxError: unterminated triple-quoted string literal (detected at line 105)

@@ -1,0 +1,1 @@
+This is the agent that handles [[Swarm-Plan]] and other notes.

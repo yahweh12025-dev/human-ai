@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "components": {
+    "openclaw": {
+      "gateway_config": "config.json",
+      "restart_command": "openclaw gateway restart"
+    },
+    "swarm_loops": {
+      "orchestrator": "/home/ubuntu/openclaw_multi_loop.sh",
+      "watchdog": "/home/ubuntu/keep_openclaw_running.sh"
+    },
+    "agents": {
+      "root": "/home/ubuntu/human-ai/agents",
+      "skills": "/home/ubuntu/human-ai/skills"
+    },
+    "env_vars": [
+      "OPENROUTER_API_KEY",
+      "GROQ_API_KEY",
+      "GOOGLE_API_KEY",
+      "STEPFUN_API_KEY",
+      "N8N_API_KEY",
+      "DEEPSEEK_EMAIL",
+      "DEEPSEEK_PASSWORD",
+      "GOOGLE_EMAIL",
+      "GOOGLE_PASSWORD"
+    ]
+  }
+}

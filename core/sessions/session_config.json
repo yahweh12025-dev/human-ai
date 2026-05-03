@@ -1,0 +1,49 @@
+{
+  "session_management": {
+    "enabled": true,
+    "reset_threshold": 0.9,
+    "monitoring_interval": 30,
+    "agent_limits": {
+      "opencode": {
+        "requests_per_hour": 1000,
+        "tokens_per_hour": 500000,
+        "daily_limit": 5000000
+      },
+      "claude": {
+        "requests_per_hour": 100,
+        "tokens_per_hour": 900000,
+        "daily_limit": 5000000
+      },
+      "deepseek": {
+        "requests_per_hour": 500,
+        "tokens_per_hour": 1000000,
+        "daily_limit": 10000000
+      },
+      "gemini": {
+        "requests_per_hour": 60,
+        "tokens_per_hour": 1000000,
+        "daily_limit": 5000000
+      },
+      "perplexity": {
+        "requests_per_hour": 500,
+        "tokens_per_hour": 500000,
+        "daily_limit": 5000000
+      }
+    },
+    "reset_actions": [
+      "clear_browser_session",
+      "rotate_agent_if_possible",
+      "wait_cooldown_period",
+      "fallback_to_lower_tier_model"
+    ],
+    "notifications": {
+      "warning_at": 0.75,
+      "critical_at": 0.9,
+      "reset_at": 0.9,
+      "channels": [
+        "log",
+        "telegram_if_available"
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "development_tracking": {
+    "enabled": true,
+    "tracking_level": "detailed",
+    "auto_capture": [
+      "task_start",
+      "task_complete",
+      "task_fail",
+      "agent_assignment",
+      "agent_completion",
+      "resource_usage",
+      "blocking_events",
+      "knowledge_events"
+    ],
+    "metrics_to_calculate": [
+      "development_velocity",
+      "cycle_time",
+      "lead_time",
+      "throughput",
+      "success_rate",
+      "mean_time_to_recovery",
+      "work_in_progress",
+      "blocked_time_ratio"
+    ],
+    "reporting": {
+      "daily_summary": true,
+      "weekly_retrospective": true,
+      "monthly_review": true,
+      "real_time_dashboard": false,
+      "trend_analysis": true
+    },
+    "integration_points": [
+      "task_queue: Hook into todo.json changes",
+      "outcome_log: Enhance with developmental context",
+      "memory_system: Correlate activities with memory formation",
+      "agent_controllers: Hook into execution lifecycle",
+      "logging_system: Forward to central logs",
+      "mission_control: Provide development metrics"
+    ]
+  }
+}

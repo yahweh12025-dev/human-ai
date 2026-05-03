@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@heyputer/puter.js": "^2.2.15",
+    "playwright": "^1.59.1"
+  }
+}

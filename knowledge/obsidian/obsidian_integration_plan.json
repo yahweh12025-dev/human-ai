@@ -1,0 +1,23 @@
+{
+  "goal": "Integrate Obsidian for local knowledge management and memory enhancement",
+  "components_to_integrate": [
+    "MEMORY.md (daily logs and wisdom)",
+    "outcome_log.md (success/failure tracking)",
+    "roadmap.md and unified_plan.md (planning documents)",
+    "knowledge bases from Dify/Graphify",
+    "agent swap outcomes and learnings"
+  ],
+  "integration_approach": [
+    "Create synchronization scripts to export/import between swarm and Obsidian",
+    "Set up Obsidian vault structure mirroring swarm knowledge domains",
+    "Implement bidirectional sync for memory enhancement",
+    "Create templates for different types of swarm knowledge in Obsidian"
+  ],
+  "next_steps": [
+    "Create obsidian_vault_sync.py script",
+    "Define Obsidian folder structure for swarm knowledge",
+    "Create templates for daily logs, outcomes, plans, etc.",
+    "Implement memory-to-obsidian export",
+    "Implement obsidian-to-memory import for enhanced recall"
+  ]
+}

@@ -1,0 +1,212 @@
+.
+|-- CVLinkedInHunt
+|   |-- README.md
+|   `-- docs
+|-- Desktop
+|-- Documents
+|   |-- Claude outputs
+|   `-- Obsidian Vault
+|-- Downloads
+|   `-- Dolphin-anty.AppImage
+|-- FINAL_SETUP_SUMMARY.md
+|-- Music
+|-- Obsidian
+|   `-- Vault
+|-- Pictures
+|   `-- Screenshot_2026-04-30_15-51-44.png
+|-- Public
+|-- Templates
+|-- Videos
+|-- agent-review
+|   |-- backtest.log
+|   |-- forward_test.log
+|   `-- masterlog.md
+|-- apps
+|   `-- Obsidian-1.12.7.AppImage
+|-- backups
+|   |-- backup_20260501_142204
+|   `-- backup_20260501_203833.tar.gz
+|-- browsers
+|   |-- claude_check.py
+|   |-- debug_claude.py
+|   |-- debug_claude2.py
+|   |-- manual_claude_login.py
+|   |-- playwright_google_login.js
+|   |-- selenium_google_login.py
+|   |-- test_claude_cookies.py
+|   |-- test_claude_full.py
+|   |-- test_claude_with_bypass.py
+|   |-- test_login.py
+|   |-- test_proxy.py
+|   `-- verify_skill.py
+|-- claude_sessions
+|   |-- claude_challenge.html
+|   |-- claude_chat.html
+|   |-- claude_chat_mirror.html
+|   |-- claude_chat_mirror_full.html
+|   |-- claude_chat_via_mirror_get.html
+|   |-- claude_chat_via_session.html
+|   |-- claude_cookies.json
+|   `-- claude_mirror_challenge.html
+|-- conversation_logs
+|   |-- hermes_conversation_20260423_141346.json
+|   |-- hermes_conversation_20260426_133843.json
+|   |-- hermes_conversation_20260426_153306.json
+|   `-- hermes_conversation_20260426_192314.json
+|-- hermes_response.txt
+|-- human-ai
+|   |-- README.md
+|   |-- agents
+|   |-- autonomous_dev
+|   |-- browser_profiles
+|   |-- core
+|   |-- docs
+|   |-- exhaustive_logs
+|   |-- improvements
+|   |-- infrastructure
+|   |-- logs
+|   |-- memory
+|   |-- misc
+|   |-- obsidian
+|   |-- obsidian-vault
+|   |-- outputs
+|   |-- repo_tree.txt
+|   |-- research
+|   |-- saves
+|   |-- scripts
+|   |-- security_audit
+|   |-- session
+|   |-- skills
+|   |-- swarm_development_tracking
+|   |-- swarm_session_management
+|   |-- swarm_telegram_bot
+|   |-- swarm_telegram_logging
+|   |-- tests
+|   `-- vector_store
+|-- masterseed_py
+|-- mission-control
+|   |-- CHANGELOG.md
+|   |-- DEMO_DEPLOY.md
+|   |-- Dockerfile
+|   |-- HANDOVER.md
+|   |-- HEARTBEAT.md
+|   |-- LICENSE
+|   |-- ORCHESTRATION.md
+|   |-- PR-DATABASE-SAFETY.md
+|   |-- PRODUCTION_SETUP.md
+|   |-- QUICKSTART_REALTIME.md
+|   |-- README.md
+|   |-- REALTIME_IMPLEMENTATION_SUMMARY.md
+|   |-- VERIFICATION_CHECKLIST.md
+|   |-- backups
+|   |-- data
+|   |-- db-backups
+|   |-- docker-compose.yml
+|   |-- docs
+|   |-- ecosystem.config.cjs
+|   |-- mission-control.db
+|   |-- mission-control.db-shm
+|   |-- mission-control.db-wal
+|   |-- mission-control.png
+|   |-- mission-control_dump.sql
+|   |-- mission-control_recovered.db
+|   |-- next-env.d.ts
+|   |-- next.config.mjs
+|   |-- package-lock.json
+|   |-- package.json
+|   |-- postcss.config.mjs
+|   |-- presentation
+|   |-- public
+|   |-- query.js
+|   |-- scripts
+|   |-- specs
+|   |-- src
+|   |-- tailwind.config.ts
+|   `-- tsconfig.json
+|-- obsidian_export
+|-- playwright-login
+|   |-- login.js
+|   |-- package-lock.json
+|   `-- package.json
+|-- projects
+|   |-- configs
+|   |-- docs
+|   |-- logs
+|   |-- quick-test
+|   |-- scripts
+|   |-- symmetry-test
+|   |-- temp
+|   `-- tests
+|-- pulseaudio-16.1+dfsg1
+|   |-- CODE_OF_CONDUCT.md
+|   |-- CONTRIBUTING.md
+|   |-- GPL
+|   |-- LGPL
+|   |-- LICENSE
+|   |-- NEWS
+|   |-- PROTOCOL
+|   |-- PulseAudioConfig.cmake.in
+|   |-- PulseAudioConfigVersion.cmake.in
+|   |-- README
+|   |-- builddir
+|   |-- coverity
+|   |-- debian
+|   |-- doc
+|   |-- doxygen
+|   |-- git-version-gen
+|   |-- libpulse-mainloop-glib.pc.in
+|   |-- libpulse-simple.pc.in
+|   |-- libpulse.pc.in
+|   |-- man
+|   |-- meson.build
+|   |-- meson_options.txt
+|   |-- po
+|   |-- pulseaudio-text.svg
+|   |-- pulseaudio.supp
+|   |-- pulseaudio.svg
+|   |-- scripts
+|   |-- shell-completion
+|   |-- src
+|   |-- todo
+|   `-- vala
+|-- pulseaudio-module-xrdp
+|   |-- LICENSE
+|   |-- Makefile
+|   |-- Makefile.am
+|   |-- Makefile.in
+|   |-- README.md
+|   |-- aclocal.m4
+|   |-- autom4te.cache
+|   |-- bootstrap
+|   |-- build-aux
+|   |-- config.log
+|   |-- config.status
+|   |-- config_ac.h
+|   |-- config_ac.h.in
+|   |-- config_ac.h.in~
+|   |-- configure
+|   |-- configure.ac
+|   |-- configure~
+|   |-- instfiles
+|   |-- libtool
+|   |-- m4
+|   |-- scripts
+|   |-- src
+|   `-- stamp-h1
+|-- run_nst_agent.sh
+|-- security_audit_summary.txt
+|-- thinclient_drives
+|-- trading_strategies
+|-- update_tree.sh
+|-- venv
+|   `-- claude
+|-- workspace
+|   |-- backtest_progress.log
+|   |-- execution_status.log
+|   |-- knowledge_payload.json
+|   |-- run_validation_loop.py
+|   |-- sequential_backtest.sh
+|   `-- sequential_results.log
+`-- ~
+
+97 directories, 115 files

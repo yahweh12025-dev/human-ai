@@ -1,0 +1,121 @@
+{
+  "security_audit": {
+    "enabled": true,
+    "scan_scope": {
+      "include_paths": [
+        "/home/yahwehatwork/human-ai",
+        "/home/yahwehatwork/.hermes"
+      ],
+      "exclude_paths": [
+        "*/venv*/",
+        "*/__pycache__/",
+        "*/node_modules/",
+        "*/.git/",
+        "*/dist/",
+        "*/build/",
+        "*/.pytest_cache/",
+        "*/.mypy_cache/",
+        "*/.hypothesis/",
+        "*/htmlcov/"
+      ]
+    },
+    "secret_patterns": {
+      "api_keys": [
+        "(?i)api[_-]?key",
+        "(?i)access[_-]?token",
+        "(?i)secret[_-]?key",
+        "(?i)auth[_-]?token",
+        "(?i)private[_-]?key",
+        "(?i)client[_-]?secret"
+      ],
+      "service_specific": [
+        "github[_-]?token",
+        "gitlab[_-]?token",
+        "aws[_-]?access[_-]?key",
+        "aws[_-]?secret[_-]?key",
+        "azure[_-]?key",
+        "gcp[_-]?api[_-]?key",
+        "openai[_-]?api[_-]?key",
+        "anthropic[_-]?api[_-]?key",
+        "deepseek[_-]?api[_-]?key",
+        "perplexity[_-]?api[_-]?key",
+        "telegram[_-]?bot[_-]?token",
+        "discord[_-]?token",
+        "slack[_-]?token",
+        "notion[_-]?api[_-]?key",
+        "linear[_-]?api[_-]?key"
+      ],
+      "file_patterns": [
+        "*.env",
+        "*.env.*",
+        "*.key",
+        "*.pem",
+        "*.p12",
+        "*.pfx",
+        "*.jks",
+        "*.keystore",
+        "firebase-key.json",
+        "google-service-account.json",
+        "service-account.json",
+        "*secrets*",
+        "*credentials*",
+        "*_secrets.py",
+        "*_keys.py"
+      ]
+    },
+    "gitignore_validation": {
+      "required_patterns": [
+        "*.env",
+        "*.key",
+        "*secret*",
+        "*token*",
+        "*password*",
+        "*vault/",
+        "*configs/",
+        "*secrets/",
+        "*_secrets.py",
+        "*_keys.py",
+        "*key*",
+        "firebase-key.json",
+        "google-service-account.json",
+        "service-account.json"
+      ]
+    },
+    "token_rotation": {
+      "expected_mechanisms": [
+        "environment_variable_rotation",
+        "secret_management_services",
+        "automated_rotation_scripts",
+        "manual_rotation_procedures",
+        "token_expiration_handling"
+      ],
+      "verification_methods": [
+        "check_for_rotation_scripts",
+        "validate_env_var_usage",
+        "check_secret_management_integration",
+        "verify_token_expiration_handling"
+      ]
+    },
+    "severity_levels": {
+      "critical": [
+        "exposed_api_keys",
+        "private_keys_in_repo",
+        "production_tokens"
+      ],
+      "high": [
+        "weak_secrets",
+        "hardcoded_credentials",
+        "missing_gitignore"
+      ],
+      "medium": [
+        "old_tokens",
+        "unused_secrets",
+        "overprivileged_tokens"
+      ],
+      "low": [
+        "documentation_secrets",
+        "test_secrets_in_dev"
+      ]
+    }
+  }
+}
