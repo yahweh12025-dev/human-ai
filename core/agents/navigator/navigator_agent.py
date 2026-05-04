@@ -83,6 +83,25 @@ class WebNavigator:
     async def get_visible_text(self) -> str:
         return await self.page.evaluate("document.body.innerText")
 
+    async def get_ocr_text(self) -> str:
+        """Extract text from screenshot using Tesseract OCR"""
+        try:
+            from PIL import Image
+            import pytesseract
+            import io
+            
+            # Take screenshot
+            screenshot_bytes = await self.page.screenshot()
+            # Convert to PIL Image
+            image = Image.open(io.BytesIO(screenshot_bytes))
+            # Extract text using pytesseract
+            text = pytesseract.image_to_string(image)
+            return text.strip()
+        except ImportError:
+            return "OCR dependencies not installed. Please install pillow and pytesseract."
+        except Exception as e:
+            return f"OCR error: {str(e)}"
+
     async def close(self):
         if self.context: await self.context.close()
         if self.pw: await self.pw.stop()
@@ -123,7 +142,11 @@ class NavigatorAgent:
             await self.navigator.close()
 
     async def _get_llm_decision(self, goal, tree, content):
-        prompt = f"GOAL: {goal}\\n\\nPAGE TEXT:\\n{content[:2000]}\\n\\nSEMANTIC MAP:\\n{tree}\\n\\nYou MUST respond with ONLY a valid JSON object. No conversation, no preamble. Format: {{\"type\": \"navigate\"|\"click\"|\"fill\"|\"press\"|\"scroll\"|\"complete\"|\"error\", \"action\": \"name\", \"details\": \"selector/url\", \"value\": \"text\", \"key\": \"key\", \"reason\": \"why\"}}"
+        # Get OCR text from screenshot
+        ocr_content = await self.navigator.get_ocr_text()
+        # Combine visible text and OCR text, limit to 2000 chars
+        combined_text = (content + "\\n\\nOCR:\\n" + ocr_content)[:2000]
+        prompt = f"GOAL: {goal}\\n\\nPAGE TEXT (including OCR):\\n{combined_text}\\n\\nSEMANTIC MAP:\\n{tree}\\n\\nYou MUST respond with ONLY a valid JSON object. No conversation, no preamble. Format: {{\"type\": \"navigate\"|\"click\"|\"fill\"|\"press\"|\"scroll\"|\"complete\"|\"error\", \"action\": \"name\", \"details\": \"selector/url\", \"value\": \"text\", \"key\": \"key\", \"reason\": \"why\"}}"
         
         try:
             # CORRECT ASYNC CALL to the HybridLLMRouter
@@ -142,7 +165,7 @@ class NavigatorAgent:
                 print(f"⚠️ LLM returned non-JSON: {decision_str[:100]}...")
         except Exception as e:
             print(f"⚠️ LLM Router failure: {e}")
-            
+             
         return {"type": "error", "reason": "LLM failed to provide a valid JSON action."}
 
     async def _execute_action(self, action_obj):

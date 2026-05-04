@@ -1,0 +1,7 @@
+{
+  "from": "hermes",
+  "to": "opencode",
+  "timestamp": "20260504_001317",
+  "task": "Implement Action-Screenshot-OCR loop for Navigator agent in the human-ai swarm. The loop should: 1) Take a screenshot using Playwright (or similar), 2) Run OCR on the screenshot to extract text (use Tesseract or easyocr), 3) Use the extracted text as observation for the Navigator's action loop. Integrate with the existing AntFarm orchestrator. Write code in core/agents/navigator/navigator_agent.py or create a new module if needed. Ensure dependencies are installed.",
+  "id": "msg_20260504_001317_hermes_to_opencode"
+}
