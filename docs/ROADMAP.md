@@ -100,7 +100,8 @@
     - Use LangChain as the orchestration bridge to standardize browser-LLM access.
 - [ ] **Dify & Graphify Synergy**: Implement LangChain-based pipelines to route data between Dify (RAG) and Graphify (Knowledge Graph).
 - [x] **Mission Control**: Implemented as replacement for Swarm Command Center - Centralized orchestration dashboard
-- [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
-- [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
-- [ ] **Gemini Browser Integration**: Add Google Gemini via browser-first automation (cookie-based auth like DeepSeek), vision-capable with rate-limit aware routing
-- [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
+    - [ ] **Dify Knowledge Hub**: Finalize RAG integration and "Remember" phase for verified solutions.
+    - [ ] **n8n-mcp Integration**: Implement deterministic workflows for repetitive tasks.
+    - [ ] **Gemini Browser Integration**: Add Google Gemini via browser-first automation (cookie-based auth like DeepSeek), vision-capable with rate-limit aware routing
+    - [ ] **Omni-Channel Intelligence**: Refine the Adaptive Router for multi-modal input.
+    - [ ] **Social Media Agent**: Create agent for YouTube/TikTok automation with content creation, research analytics, and posting automation.
