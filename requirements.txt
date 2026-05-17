@@ -23,3 +23,7 @@ google-cloud-firestore>=2.15.0
 # Add other dependencies as needed
 gpt-researcher>=0.10.0
 camoufox>=0.4.0
+# Multi-agent frameworks (high-star repos)
+crewai>=1.14.4
+pyautogen>=0.10.0
+# tradingagents>=0.6.0  # Requires Python >=3.12; use trading_agents_bridge.py wrapper
