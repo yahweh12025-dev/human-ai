@@ -654,19 +654,23 @@ class BinanceTrader:
             qty      = max(step, math.floor(qty_raw / step) * step)
             qty      = round(qty, len(str(step).rstrip('0').split('.')[-1]) if '.' in str(step) else 0)
             side = sig["direction"]
-            # v9: ATR-based dynamic SL/TP — adapts to actual market volatility
+            # ATR-based dynamic SL/TP with minimum ATR threshold
+            # CRITICAL: use PCT fallback if ATR is too small relative to price
+            # (e.g. TRX ATR=0.0001, ADA ATR=0.0001 — nearly zero, would hit SL instantly)
             avg_atr_abs = sig.get("avg_atr", 0.0)
-            if avg_atr_abs > 0:
+            atr_pct = avg_atr_abs / price if price > 0 else 0
+            USE_ATR_MIN_PCT = 0.0008  # ATR must be at least 0.08% of price to be meaningful
+            if avg_atr_abs > 0 and atr_pct >= USE_ATR_MIN_PCT:
                 sl_dist  = avg_atr_abs * ATR_SL_MULT
                 tp1_dist = avg_atr_abs * ATR_TP1_MULT
                 tp2_dist = avg_atr_abs * ATR_TP2_MULT
                 sl_mode  = "ATR"
             else:
-                # Fallback: fixed percentage (original behavior)
+                # Fallback: fixed percentage — used when ATR is near-zero (low-vol coins)
                 sl_dist  = price * SL_PCT
                 tp1_dist = price * TP1_PCT
                 tp2_dist = price * TP2_PCT
-                sl_mode  = "PCT"
+                sl_mode  = f"PCT(atr={avg_atr_abs:.5f}<{USE_ATR_MIN_PCT*100:.2f}%)"
             sl  = price - sl_dist  if side == "BUY" else price + sl_dist
             tp1 = price + tp1_dist if side == "BUY" else price - tp1_dist
             tp2 = price + tp2_dist if side == "BUY" else price - tp2_dist

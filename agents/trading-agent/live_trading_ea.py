@@ -260,7 +260,8 @@ def fetch_klines(symbol: str, period="1d", interval_tf="1m", n=80) -> list:
         if df.empty: return []
         col = df["Close"].iloc[:, 0] if hasattr(df.columns, "levels") else df["Close"]
         return [float(c) for c in col.dropna().values[-n:]]
-    except: return []
+    except Exception:
+        return []
 
 
 def compute_atr(prices: list, period: int = 14) -> float:
@@ -1442,8 +1443,10 @@ class EATrader:
         _obsidian("EA Trader v7 Stopped",
             f"- Trades: {self.trades}\n- PnL: ${self.pnl:+.2f}\n- Peak equity: ${self._peak_equity:,.2f}",
             "ea_stop")
-        try: PID_FILE.unlink()
-        except: pass
+        try:
+            PID_FILE.unlink(missing_ok=True)
+        except Exception:
+            pass  # PID file cleanup is best-effort
 
 
 if __name__ == "__main__":
