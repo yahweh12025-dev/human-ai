@@ -9,7 +9,7 @@ Sync operations (each idempotent, independent — failure of one doesn't stop ot
   4. Dify sync: from core.integrations.dify_brain import DifyBrain
   5. Graphify sync: run scripts/sync/dify_graphify_bridge.py
   6. .env backup: rclone copy .env gdrive:backups/env/
-  7. VIDEO_INDEX.json: sync to gdrive:backups/VIDEO_INDEX.json
+  7. VIDEO_INDEX.json: sync to gdrive:videos/VIDEO_INDEX.json
   8. Git status check: warn if uncommitted changes > 5 files
 
 Runs once immediately on launch, then every 6 hours.

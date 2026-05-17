@@ -1,179 +1,723 @@
 {
-  "generated": "2026-05-17T00:00:00",
-  "total_videos": 19,
+  "generated": "2026-05-17T21:55:58.908883",
+  "total_videos": 102,
   "christian": 4,
-  "trading": 15,
+  "trading": 98,
+  "note": "Fresh start 2026-05-17. Videos cleared from GDrive by user.",
   "videos": [
     {
-      "filename": "FaithNexus_Isaiah_40_31_Wings_Like_Eagles.mp4",
-      "path": "gdrive:videos/christian/FaithNexus_Isaiah_40_31_Wings_Like_Eagles.mp4",
+      "filename": "faithnexus_Isaiah_40_31.mp4",
+      "path": "gdrive:videos/christian/faithnexus_Isaiah_40_31.mp4",
       "category": "christian",
       "size_bytes": 7680883,
-      "modified": "2026-05-17T19:14:12.588Z",
-      "topic": "Isaiah 40:31 Wings Like Eagles",
-      "gdrive_id": "18Uugy0q44m3Uvtm9-7SRM0_ASJlYQ_ff"
+      "local_path": "data/media_output/christian/faithnexus_Isaiah_40_31.mp4"
     },
     {
-      "filename": "FaithNexus_John_3_16_For_God_So_Loved_The_World.mp4",
-      "path": "gdrive:videos/christian/FaithNexus_John_3_16_For_God_So_Loved_The_World.mp4",
+      "filename": "faithnexus_John_3_16.mp4",
+      "path": "gdrive:videos/christian/faithnexus_John_3_16.mp4",
       "category": "christian",
       "size_bytes": 7746555,
-      "modified": "2026-05-17T19:14:12.634Z",
-      "topic": "John 3:16 For God So Loved The World",
-      "gdrive_id": "1AfLNhxP-g4z0zWvmSRYhqnQxTVBYs-Bm"
+      "local_path": "data/media_output/christian/faithnexus_John_3_16.mp4"
     },
     {
-      "filename": "FaithNexus_Philippians_4_13_I_Can_Do_All_Things.mp4",
-      "path": "gdrive:videos/christian/FaithNexus_Philippians_4_13_I_Can_Do_All_Things.mp4",
+      "filename": "faithnexus_Philippians_4_13.mp4",
+      "path": "gdrive:videos/christian/faithnexus_Philippians_4_13.mp4",
       "category": "christian",
       "size_bytes": 10204252,
-      "modified": "2026-05-17T19:14:12.770Z",
-      "topic": "Philippians 4:13 I Can Do All Things",
-      "gdrive_id": "1wZO2hVn_UM3EsVVrswLEO_k9g47cFZFY"
+      "local_path": "data/media_output/christian/faithnexus_Philippians_4_13.mp4"
     },
     {
-      "filename": "FaithNexus_Proverbs_3_5_6_Trust_In_The_Lord.mp4",
-      "path": "gdrive:videos/christian/FaithNexus_Proverbs_3_5_6_Trust_In_The_Lord.mp4",
+      "filename": "faithnexus_Proverbs_3_5_6.mp4",
+      "path": "gdrive:videos/christian/faithnexus_Proverbs_3_5_6.mp4",
       "category": "christian",
       "size_bytes": 10234804,
-      "modified": "2026-05-17T19:14:12.954Z",
-      "topic": "Proverbs 3:5-6 Trust In The Lord",
-      "gdrive_id": "1KmLMGCVPyZYvOCvLG5h9eCgfUJuFqqYF"
+      "local_path": "data/media_output/christian/faithnexus_Proverbs_3_5_6.mp4"
     },
     {
-      "filename": "ITNexus_Gold_Signal.mp4",
-      "path": "gdrive:videos/trading/ITNexus_Gold_Signal.mp4",
+      "filename": "itnexus_gold_signal.mp4",
+      "path": "gdrive:videos/trading/itnexus_gold_signal.mp4",
       "category": "trading",
       "size_bytes": 24572976,
-      "modified": "2026-05-17T19:14:43.329Z",
-      "topic": "ITNexus Gold Signal",
-      "gdrive_id": "13oaVAhqGbKp_3LBLIied9WuIXsKv2uaG"
+      "local_path": "data/media_output/trading/all/itnexus_gold_signal.mp4"
     },
     {
-      "filename": "Tiktok_20260511_Trading_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260511_Trading_Signal.mp4",
+      "filename": "tiktok_20260511_tiktok.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260511_tiktok.mp4",
       "category": "trading",
       "size_bytes": 24256240,
-      "modified": "2026-05-17T19:23:52.114Z",
-      "topic": "Trading Signal 2026-05-11",
-      "gdrive_id": "1ooXLvut5gGzahfVJ_Ee8GCaw-npTGfih"
+      "local_path": "data/media_output/trading/all/tiktok_20260511_tiktok.mp4"
     },
     {
-      "filename": "Tiktok_20260515_3_Signs_Gold_About_To_Move_XAUUSD.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_3_Signs_Gold_About_To_Move_XAUUSD.mp4",
+      "filename": "tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4",
       "category": "trading",
-      "size_bytes": 10747952,
-      "modified": "2026-05-17T19:14:58.457Z",
-      "topic": "3 Signs Gold About To Move XAUUSD",
-      "gdrive_id": "1tlzSQXvLIR0-uhCk4Ix_1fExtZCqixPl"
+      "size_bytes": 9339507,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4"
     },
     {
-      "filename": "Tiktok_20260515_Gold_Buy_Signal_XAUUSD.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_Gold_Buy_Signal_XAUUSD.mp4",
+      "filename": "tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4",
       "category": "trading",
       "size_bytes": 9443493,
-      "modified": "2026-05-17T19:15:06.366Z",
-      "topic": "Gold Buy Signal XAUUSD",
-      "gdrive_id": "1OqF-U6DnAT_8ZsMfRGGimfOIiRfrd1mJ"
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4"
     },
     {
-      "filename": "Tiktok_20260515_Gold_Sell_Signal_XAUUSD.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_Gold_Sell_Signal_XAUUSD.mp4",
+      "filename": "tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4",
       "category": "trading",
-      "size_bytes": 10031228,
-      "modified": "2026-05-17T19:15:06.445Z",
-      "topic": "Gold Sell Signal XAUUSD",
-      "gdrive_id": "1RLFfaf-RbuFl5IZ2crvlF_gIAREmBFQ-"
+      "size_bytes": 9443493,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4"
     },
     {
-      "filename": "Tiktok_20260515_POW_Buy_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_POW_Buy_Signal.mp4",
+      "filename": "tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4",
       "category": "trading",
-      "size_bytes": 11379994,
-      "modified": "2026-05-17T19:15:06.517Z",
-      "topic": "POW Buy Signal 2026-05-15",
-      "gdrive_id": "1DlktjGnyybnunEWxrra6OijRLRUAqOLF"
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4"
     },
     {
-      "filename": "Tiktok_20260515_POW_Sell_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_POW_Sell_Signal.mp4",
+      "filename": "tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4",
       "category": "trading",
-      "size_bytes": 11534851,
-      "modified": "2026-05-17T19:15:06.580Z",
-      "topic": "POW Sell Signal 2026-05-15",
-      "gdrive_id": "1whUEv3rCQI5qrUAA11UfUymufyfAwyZg"
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4"
     },
     {
-      "filename": "Tiktok_20260515_Trading_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_Trading_Signal.mp4",
+      "filename": "tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis.mp4",
       "category": "trading",
-      "size_bytes": 26344009,
-      "modified": "2026-05-17T19:14:58.363Z",
-      "topic": "Trading Signal 2026-05-15",
-      "gdrive_id": "1ry-gs3hkkOxPeToIGJJWHU9tVWpLkcOS"
+      "size_bytes": 84271,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis.mp4"
     },
     {
-      "filename": "Tiktok_20260515_Why_Institutional_Traders_Watch_This.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260515_Why_Institutional_Traders_Watch_This.mp4",
-      "category": "trading",
-      "size_bytes": 11432631,
-      "modified": "2026-05-17T19:14:58.571Z",
-      "topic": "Why Institutional Traders Watch This",
-      "gdrive_id": "1WJHeQU6DnYZWDsJJm3M1KcDqyP9ngxk2"
-    },
-    {
-      "filename": "Tiktok_20260516_POW_Buy_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260516_POW_Buy_Signal.mp4",
-      "category": "trading",
-      "size_bytes": 11681595,
-      "modified": "2026-05-17T19:15:11.865Z",
-      "topic": "POW Buy Signal 2026-05-16",
-      "gdrive_id": "14_Ers7jPFAuz2IZH30Jr2R0vBEd6zPiP"
-    },
-    {
-      "filename": "Tiktok_20260516_POW_Sell_Signal.mp4",
-      "path": "gdrive:videos/trading/Tiktok_20260516_POW_Sell_Signal.mp4",
-      "category": "trading",
-      "size_bytes": 11665724,
-      "modified": "2026-05-17T19:15:11.951Z",
-      "topic": "POW Sell Signal 2026-05-16",
-      "gdrive_id": "1Cy5iuSkiSBNuyZuiiHkGrUXMUtIeylLr"
-    },
-    {
-      "filename": "XAUUSD_Breakout_Trading_Signal.mp4",
-      "path": "gdrive:videos/trading/XAUUSD_Breakout_Trading_Signal.mp4",
+      "filename": "tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis_1.mp4",
       "category": "trading",
       "size_bytes": 6952730,
-      "modified": "2026-05-17T19:14:50.674Z",
-      "topic": "XAUUSD Breakout Trading Signal",
-      "gdrive_id": "1NS7kvk10IJXo7xP2Nwy6qBxun6GP4GQN"
+      "local_path": "data/media_output/trading/all/tiktok_20260514_gold_xauusd_breakout_trading_signal_analysis_1.mp4"
     },
     {
-      "filename": "XAUUSD_Gold_Buy_Signal_Technical_Analysis.mp4",
-      "path": "gdrive:videos/trading/XAUUSD_Gold_Buy_Signal_Technical_Analysis.mp4",
+      "filename": "tiktok_20260514_tiktok.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok.mp4",
       "category": "trading",
-      "size_bytes": 11476465,
-      "modified": "2026-05-17T19:14:50.380Z",
-      "topic": "XAUUSD Gold Buy Signal Technical Analysis",
-      "gdrive_id": "1qqHc7sLXsZTcZ_3ZBxQdyb4Am1QsEh_c"
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok.mp4"
     },
     {
-      "filename": "XAUUSD_Gold_Sell_Signal_Key_Resistance.mp4",
-      "path": "gdrive:videos/trading/XAUUSD_Gold_Sell_Signal_Key_Resistance.mp4",
+      "filename": "tiktok_20260514_tiktok_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_1.mp4",
       "category": "trading",
-      "size_bytes": 11462281,
-      "modified": "2026-05-17T19:14:50.529Z",
-      "topic": "XAUUSD Gold Sell Signal Key Resistance",
-      "gdrive_id": "1jhtHPZ3-Qln8cZgW_j_qQb"
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_1.mp4"
     },
     {
-      "filename": "YouTube_Shorts_20260515_XAUUSD_Gold_Market_Midday_Analysis.mp4",
-      "path": "gdrive:videos/trading/YouTube_Shorts_20260515_XAUUSD_Gold_Market_Midday_Analysis.mp4",
+      "filename": "tiktok_20260514_tiktok_10.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_10.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_10.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_11.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_11.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_11.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_12.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_12.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_12.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_13.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_13.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_13.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_14.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_14.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_14.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_15.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_15.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_15.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_16.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_16.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_16.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_17.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_17.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_17.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_2.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_2.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_2.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_3.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_3.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_3.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_4.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_4.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_4.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_5.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_5.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_5.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_6.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_6.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_6.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_7.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_7.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_7.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_8.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_8.mp4",
+      "category": "trading",
+      "size_bytes": 389704,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_8.mp4"
+    },
+    {
+      "filename": "tiktok_20260514_tiktok_9.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260514_tiktok_9.mp4",
+      "category": "trading",
+      "size_bytes": 381314,
+      "local_path": "data/media_output/trading/all/tiktok_20260514_tiktok_9.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "category": "trading",
+      "size_bytes": 234778,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4",
+      "category": "trading",
+      "size_bytes": 9443493,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4",
+      "category": "trading",
+      "size_bytes": 9443493,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_1.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4",
+      "category": "trading",
+      "size_bytes": 9443493,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_2.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_3.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_3.mp4",
+      "category": "trading",
+      "size_bytes": 9443493,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_buy_signal_on_xauusd_technical_analysis_entry_3.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4",
+      "category": "trading",
+      "size_bytes": 159469,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4",
+      "category": "trading",
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4",
+      "category": "trading",
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_1.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_2.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_2.mp4",
+      "category": "trading",
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_2.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_3.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_3.mp4",
+      "category": "trading",
+      "size_bytes": 9456322,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_sell_signal_on_xauusd_key_resistance_levels_e_3.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_gold_trading_signal_xauusd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_gold_trading_signal_xauusd.mp4",
+      "category": "trading",
+      "size_bytes": 335014,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_gold_trading_signal_xauusd.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_read_docs_pow_video_produce_buy_20260515.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_read_docs_pow_video_produce_buy_20260515.mp4",
+      "category": "trading",
+      "size_bytes": 11377457,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_read_docs_pow_video_produce_buy_20260515.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_read_docs_pow_video_produce_sell_2026051.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_read_docs_pow_video_produce_sell_2026051.mp4",
+      "category": "trading",
+      "size_bytes": 11504850,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_read_docs_pow_video_produce_sell_2026051.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_1.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_1.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_1.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_10.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_10.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_10.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_11.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_11.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_11.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_12.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_12.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_12.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_13.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_13.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_13.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_14.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_14.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_14.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_15.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_15.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_15.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_16.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_16.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_16.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_17.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_17.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_17.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_18.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_18.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_18.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_19.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_19.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_19.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_2.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_2.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_2.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_20.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_20.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_20.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_21.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_21.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_21.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_22.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_22.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_22.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_23.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_23.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_23.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_24.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_24.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_24.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_25.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_25.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_25.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_26.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_26.mp4",
+      "category": "trading",
+      "size_bytes": 381139,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_26.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_27.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_27.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_27.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_28.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_28.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_28.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_29.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_29.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_29.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_3.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_3.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_3.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_30.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_30.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_30.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_31.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_31.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_31.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_32.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_32.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_32.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_33.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_33.mp4",
+      "category": "trading",
+      "size_bytes": 21233712,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_33.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_34.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_34.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_34.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_35.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_35.mp4",
+      "category": "trading",
+      "size_bytes": 26342889,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_35.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_4.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_4.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_4.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_5.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_5.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_5.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_6.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_6.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_6.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_7.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_7.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_7.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_8.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_8.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_8.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_tiktok_9.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_tiktok_9.mp4",
+      "category": "trading",
+      "size_bytes": 26338224,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_tiktok_9.mp4"
+    },
+    {
+      "filename": "tiktok_20260515_why_institutional_traders_watch_this_lev.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260515_why_institutional_traders_watch_this_lev.mp4",
+      "category": "trading",
+      "size_bytes": 11432631,
+      "local_path": "data/media_output/trading/all/tiktok_20260515_why_institutional_traders_watch_this_lev.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_gold_buy_signal_on_xauusd_technical_anal.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_gold_buy_signal_on_xauusd_technical_anal.mp4",
+      "category": "trading",
+      "size_bytes": 222948,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_gold_buy_signal_on_xauusd_technical_anal.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "category": "trading",
+      "size_bytes": 250351,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_gold_sell_signal_on_xauusd_key_resistanc.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_gold_sell_signal_on_xauusd_key_resistanc.mp4",
+      "category": "trading",
+      "size_bytes": 226392,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_gold_sell_signal_on_xauusd_key_resistanc.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4",
+      "category": "trading",
+      "size_bytes": 233959,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_gold_sell_signal_on_xauusd_key_resistancTEMP_MPY_wvf_snd.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_read_docs_pow_video_produce_buy_20260516.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_read_docs_pow_video_produce_buy_20260516.mp4",
+      "category": "trading",
+      "size_bytes": 233122,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_read_docs_pow_video_produce_buy_20260516.mp4"
+    },
+    {
+      "filename": "tiktok_20260516_read_docs_pow_video_produce_sell_2026051.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260516_read_docs_pow_video_produce_sell_2026051.mp4",
+      "category": "trading",
+      "size_bytes": 232892,
+      "local_path": "data/media_output/trading/all/tiktok_20260516_read_docs_pow_video_produce_sell_2026051.mp4"
+    },
+    {
+      "filename": "tiktok_20260517_gold_buy_signal_on_xauusd_technical_anal.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260517_gold_buy_signal_on_xauusd_technical_anal.mp4",
+      "category": "trading",
+      "size_bytes": 11458665,
+      "local_path": "data/media_output/trading/all/tiktok_20260517_gold_buy_signal_on_xauusd_technical_anal.mp4"
+    },
+    {
+      "filename": "tiktok_20260517_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260517_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4",
+      "category": "trading",
+      "size_bytes": 234778,
+      "local_path": "data/media_output/trading/all/tiktok_20260517_gold_buy_signal_on_xauusd_technical_analTEMP_MPY_wvf_snd.mp4"
+    },
+    {
+      "filename": "tiktok_20260517_gold_sell_signal_on_xauusd_key_resistanc.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260517_gold_sell_signal_on_xauusd_key_resistanc.mp4",
+      "category": "trading",
+      "size_bytes": 11385125,
+      "local_path": "data/media_output/trading/all/tiktok_20260517_gold_sell_signal_on_xauusd_key_resistanc.mp4"
+    },
+    {
+      "filename": "tiktok_20260517_read_docs_pow_video_produce_buy_20260517.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260517_read_docs_pow_video_produce_buy_20260517.mp4",
+      "category": "trading",
+      "size_bytes": 231206,
+      "local_path": "data/media_output/trading/all/tiktok_20260517_read_docs_pow_video_produce_buy_20260517.mp4"
+    },
+    {
+      "filename": "tiktok_20260517_read_docs_pow_video_produce_sell_2026051.mp4",
+      "path": "gdrive:videos/trading/tiktok_20260517_read_docs_pow_video_produce_sell_2026051.mp4",
+      "category": "trading",
+      "size_bytes": 230526,
+      "local_path": "data/media_output/trading/all/tiktok_20260517_read_docs_pow_video_produce_sell_2026051.mp4"
+    },
+    {
+      "filename": "youtube_20260514_xauusd_daily_market_analysis_and_key_levels.mp4",
+      "path": "gdrive:videos/trading/youtube_20260514_xauusd_daily_market_analysis_and_key_levels.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260514_xauusd_daily_market_analysis_and_key_levels.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_daily_market_analysis_and_key_levels.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_daily_market_analysis_and_key_levels.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_daily_market_analysis_and_key_levels.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_daily_market_analysis_and_key_levels_1.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_1.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_1.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_daily_market_analysis_and_key_levels_2.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_2.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_2.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_daily_market_analysis_and_key_levels_3.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_3.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_3.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_daily_market_analysis_and_key_levels_4.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_4.mp4",
+      "category": "trading",
+      "size_bytes": 128982,
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_daily_market_analysis_and_key_levels_4.mp4"
+    },
+    {
+      "filename": "youtube_20260515_xauusd_gold_market_midday_analysis_and_key_levels.mp4",
+      "path": "gdrive:videos/trading/youtube_20260515_xauusd_gold_market_midday_analysis_and_key_levels.mp4",
       "category": "trading",
       "size_bytes": 13319942,
-      "modified": "2026-05-17T19:15:36.883Z",
-      "topic": "XAUUSD Gold Market Midday Analysis",
-      "gdrive_id": "10SO-0gYq8RPfcqV0-tnOC7yB4iC8mmYF"
+      "local_path": "data/media_output/trading/all/youtube_20260515_xauusd_gold_market_midday_analysis_and_key_levels.mp4"
+    },
+    {
+      "filename": "youtube_shorts_20260515_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "path": "gdrive:videos/trading/youtube_shorts_20260515_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "category": "trading",
+      "size_bytes": 351448,
+      "local_path": "data/media_output/trading/all/youtube_shorts_20260515_xauusd_daily_market_analysis_and_key_lev.mp4"
+    },
+    {
+      "filename": "youtube_shorts_20260516_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "path": "gdrive:videos/trading/youtube_shorts_20260516_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "category": "trading",
+      "size_bytes": 326562,
+      "local_path": "data/media_output/trading/all/youtube_shorts_20260516_xauusd_daily_market_analysis_and_key_lev.mp4"
+    },
+    {
+      "filename": "youtube_shorts_20260517_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "path": "gdrive:videos/trading/youtube_shorts_20260517_xauusd_daily_market_analysis_and_key_lev.mp4",
+      "category": "trading",
+      "size_bytes": 351448,
+      "local_path": "data/media_output/trading/all/youtube_shorts_20260517_xauusd_daily_market_analysis_and_key_lev.mp4"
     }
   ]
 }
