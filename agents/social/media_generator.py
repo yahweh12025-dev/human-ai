@@ -112,50 +112,92 @@ def _generate_script_openrouter_DISABLED(topic: str, platform: str, duration_s: 
     return f"🔥 {topic} — Your trading edge starts here! Follow for daily signals. #trading #forex #gold"
 
 
+def _get_used_pexels_ids() -> set:
+    """Return set of Pexels video IDs already used in produced videos (dedup)."""
+    idx_path = MEDIA_DIR / "VIDEO_INDEX.json"
+    if not idx_path.exists():
+        return set()
+    try:
+        import json as _json
+        idx = _json.loads(idx_path.read_text())
+        used = set()
+        for v in idx.get("videos", []):
+            src = v.get("pexels_id")
+            if src:
+                used.add(str(src))
+        return used
+    except Exception:
+        return set()
+
+
 def _fetch_pexels_video(query: str, min_duration: int = 10) -> Optional[str]:
-    """Download a Pexels video clip. Returns local path or None."""
+    """Download a Pexels video clip. Returns local path or None.
+    Deduplication: skip Pexels IDs already used in VIDEO_INDEX.json."""
     if not PEXELS_KEY:
         logger.warning("No PEXELS_API_KEY — cannot fetch stock video")
         return None
+    used_ids = _get_used_pexels_ids()
     try:
         r = requests.get(
             "https://api.pexels.com/videos/search",
             headers={"Authorization": PEXELS_KEY},
-            params={"query": query, "per_page": 5, "size": "medium", "orientation": "portrait"},
+            params={"query": query, "per_page": 15, "size": "medium", "orientation": "portrait"},
             timeout=10
         )
         if r.status_code != 200:
             logger.warning(f"Pexels API {r.status_code}: {r.text[:100]}")
             return None
         videos = r.json().get("videos", [])
-        # Filter by portrait orientation and min duration
+        # Filter by portrait orientation, min duration, AND not already used
         for v in videos:
+            vid_id = str(v["id"])
+            if vid_id in used_ids:
+                logger.debug(f"Skipping used Pexels video {vid_id}")
+                continue
             if v.get("duration", 0) >= min_duration:
-                # Get highest quality portrait file
                 files = sorted(v.get("video_files", []),
                                key=lambda f: f.get("width", 0) * f.get("height", 0),
                                reverse=True)
                 for f in files:
                     if f.get("width", 1) < f.get("height", 1):  # portrait
                         url = f["link"]
-                        vid_id = v["id"]
-                        # Store stock footage in _source/ to keep root clean
                         _source_dir = MEDIA_DIR / "_source"
                         _source_dir.mkdir(parents=True, exist_ok=True)
                         dest = _source_dir / f"pexels_{vid_id}.mp4"
-                        # Also check old location for backwards compat
                         if not dest.exists():
                             _old_dest = MEDIA_DIR / f"pexels_{vid_id}.mp4"
                             if _old_dest.exists():
                                 dest = _old_dest
                         if dest.exists():
                             return str(dest)
-                        logger.info(f"Downloading Pexels {vid_id}...")
+                        logger.info(f"Downloading new Pexels {vid_id} (unique)...")
                         data = requests.get(url, timeout=60, stream=True)
                         with open(dest, "wb") as fp:
                             for chunk in data.iter_content(8192):
                                 fp.write(chunk)
                         return str(dest)
+        logger.warning(f"All Pexels results for '{query}' already used — trying with page 2")
+        # Fallback: page 2 to get fresh content
+        r2 = requests.get(
+            "https://api.pexels.com/videos/search",
+            headers={"Authorization": PEXELS_KEY},
+            params={"query": query, "per_page": 5, "page": 2, "size": "medium", "orientation": "portrait"},
+            timeout=10
+        )
+        if r2.status_code == 200:
+            for v in r2.json().get("videos", []):
+                if v.get("duration", 0) >= min_duration:
+                    files = sorted(v.get("video_files", []), key=lambda f: f.get("width", 0)*f.get("height", 0), reverse=True)
+                    for f in files:
+                        if f.get("width", 1) < f.get("height", 1):
+                            url = f["link"]
+                            vid_id = str(v["id"])
+                            dest = MEDIA_DIR / "_source" / f"pexels_{vid_id}.mp4"
+                            if not dest.exists():
+                                data = requests.get(url, timeout=60, stream=True)
+                                with open(dest, "wb") as fp:
+                                    for chunk in data.iter_content(8192): fp.write(chunk)
+                            return str(dest)
     except Exception as e:
         logger.error(f"Pexels fetch failed: {e}")
     return None

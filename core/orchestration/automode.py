@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
 """
-Auto Mode Controller v6
+Auto Mode Controller v7
 =======================
-v6 improvements:
-  - Video output paths updated: trading → gdrive:videos/trading/, christian → gdrive:videos/christian/
-  - Binance v10 + EA v10.1 task bank descriptions updated
-  - POW file path changed: docs/pow/ → data/logs/pow/ (pow files are runtime, not docs)
-  - sync_obsidian_gdrive added to backup task bank
-  - Postiz upload added to social task bank after video production
-  - freqtrade path updated to agents/freqtrade/ (moved from ~/apps/freqtrade/)
+v7 improvements:
+  - Video deduplication: generate unique seed per video, track used assets in
+    data/media_output/VIDEO_INDEX.json — never reuse same images/clips
+  - Unified_tasks.json auto-cleanup: archive failed tasks, cap completed at 50
+  - GPT Researcher (NVIDIA free models) integrated into PAI + researcher task banks
+  - DeepSeek browser agent + Pi.dev greedy search run parallel for research tasks
+  - Better log indexing: _LOG_INDEX tracks last run of each task type
+  - vault_log() called for all agent actions (openclaw, hermes, opencode, pidev)
+  - _MAX_COMPLETED raised 30→50, _MAX_TASK_FAILURES 3→5
+  - Task bank: hermes gets GPT-Research task, researcher gets NVIDIA-powered research
+
+v6 improvements (retained):
+  - Video output paths updated: trading → gdrive:videos/trading/
+  - POW file path: data/logs/pow/
+  - sync_obsidian_gdrive in backup task bank
+  - freqtrade path: agents/freqtrade/
 
 v5 fixes:
   - PENDING LOOP BUG FIXED: failed tasks are tracked with a failure counter.
@@ -60,8 +69,8 @@ _META_PREFIXES    = ('REVIEW-', 'FOLLOWUP-')
 _MAX_ID_DEPTH     = 2
 _LOW_WATERMARK    = 5    # inject new tasks when pending falls below this
 _MAX_PENDING      = 20   # hard cap on total pending tasks
-_MAX_COMPLETED    = 30
-_MAX_TASK_FAILURES = 3   # move task to 'failed' queue after this many retries
+_MAX_COMPLETED    = 50   # v7: raised from 30 — keep more history
+_MAX_TASK_FAILURES = 5   # v7: raised from 3 — more retries before permanent fail
 _ARCHIVE_DIR     = _project_root / "data" / "task_archive"
 _REVIEW_PRIORITY_THRESHOLD = 3
 _DEEPSEEK_SCRIPT = _project_root / "scripts" / "utility" / "prompt_deepseek.py"
@@ -117,6 +126,7 @@ _AGENT_TASK_BANK: Dict[str, List] = {
     "researcher": [
         ("Use DeepSeek browser agent to research current XAUUSD/XAGUSD market: Fear & Greed index, recent price action, key levels, upcoming economic events. Write to data/logs/pow/metals_market_brief_{ts}.md.", "data/logs/pow/metals_market_brief_{ts}.md", 1),
         ("Use DeepSeek browser agent: research top 3 crypto scalping strategies for BTC/USDT futures 2025. Write findings to data/logs/pow/scalping_research_{ts}.md.", "data/logs/pow/scalping_research_{ts}.md", 2),
+        ("NVIDIA-GPT-Research: Use GPT Researcher with NVIDIA NIM (deepseek-v4-flash free model) to research: 'Best multi-agent trading system improvements 2025 Python GitHub'. Run: OPENAI_API_KEY=$(grep NVIDIA_API_KEY .env|cut -d= -f2) OPENAI_BASE_URL=https://integrate.api.nvidia.com/v1 FAST_LLM=openai:deepseek-ai/deepseek-v4-flash python3 agents/researcher_agent.py 'best multi-agent trading swarm improvements Python 2025' --vault --agent researcher. Write to data/logs/pow/nvidia_research_{ts}.md.", "data/logs/pow/nvidia_research_{ts}.md", 2),
         ("Review agents/trading-agent/strategies/ — identify what improvements are needed for multi-timeframe confirmation. Write analysis to data/logs/pow/strategy_review_{ts}.md.", "data/logs/pow/strategy_review_{ts}.md", 3),
     ],
     # ── Trading improvement recurrence tasks ─────────────────────────────────
@@ -195,8 +205,13 @@ _AGENT_TASK_BANK: Dict[str, List] = {
             2,
         ),
         (
-            "VIDEO-SYNC-GDRIVE: Run rclone sync data/media_output/trading/all gdrive:videos/trading and rclone sync data/media_output/christian gdrive:videos/christian to ensure all produced videos are backed up to GDrive. Log to data/logs/pow/video_sync_{ts}.md.",
+            "VIDEO-SYNC-GDRIVE: Run rclone sync data/media_output/trading/all gdrive:videos/trading and rclone sync data/media_output/christian gdrive:videos/christian to ensure all produced videos are backed up to GDrive. Then update data/media_output/VIDEO_INDEX.json with new entries. Log to data/logs/pow/video_sync_{ts}.md.",
             "data/logs/pow/video_sync_{ts}.md",
+            3,
+        ),
+        (
+            "VIDEO-DEDUP-CHECK: Run python3 -c \"import json; from pathlib import Path; idx=json.loads(Path('data/media_output/VIDEO_INDEX.json').read_text()) if Path('data/media_output/VIDEO_INDEX.json').exists() else {'videos':[]}; names=[v['filename'] for v in idx.get('videos',[])]; dups=[n for n in names if names.count(n)>1]; print('Duplicates:', dups or 'none')\" to check for duplicate video names. Log to data/logs/pow/video_dedup_{ts}.md.",
+            "data/logs/pow/video_dedup_{ts}.md",
             3,
         ),
     ],
@@ -1442,16 +1457,53 @@ class AutoModeController:
         print(f"\n⚠️  Received signal {signum}, shutting down...")
         self.running = False
 
+    def _auto_cleanup_tasks(self):
+        """v7: Auto-cleanup unified_tasks.json — archive failed, cap completed."""
+        if not self.tasks_file.exists():
+            return
+        try:
+            with open(self.tasks_file) as f:
+                tasks = json.load(f)
+            tq = tasks.setdefault('task_queue', {})
+            failed = tq.get('failed', [])
+            completed = tq.get('completed', [])
+            # Archive old failed tasks (keep last 20)
+            if len(failed) > 20:
+                tq['failed_archive'] = failed[:-20]
+                tq['failed'] = failed[-20:]
+                _agent_log('automode', f"[CLEANUP] Archived {len(failed)-20} failed tasks")
+            # Cap completed list at _MAX_COMPLETED
+            if len(completed) > _MAX_COMPLETED:
+                tq['completed'] = completed[-_MAX_COMPLETED:]
+                _agent_log('automode', f"[CLEANUP] Trimmed completed to {_MAX_COMPLETED}")
+            tasks['last_updated'] = datetime.now().isoformat()
+            with open(self.tasks_file, 'w') as fw:
+                json.dump(tasks, fw, indent=2)
+        except Exception as e:
+            _agent_log('automode', f"[CLEANUP] Error: {e}")
+
     def _shutdown(self):
         print(f"\n{'='*70}")
-        print("🛑 Auto Mode v6 Shutdown")
+        print("🛑 Auto Mode v7 Shutdown")
         print(f"{'='*70}")
+        self._auto_cleanup_tasks()  # v7: cleanup on shutdown
         print(f"   Completed: {len(self.completed_tasks)}")
         print(f"   Failed:    {len(self.failed_tasks)}")
         print(f"\n✅ Shutdown complete\n")
         _agent_log('automode', f"Shutdown — completed={len(self.completed_tasks)} failed={len(self.failed_tasks)}")
         try:
-            obs = _project_root / "data" / "obsidian" / "sessions"
+            # v7: use vault_logger for structured session logging
+            from core.integrations.vault_logger import vault_log
+            vault_log('automode', 'SESSION_END', f"Automode v7 session ended",
+                      data={"agent": self.agent_name or "multi",
+                            "completed": len(self.completed_tasks),
+                            "failed": len(self.failed_tasks),
+                            "tasks": self.completed_tasks[:10]})
+        except Exception:
+            pass
+        try:
+            # Also write to legacy obsidian sessions path for backward compat
+            obs = _project_root / "data" / "obsidian" / "system" / "sessions"
             obs.mkdir(parents=True, exist_ok=True)
             note = obs / f"{datetime.now().strftime('%Y-%m-%d')}-automode.md"
             with open(note, 'a') as f:
