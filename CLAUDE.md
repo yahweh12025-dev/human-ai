@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The **Human-AI Project** is a self-evolving, autonomous multi-agent swarm for high-alpha trading,
 deep-web research, and automated social media content. It combines a dual-brain trading architecture
-(EA v10.1 for metals + Binance v10 for crypto) with autonomous content creation and a self-improving
-agent loop via Automode v6.
+(EA v10.1 for metals + Binance v11.1 for crypto) with autonomous content creation and a self-improving
+agent loop via Automode v7.
 
 Core agents:
 - **OpenClaw**: Gateway coordinator managing inter-agent communication
@@ -23,7 +23,7 @@ Core agents:
 Trading engines:
 - **EA Trader v10.1** (`agents/trading-agent/live_trading_ea.py`) — XAUUSD/XAGUSD via MT5 file bridge.
   Start: `python3 liveea.py`. Prop-firm safe: 3% daily / 5% max drawdown / 0.05L hard cap.
-- **Binance Scalper v10** (`agents/trading-agent/live_trading_binance.py`) — BTC/ETH/BNB/SOL/XRP/TRX/ADA demo futures.
+- **Binance Scalper v11.1** (`agents/trading-agent/live_trading_binance.py`) — BTC/ETH/BNB/SOL/XRP/TRX/ADA demo futures.
   Start: `python3 startbinance.py`. Dynamic leverage up to 75x. $5/$3/$2 equity per trade.
 
 The system integrates with:
@@ -49,7 +49,7 @@ The system integrates with:
 ```
 human-ai/                    # Main project directory
 │
-├── automode.py              # Automode v6 — autonomous swarm controller
+├── automode.py              # Automode v7 — autonomous swarm controller
 ├── liveea.py                # EA launcher (delegates to scripts/ea/liveea.py)
 ├── startbinance.py          # Binance scalper launcher (nohup)
 ├── stopbinance.py           # Stop Binance scalper
@@ -57,9 +57,9 @@ human-ai/                    # Main project directory
 ├── unified_tasks.json       # Unified task queue: pending/completed/failed
 │
 ├── agents/                  # All agent code
-│   ├── trading-agent/       # EA v10.1 + Binance v10 + strategies + MQ5 files
+│   ├── trading-agent/       # EA v10.1 + Binance v11.1 + strategies + MQ5 files
 │   │   ├── live_trading_ea.py      # EA Trader v10.1 (XAUUSD/XAGUSD)
-│   │   ├── live_trading_binance.py # Binance Scalper v10 (BTC/ETH/BNB/SOL)
+│   │   ├── live_trading_binance.py # Binance Scalper v11.1 (BTC/ETH/BNB/SOL)
 │   │   ├── deadman_switch.py       # Catastrophic drawdown liquidation
 │   │   ├── ea/                     # MQ5 source (MasterMetalsEA_v56.mq5, etc.)
 │   │   └── strategies/             # FreqTrade strategies
@@ -184,7 +184,7 @@ python3 liveea.py
 # Stop EA + close all MT5 positions
 python3 stopea.py
 
-# Start Binance Scalper v10 (BTC/ETH/BNB/SOL/XRP/TRX/ADA demo futures)
+# Start Binance Scalper v11.1 (BTC/ETH/BNB/SOL/XRP/TRX/ADA demo futures)
 python3 startbinance.py
 
 # Stop Binance scalper
@@ -200,13 +200,18 @@ python3 core/apps/dashboard/mission_control.py
 
 ### Automode (Autonomous Swarm)
 ```bash
-# Run all agents in self-tasking loop
-python3 automode.py
+# Start OpenClaw manager (monitors and manages ALL automodes)
+python3 core/orchestration/openclaw_manager.py
 
-# Run a specific agent
-python3 automode.py hermes
-python3 automode.py opencode
-python3 automode.py pai
+# Or run individual focused automodes
+python3 scripts/autobinance.py    # Binance trading automation
+python3 scripts/autoea.py         # EA MetaTrader 5 automation
+python3 scripts/autosocial.py     # Social media / video automation
+python3 scripts/autosync.py       # Backup / sync all integrations
+
+# Full swarm automode
+python3 automode.py               # All agents
+python3 automode.py hermes        # Single agent
 ```
 
 ### Video Production
@@ -254,7 +259,7 @@ freqtrade download-data --pairs BTC/USDT --timerange 20240101-20250101
 ### Trading Engine (Dual-Brain)
 - **EA v10.1** (XAUUSD/XAGUSD): 3-pillar signal (trend + RSI divergence + Bollinger structure),
   session-aware regimes (ASIAN/LONDON/NY), RANGE mean-reversion mode, prop-firm safe
-- **Binance v10** (BTC/ETH/BNB/SOL): 10s ticks, 60s max hold, dynamic leverage (50%→75x max),
+- **Binance v11.1** (BTC/ETH/BNB/SOL): 10s ticks, 60s max hold, dynamic leverage (50%→75x max),
   partial TP at 0.30%, SL move to breakeven, TP2 at 0.60%
 - **FreqTrade V9** strategy in `agents/trading-agent/strategies/freqtrade_v9.py`
 - Multiple exchange support via CCXT; backtesting in `data/tests/`

@@ -1,4 +1,4 @@
-# Disable Jekyll processing - serve files as-is
-# This is required because GitHub Pages tries to run Jekyll on all .md files
-exclude:
-  - "**/*"
+# GitHub Pages config — serve static files
+theme: jekyll-theme-minimal
+title: "Human-AI Swarm"
+description: "Autonomous multi-agent swarm for high-alpha trading and content creation"
