@@ -1,6 +1,6 @@
 # Trading Agents Status
 
-**Last updated: 2026-05-15**
+**Last updated: 2026-05-17 22:30 UTC**
 
 ---
 
@@ -9,9 +9,15 @@
 - **File**: `agents/trading-agent/live_trading_ea.py`
 - **Start**: `python3 liveea.py` (root launcher)
 - **Stop**: `python3 stopea.py`
-- **Status**: RUNNING in nohup
-- **Account**: ICMarketsSC-Demo #52878487 | Balance: $4,430.86 | trades=757 | streak=+5
+- **Status**: RUNNING (PIDs 19086/19088) | MT5 bridge live
+- **Account**: ICMarketsSC-Demo #52878487 | Balance: $4,430.58 | Equity: ~$4,410 | 2 open positions
 - **Version**: v10.1
+
+### Incident 2026-05-17
+- MT5 crashed at ~21:38 UTC; bridge stale for 26 minutes; 2 open XAUUSD positions had no SL/TP
+- **Fixed**: SL/TP now passed to MT5 broker on every entry (`sl_python`/`tp_python`)
+- **Fixed**: Stale bridge counter — Obsidian alert at 5min, reconnect trigger at 10min
+- **MT5 after restart**: EA must be manually reattached to XAUUSD chart; does not auto-reattach
 
 ### Signal Architecture
 - 3-pillar signal: trend (EMA stack) + RSI divergence + Bollinger structure
@@ -21,7 +27,8 @@
 
 ### Risk Management
 - Prop-firm safe: 3% daily limit, 5% max drawdown
-- XAUUSD: 0.05L hard cap | XAGUSD: 0.01L always | EURUSD/GBPUSD: 0.01L default
+- XAUUSD: 0.05L hard cap | XAGUSD: 0.01L | EURUSD/GBPUSD: 0.05L
+- **SL/TP now set at broker level** on every entry — positions protected if Python crashes
 - LONDON_NY overlap: trailing stop tightened to 10 pips
 - NY_CLOSE: TREND regime now active (unblocked in v10)
 
@@ -43,8 +50,12 @@
 - **Start**: `python3 startbinance.py` (root launcher)
 - **Stop**: `python3 stopbinance.py`
 - **Status**: RUNNING via nohup + PID file
-- **Balance**: $4,502.09 | trades=5,533 | pnl_today=+$16.93
 - **Version**: v9.1 — 7 symbols, ATR-based risk, market intelligence
+
+### Fix 2026-05-17
+- **Exchange-side SL**: `place_stop_market_order()` added to `binance_demo_client.py`
+- Immediately after every market entry, a STOP_MARKET reduceOnly order is placed at the SL level
+- If process crashes, broker-side stop protects the position
 
 ### Signal Architecture
 - 10-second tick rate, 60-second max hold

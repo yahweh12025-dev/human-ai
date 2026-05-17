@@ -110,6 +110,19 @@ class BinanceDemoClient:
         }
         return self._post_private('/fapi/v1/order', params)
 
+    def place_stop_market_order(self, symbol: str, side: str, quantity: float,
+                               stop_price: float) -> Dict:
+        """Place a STOP_MARKET order (exchange-side stop loss). side: BUY or SELL"""
+        params = {
+            'symbol': symbol,
+            'side': side.upper(),
+            'type': 'STOP_MARKET',
+            'quantity': quantity,
+            'stopPrice': round(stop_price, 4),
+            'reduceOnly': 'true',
+        }
+        return self._post_private('/fapi/v1/order', params)
+
     def place_limit_order(self, symbol: str, side: str, quantity: float,
                          price: float, time_in_force: str = 'GTC') -> Dict:
         params = {

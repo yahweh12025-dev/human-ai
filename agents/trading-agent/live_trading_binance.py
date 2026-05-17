@@ -678,6 +678,11 @@ class BinanceTrader:
             print(f"   -> ENTRY {side} {qty} {symbol} @ ${price:,.4f}  SL={sl:,.4f}  TP1={tp1:,.4f}  TP2={tp2:,.4f}  LEV:{lev}x  equity=${risk_usd:.2f}  [{sl_mode} atr={avg_atr_abs:.4f}]")
             result = self.client.place_market_order(symbol, side, qty)
             if result.get("status") in ("FILLED", "NEW", "success", "demo"):
+                stop_side = "SELL" if side == "BUY" else "BUY"
+                try:
+                    self.client.place_stop_market_order(symbol, stop_side, qty, sl)
+                except Exception as e:
+                    print(f"   [WARN] Exchange SL order failed: {e}")
                 self.positions[symbol] = {
                     "side": side, "entry": price, "qty": qty, "qty_remaining": qty,
                     "sl": sl, "tp1": tp1, "tp2": tp2, "leverage": lev,
