@@ -1,11 +1,15 @@
+import logging
 import time
 import requests
 import os
 import json
 from datetime import datetime
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv('/home/yahwehatwork/human-ai/.env')
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(_PROJECT_ROOT / '.env')
+logger = logging.getLogger(__name__)
 
 FREQTRADE_URL = 'http://localhost:8080'
 FREQTRADE_USER = 'freqtrade'
@@ -23,8 +27,8 @@ def send_telegram(msg):
                 json={'chat_id': TELEGRAM_CHAT, 'text': msg},
                 timeout=10
             )
-        except:
-            pass
+        except Exception as exc:
+            logger.warning("Telegram send failed: %s", exc)
 
 def close_all_positions():
     try:
@@ -59,7 +63,10 @@ def check_heartbeat():
         with open(HEARTBEAT_FILE) as f:
             last_beat = float(f.read().strip())
         return time.time() - last_beat < TIMEOUT_SECONDS
-    except:
+    except FileNotFoundError:
+        return False
+    except Exception as exc:
+        logger.warning("Heartbeat check error: %s", exc)
         return False
 
 def run_monitor():

@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import requests
 from datetime import datetime, timedelta
@@ -6,17 +7,25 @@ from pathlib import Path
 from dotenv import load_dotenv
 from supabase import create_client
 
-load_dotenv('/home/yahwehatwork/human-ai/.env')
+_HERE = Path(__file__).resolve().parent
+_PROJECT_ROOT = _HERE.parent.parent
+load_dotenv(_PROJECT_ROOT / '.env')
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
-VAULT_FILE = '/home/yahwehatwork/human-ai/agents/trading-agent/data/vault_state.json'
+VAULT_FILE = str(_HERE / 'data' / 'vault_state.json')
 FREQTRADE_URL = 'http://localhost:8080'
+
+logger = logging.getLogger(__name__)
 
 def load_vault():
     try:
         with open(VAULT_FILE) as f:
             return json.load(f)
-    except:
+    except FileNotFoundError:
+        logger.debug("vault_state.json not found — using default state")
+        return {'active_balance': 5.0, 'vault_balance': 0.0, 'total_deposited': 5.0, 'trades_today': 0, 'session_start_balance': 5.0, 'peak_balance': 5.0, 'circuit_breaker_active': False, 'circuit_breaker_until': None, 'daily_returns': [], 'vault_earn_rate': 0.0002}
+    except Exception as exc:
+        logger.warning("Failed to load vault state: %s — using default", exc)
         return {'active_balance': 5.0, 'vault_balance': 0.0, 'total_deposited': 5.0, 'trades_today': 0, 'session_start_balance': 5.0, 'peak_balance': 5.0, 'circuit_breaker_active': False, 'circuit_breaker_until': None, 'daily_returns': [], 'vault_earn_rate': 0.0002}
 
 def save_vault(state):
@@ -67,8 +76,8 @@ def process_trade_result(net_pnl: float):
                 'vault_balance': state['vault_balance'],
                 'timestamp': datetime.utcnow().isoformat()
             }).execute()
-        except:
-            pass
+        except Exception as exc:
+            logger.warning("Supabase trade_log insert failed: %s", exc)
 
     state['trades_today'] += 1
     save_vault(state)

@@ -457,7 +457,8 @@ class BinanceTrader:
                     # new day — reset daily counter
                     self.pnl_today = 0.0
                     self.daily_reset_date = today
-            except: pass
+            except Exception as _e_state:
+                print(f"[WARN] Failed to load state: {_e_state} — using defaults")
 
     def _check_daily_reset(self):
         """v9: Reset daily P&L counter at UTC midnight."""
@@ -584,6 +585,14 @@ class BinanceTrader:
         sig   = compute_signal(klines, sentiment, alp_trend, market_intel)
         price = self.client.get_price(symbol)
         pos   = self.positions.get(symbol)
+
+        # HEARTBEAT_OK suppression (DeepSeek urgency gate pattern):
+        # If no open position AND signal strength is well below entry threshold,
+        # skip verbose processing — reduces log noise and unnecessary CPU cycles.
+        _urgency_floor = MIN_STRENGTH * 0.70   # 30% below min = clearly no opportunity
+        if pos is None and sig["strength"] < _urgency_floor and sig["direction"] == "NONE":
+            return  # HEARTBEAT_OK — nothing to do for this symbol this tick
+
         fg_val = sentiment.get("fear_greed", {}).get("value", 50)
         lev    = self._sym_leverage(symbol, sig["strength"], fg_val)  # dynamic: starts low, grows with WR
 
@@ -870,8 +879,10 @@ class BinanceTrader:
         self._save(bal)
         print(f"\nBinance trader stopped. Trades: {self.trades} | PnL: ${self.pnl:+.2f} | Balance: ${bal:,.2f}")
         _obsidian("Binance Trader Stopped", f"- Trades: {self.trades}\n- PnL: ${self.pnl:+.2f}\n- Balance: ${bal:,.2f}")
-        try: PID_FILE.unlink()
-        except: pass
+        try:
+            PID_FILE.unlink(missing_ok=True)
+        except Exception as _e_pid:
+            print(f"[WARN] Could not remove PID file: {_e_pid}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,179 @@
+{
+  "generated": "2026-05-17T00:00:00",
+  "total_videos": 19,
+  "christian": 4,
+  "trading": 15,
+  "videos": [
+    {
+      "filename": "FaithNexus_Isaiah_40_31_Wings_Like_Eagles.mp4",
+      "path": "gdrive:videos/christian/FaithNexus_Isaiah_40_31_Wings_Like_Eagles.mp4",
+      "category": "christian",
+      "size_bytes": 7680883,
+      "modified": "2026-05-17T19:14:12.588Z",
+      "topic": "Isaiah 40:31 Wings Like Eagles",
+      "gdrive_id": "18Uugy0q44m3Uvtm9-7SRM0_ASJlYQ_ff"
+    },
+    {
+      "filename": "FaithNexus_John_3_16_For_God_So_Loved_The_World.mp4",
+      "path": "gdrive:videos/christian/FaithNexus_John_3_16_For_God_So_Loved_The_World.mp4",
+      "category": "christian",
+      "size_bytes": 7746555,
+      "modified": "2026-05-17T19:14:12.634Z",
+      "topic": "John 3:16 For God So Loved The World",
+      "gdrive_id": "1AfLNhxP-g4z0zWvmSRYhqnQxTVBYs-Bm"
+    },
+    {
+      "filename": "FaithNexus_Philippians_4_13_I_Can_Do_All_Things.mp4",
+      "path": "gdrive:videos/christian/FaithNexus_Philippians_4_13_I_Can_Do_All_Things.mp4",
+      "category": "christian",
+      "size_bytes": 10204252,
+      "modified": "2026-05-17T19:14:12.770Z",
+      "topic": "Philippians 4:13 I Can Do All Things",
+      "gdrive_id": "1wZO2hVn_UM3EsVVrswLEO_k9g47cFZFY"
+    },
+    {
+      "filename": "FaithNexus_Proverbs_3_5_6_Trust_In_The_Lord.mp4",
+      "path": "gdrive:videos/christian/FaithNexus_Proverbs_3_5_6_Trust_In_The_Lord.mp4",
+      "category": "christian",
+      "size_bytes": 10234804,
+      "modified": "2026-05-17T19:14:12.954Z",
+      "topic": "Proverbs 3:5-6 Trust In The Lord",
+      "gdrive_id": "1KmLMGCVPyZYvOCvLG5h9eCgfUJuFqqYF"
+    },
+    {
+      "filename": "ITNexus_Gold_Signal.mp4",
+      "path": "gdrive:videos/trading/ITNexus_Gold_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 24572976,
+      "modified": "2026-05-17T19:14:43.329Z",
+      "topic": "ITNexus Gold Signal",
+      "gdrive_id": "13oaVAhqGbKp_3LBLIied9WuIXsKv2uaG"
+    },
+    {
+      "filename": "Tiktok_20260511_Trading_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260511_Trading_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 24256240,
+      "modified": "2026-05-17T19:23:52.114Z",
+      "topic": "Trading Signal 2026-05-11",
+      "gdrive_id": "1ooXLvut5gGzahfVJ_Ee8GCaw-npTGfih"
+    },
+    {
+      "filename": "Tiktok_20260515_3_Signs_Gold_About_To_Move_XAUUSD.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_3_Signs_Gold_About_To_Move_XAUUSD.mp4",
+      "category": "trading",
+      "size_bytes": 10747952,
+      "modified": "2026-05-17T19:14:58.457Z",
+      "topic": "3 Signs Gold About To Move XAUUSD",
+      "gdrive_id": "1tlzSQXvLIR0-uhCk4Ix_1fExtZCqixPl"
+    },
+    {
+      "filename": "Tiktok_20260515_Gold_Buy_Signal_XAUUSD.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_Gold_Buy_Signal_XAUUSD.mp4",
+      "category": "trading",
+      "size_bytes": 9443493,
+      "modified": "2026-05-17T19:15:06.366Z",
+      "topic": "Gold Buy Signal XAUUSD",
+      "gdrive_id": "1OqF-U6DnAT_8ZsMfRGGimfOIiRfrd1mJ"
+    },
+    {
+      "filename": "Tiktok_20260515_Gold_Sell_Signal_XAUUSD.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_Gold_Sell_Signal_XAUUSD.mp4",
+      "category": "trading",
+      "size_bytes": 10031228,
+      "modified": "2026-05-17T19:15:06.445Z",
+      "topic": "Gold Sell Signal XAUUSD",
+      "gdrive_id": "1RLFfaf-RbuFl5IZ2crvlF_gIAREmBFQ-"
+    },
+    {
+      "filename": "Tiktok_20260515_POW_Buy_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_POW_Buy_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 11379994,
+      "modified": "2026-05-17T19:15:06.517Z",
+      "topic": "POW Buy Signal 2026-05-15",
+      "gdrive_id": "1DlktjGnyybnunEWxrra6OijRLRUAqOLF"
+    },
+    {
+      "filename": "Tiktok_20260515_POW_Sell_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_POW_Sell_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 11534851,
+      "modified": "2026-05-17T19:15:06.580Z",
+      "topic": "POW Sell Signal 2026-05-15",
+      "gdrive_id": "1whUEv3rCQI5qrUAA11UfUymufyfAwyZg"
+    },
+    {
+      "filename": "Tiktok_20260515_Trading_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_Trading_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 26344009,
+      "modified": "2026-05-17T19:14:58.363Z",
+      "topic": "Trading Signal 2026-05-15",
+      "gdrive_id": "1ry-gs3hkkOxPeToIGJJWHU9tVWpLkcOS"
+    },
+    {
+      "filename": "Tiktok_20260515_Why_Institutional_Traders_Watch_This.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260515_Why_Institutional_Traders_Watch_This.mp4",
+      "category": "trading",
+      "size_bytes": 11432631,
+      "modified": "2026-05-17T19:14:58.571Z",
+      "topic": "Why Institutional Traders Watch This",
+      "gdrive_id": "1WJHeQU6DnYZWDsJJm3M1KcDqyP9ngxk2"
+    },
+    {
+      "filename": "Tiktok_20260516_POW_Buy_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260516_POW_Buy_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 11681595,
+      "modified": "2026-05-17T19:15:11.865Z",
+      "topic": "POW Buy Signal 2026-05-16",
+      "gdrive_id": "14_Ers7jPFAuz2IZH30Jr2R0vBEd6zPiP"
+    },
+    {
+      "filename": "Tiktok_20260516_POW_Sell_Signal.mp4",
+      "path": "gdrive:videos/trading/Tiktok_20260516_POW_Sell_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 11665724,
+      "modified": "2026-05-17T19:15:11.951Z",
+      "topic": "POW Sell Signal 2026-05-16",
+      "gdrive_id": "1Cy5iuSkiSBNuyZuiiHkGrUXMUtIeylLr"
+    },
+    {
+      "filename": "XAUUSD_Breakout_Trading_Signal.mp4",
+      "path": "gdrive:videos/trading/XAUUSD_Breakout_Trading_Signal.mp4",
+      "category": "trading",
+      "size_bytes": 6952730,
+      "modified": "2026-05-17T19:14:50.674Z",
+      "topic": "XAUUSD Breakout Trading Signal",
+      "gdrive_id": "1NS7kvk10IJXo7xP2Nwy6qBxun6GP4GQN"
+    },
+    {
+      "filename": "XAUUSD_Gold_Buy_Signal_Technical_Analysis.mp4",
+      "path": "gdrive:videos/trading/XAUUSD_Gold_Buy_Signal_Technical_Analysis.mp4",
+      "category": "trading",
+      "size_bytes": 11476465,
+      "modified": "2026-05-17T19:14:50.380Z",
+      "topic": "XAUUSD Gold Buy Signal Technical Analysis",
+      "gdrive_id": "1qqHc7sLXsZTcZ_3ZBxQdyb4Am1QsEh_c"
+    },
+    {
+      "filename": "XAUUSD_Gold_Sell_Signal_Key_Resistance.mp4",
+      "path": "gdrive:videos/trading/XAUUSD_Gold_Sell_Signal_Key_Resistance.mp4",
+      "category": "trading",
+      "size_bytes": 11462281,
+      "modified": "2026-05-17T19:14:50.529Z",
+      "topic": "XAUUSD Gold Sell Signal Key Resistance",
+      "gdrive_id": "1jhtHPZ3-Qln8cZgW_j_qQb"
+    },
+    {
+      "filename": "YouTube_Shorts_20260515_XAUUSD_Gold_Market_Midday_Analysis.mp4",
+      "path": "gdrive:videos/trading/YouTube_Shorts_20260515_XAUUSD_Gold_Market_Midday_Analysis.mp4",
+      "category": "trading",
+      "size_bytes": 13319942,
+      "modified": "2026-05-17T19:15:36.883Z",
+      "topic": "XAUUSD Gold Market Midday Analysis",
+      "gdrive_id": "10SO-0gYq8RPfcqV0-tnOC7yB4iC8mmYF"
+    }
+  ]
+}

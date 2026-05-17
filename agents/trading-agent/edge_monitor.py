@@ -1,29 +1,37 @@
 import json
+import logging
 import os
 import requests
 from collections import deque
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv('/home/yahwehatwork/human-ai/.env')
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(_PROJECT_ROOT / '.env')
+logger = logging.getLogger(__name__)
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT = os.getenv('TELEGRAM_CHAT_ID', '')
-MONITOR_FILE = '/home/yahwehatwork/human-ai/agents/trading-agent/data/edge_state.json'
-BASELINE_FILE = '/home/yahwehatwork/human-ai/agents/trading-agent/data/baseline_stats.json'
+_DATA_DIR = Path(__file__).resolve().parent / 'data'
+MONITOR_FILE = str(_DATA_DIR / 'edge_state.json')
+BASELINE_FILE = str(_DATA_DIR / 'baseline_stats.json')
 
 def send_telegram(msg):
     if TELEGRAM_TOKEN and TELEGRAM_CHAT:
         try:
             requests.post(f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage',
                 json={'chat_id': TELEGRAM_CHAT, 'text': f'[EDGE MONITOR] {msg}'}, timeout=10)
-        except:
-            pass
+        except Exception as exc:
+            logger.warning("Telegram send failed: %s", exc)
 
 def load_baseline():
     try:
         with open(BASELINE_FILE) as f:
             return json.load(f)
-    except:
+    except FileNotFoundError:
+        logger.debug("baseline_stats.json not found — using default baseline")
+        return {'win_rate': 0.54, 'profit_factor': 1.3, 'sample_size': 0}
+    except Exception as exc:
+        logger.warning("Failed to load baseline stats: %s — using default", exc)
         return {'win_rate': 0.54, 'profit_factor': 1.3, 'sample_size': 0}
 
 def load_monitor():
@@ -32,7 +40,11 @@ def load_monitor():
             data = json.load(f)
             data['trades'] = deque(data['trades'], maxlen=500)
             return data
-    except:
+    except FileNotFoundError:
+        logger.debug("edge_state.json not found — using default monitor state")
+        return {'trades': deque(maxlen=500), 'alert_level': 'GREEN', 'position_multiplier': 1.0, 'halted': False}
+    except Exception as exc:
+        logger.warning("Failed to load edge monitor state: %s — using default", exc)
         return {'trades': deque(maxlen=500), 'alert_level': 'GREEN', 'position_multiplier': 1.0, 'halted': False}
 
 def save_monitor(state):

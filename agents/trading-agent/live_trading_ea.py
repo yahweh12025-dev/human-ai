@@ -168,7 +168,8 @@ def _obsidian(title, body, tag="ea"):
             f = d / f"{datetime.now().strftime('%Y-%m-%d')}-{tag}.md"
             with open(f, "a") as fp:
                 fp.write(f"## {title}\n_{datetime.now().strftime('%H:%M:%S')}_\n{body}\n\n---\n\n")
-        except: pass
+        except Exception:
+            pass  # obsidian write is best-effort; never crash trading on log failure
 
 
 def in_session() -> bool:
@@ -232,11 +233,12 @@ def get_price(symbol: str) -> float:
                 val = status.get(key, 0)
                 if val and float(val) > 0:
                     return float(val)
-    except: pass
+    except Exception:
+        pass  # MT5 status file unavailable — try next source
     # Secondary: yfinance (slight delay but accurate)
     if YFINANCE_OK:
         try: return float(yf.Ticker(YF_MAP[symbol]).fast_info.last_price)
-        except: pass
+        except Exception: pass
     # Fallback: last known price from most recent trade file
     try:
         import glob as _glob
@@ -245,7 +247,8 @@ def get_price(symbol: str) -> float:
             last = json.loads(open(files[-1]).read())
             p = last.get("entry_price") or last.get("exit_price")
             if p: return float(p)
-    except: pass
+    except Exception:
+        pass  # no cached trade file — use hardcoded fallback
     # Last resort: hardcoded approximate (agent will not trade until MT5 confirms)
     return {"XAUUSD": 3320.0, "XAGUSD": 33.0, "EURUSD": 1.0850, "GBPUSD": 1.2700}.get(symbol, 1.0)
 
@@ -292,7 +295,8 @@ def get_trend_15m(symbol: str) -> str:
         # Tightened from 0.03% to 0.02% threshold — less NEUTRAL, catches more directional bias
         if ema9 > ema20 * 1.0002: return "BULL"
         if ema9 < ema20 * 0.9998: return "BEAR"
-    except: pass
+    except Exception:
+        pass  # yfinance unavailable — return NEUTRAL bias
     return "NEUTRAL"
 
 
@@ -323,8 +327,8 @@ def get_h1_bias(symbol: str) -> str:
             return "BULL"
         if ema20_now < ema20_prev * (1 - threshold):
             return "BEAR"
-    except:
-        pass
+    except Exception:
+        pass  # yfinance H1 data unavailable — return NEUTRAL bias
     return "NEUTRAL"
 
 
@@ -746,7 +750,8 @@ def read_signal_result(expected_id: str, timeout: float = 6.0):
                 r = json.loads(RESULT_FILE.read_text())
                 if r.get("sig_id") == expected_id:
                     return r
-            except: pass
+            except Exception:
+                pass  # result file may be mid-write — retry
         time.sleep(0.4)
     return None
 
@@ -831,7 +836,8 @@ class EATrader:
                 self.trades       = s.get("trade_count", 0)
                 self._peak_equity = s.get("peak_equity", self.deposit + self.pnl)
                 self._streak      = s.get("streak", 0)
-            except: pass
+            except Exception as _e_st:
+                print(f"[WARN] EA state load failed: {_e_st} — using defaults")
 
     def _save(self, mt5_status: dict = None):
         # Use MT5 live values as source of truth when available
