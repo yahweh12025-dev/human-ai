@@ -1,0 +1,233 @@
+{
+  "allocation": {
+    "MasterMetalsEA_v56": {
+      "allocation_pct": 99.9,
+      "score": 1.929,
+      "metrics": {
+        "sharpe": 1.2,
+        "win_rate": 55.0,
+        "profit_factor": 1.8,
+        "max_drawdown": 12.0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_1x_20260509_193258.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V4_20260509_192128.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214555.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_20260509_015945.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214553.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1092,
+        "net_profit": 0
+      }
+    },
+    "robust_summary_V6_20260509_213031.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 6,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_3x_20260509_213030.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_1x_20260509_213030.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_5x_20260509_193259.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V3_20260509_191750.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_3x_20260509_193258.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1464,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213030.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1092,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214554.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_3x_20260509_214554.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213031.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 372,
+        "net_profit": 0
+      }
+    },
+    "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214554.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 1092,
+        "net_profit": 0
+      }
+    },
+    "robust_summary_V7_20260509_214555.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 6,
+        "net_profit": 0
+      }
+    },
+    "backtest_summary_V5_20260509_193259.json": {
+      "allocation_pct": 0.0,
+      "score": 0.0,
+      "metrics": {
+        "sharpe": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0,
+        "total_trades": 3,
+        "net_profit": 0
+      }
+    }
+  },
+  "optimization_method": "risk_parity_composite",
+  "timestamp": "2026-05-11T08:07:24.321709",
+  "total_strategies": 19
+}

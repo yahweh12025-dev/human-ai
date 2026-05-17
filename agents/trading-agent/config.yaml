@@ -1,0 +1,38 @@
+general:
+  log_level: INFO
+data:
+  fetch_interval: 5
+  provider: binance
+execution:
+  api_key: your_binance_api_key_here
+  api_secret: your_binance_api_secret_here
+  broker: binance
+  exchange: binance
+  leverage: 5
+  paper_trading: false  # Set to false to use real Binance testnet API
+  test_mode: true
+futures:
+  default_symbols:
+  - BTC/USDT
+  - ETH/USDT
+  - SOL/USDT
+  enabled: true
+  grid:
+    atr_period: 14
+    grid_multiplier: 1.15
+  sma_crossover:
+    fast_period: 10
+    slow_period: 30
+  active_strategy: grid
+  testnet: true
+general:
+  log_level: INFO
+risk:
+  leverage: 2
+  margin_call_threshold: 55.0
+  max_daily_loss_percent: 10.0
+  max_open_positions: 5
+  max_risk_per_trade: 5.0
+  starting_equity: 1.0
+  stop_loss_percent: 5.0
+  take_profit_percent: 15.0

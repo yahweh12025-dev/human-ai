@@ -1,0 +1,24 @@
+{
+  "dify": {
+    "api_endpoint": "https://api.dify.ai/v1",
+    "api_key_env_var": "DIFY_API_KEY",
+    "dataset_id": "human-ai-repo-knowledge",
+    "rag_enabled": true,
+    "timeout_ms": 10000
+  },
+  "graphify": {
+    "api_endpoint": "https://api.graphify.ai/v1",
+    "api_key_env_var": "GRAPHIFY_API_KEY",
+    "graph_id": "human-ai-repo-structure",
+    "mapping_enabled": true,
+    "include_agent_interactions": true
+  },
+  "knowledge_bridge": {
+    "watch_paths": ["/home/yahwehatwork/human-ai/"],
+    "file_patterns": [".md", ".json", ".py", ".js", ".ts"],
+    "auto_index_dify": true,
+    "auto_link_graphify": true,
+    "index_delay_ms": 3000,
+    "max_batch_size": 50
+  }
+}

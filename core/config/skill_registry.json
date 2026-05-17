@@ -1,0 +1,181 @@
+{
+  "openclaw": {
+    "trigger_agent": {
+      "description": "Trigger any agent to execute their assigned tasks",
+      "usage": "/openclaw trigger <agent_name>",
+      "handler": "core.orchestration.auto_mode_controller:AutoModeController"
+    },
+    "system_status": {
+      "description": "Get full system status across all agents and integrations",
+      "usage": "/openclaw status",
+      "handler": "core.integrations.verify_all_integrations:run_all_verifications"
+    },
+    "deploy_coordinator": {
+      "description": "Orchestrate multi-agent deployments with verification gates",
+      "usage": "/openclaw deploy <target>",
+      "handler": "scripts.deployment_orchestrator:deploy"
+    },
+    "task_manager": {
+      "description": "View, assign, and manage tasks in unified_tasks.json",
+      "usage": "/openclaw tasks [list|assign|complete]",
+      "handler": "unified_tasks.json"
+    },
+    "sync_all": {
+      "description": "Run full sync to Obsidian vault and Google Drive",
+      "usage": "/openclaw sync",
+      "handler": "scripts.sync.full_sync:main"
+    }
+  },
+  "hermes": {
+    "strategy_review": {
+      "description": "Review and improve trading strategies based on backtest data",
+      "usage": "/hermes review_strategy <freqtrade|ea>",
+      "handler": "core.orchestration.unified_improvement_workflow:UnifiedImprovementWorkflow"
+    },
+    "decision_intelligence": {
+      "description": "Analyze agent performance and suggest optimal task assignments",
+      "usage": "/hermes decide <context>",
+      "handler": "scripts.cross_agent_decision_intelligence:analyze"
+    },
+    "knowledge_synthesis": {
+      "description": "Synthesize research findings into actionable insights",
+      "usage": "/hermes synthesize <topic>",
+      "handler": "research.auto_synthesizer:synthesize"
+    },
+    "architecture_audit": {
+      "description": "Audit system architecture and suggest improvements",
+      "usage": "/hermes audit",
+      "handler": "core.health.architecture_auditor:audit"
+    },
+    "dify_query": {
+      "description": "Query Dify knowledge base for information",
+      "usage": "/hermes query <question>",
+      "handler": "core.integrations.dify_brain:DifyBrain.query"
+    }
+  },
+  "opencode": {
+    "implement_task": {
+      "description": "Implement a specific task from the queue",
+      "usage": "/opencode implement <task_id>",
+      "handler": "core.orchestration.auto_mode_controller:AutoModeController._execute_task"
+    },
+    "run_tests": {
+      "description": "Run test suite and report results",
+      "usage": "/opencode test [path]",
+      "handler": "pytest"
+    },
+    "code_review": {
+      "description": "Review code for quality, security, and performance",
+      "usage": "/opencode review <file_path>",
+      "handler": "agents.code_review_assistant:review"
+    },
+    "refactor": {
+      "description": "Refactor code for better structure and maintainability",
+      "usage": "/opencode refactor <file_path>",
+      "handler": "agents.code_review_assistant:refactor"
+    },
+    "generate_tests": {
+      "description": "Auto-generate test cases for a module",
+      "usage": "/opencode gen_tests <module>",
+      "handler": "scripts.automated_verification_test_generator:generate"
+    }
+  },
+  "pidev": {
+    "security_audit": {
+      "description": "Run full security audit on codebase",
+      "usage": "/pidev audit [scope]",
+      "handler": "security_audit.run_audit:full_audit"
+    },
+    "verify_output": {
+      "description": "Verify agent output meets quality standards",
+      "usage": "/pidev verify <agent> <output_file>",
+      "handler": "verification.cross_verify:verify"
+    },
+    "credential_scan": {
+      "description": "Scan for leaked credentials in tracked files",
+      "usage": "/pidev scan_creds",
+      "handler": "scripts.credential_scanner:scan"
+    },
+    "knowledge_graph": {
+      "description": "Update knowledge graph with new findings",
+      "usage": "/pidev update_kg <data>",
+      "handler": "core.knowledge_graph:update"
+    },
+    "obsidian_parse": {
+      "description": "Parse Obsidian vault for structured knowledge extraction",
+      "usage": "/pidev parse_obsidian",
+      "handler": "skills.pi-obsidian-md-parser.pi_obsidian_md_parser:parse"
+    }
+  },
+  "freqtrade": {
+    "run_backtest": {
+      "description": "Run FreqTrade backtest with current strategy",
+      "usage": "/freqtrade backtest [timerange]",
+      "handler": "agents.trading-agent.openclaw_freqtrade_bridge:OpenClawFreqTradeBridge.run_backtest"
+    },
+    "start_bot": {
+      "description": "Start FreqTrade trading bot on testnet",
+      "usage": "/freqtrade start [dry_run]",
+      "handler": "agents.trading-agent.openclaw_freqtrade_bridge:OpenClawFreqTradeBridge.start_trading_bot"
+    },
+    "stop_bot": {
+      "description": "Stop FreqTrade trading bot",
+      "usage": "/freqtrade stop",
+      "handler": "agents.trading-agent.openclaw_freqtrade_bridge:OpenClawFreqTradeBridge.stop_trading_bot"
+    },
+    "trade_history": {
+      "description": "Get recent trading history",
+      "usage": "/freqtrade history [limit]",
+      "handler": "agents.trading-agent.freqtrade_testnet_agent:FreqTradeTestnetAgent.get_performance_summary"
+    },
+    "download_data": {
+      "description": "Download latest market data",
+      "usage": "/freqtrade download [pairs] [timerange]",
+      "handler": "agents.trading-agent.openclaw_freqtrade_bridge:OpenClawFreqTradeBridge.download_market_data"
+    }
+  },
+  "ea": {
+    "compile": {
+      "description": "Compile EA from MQ5 source",
+      "usage": "/ea compile <ea_name>",
+      "handler": "automation.mt5_bridge_complete:MT5AutomationBridge.compile_ea"
+    },
+    "backtest": {
+      "description": "Run EA backtest on MT5",
+      "usage": "/ea backtest <ea_name> [symbol] [timeframe]",
+      "handler": "automation.mt5_bridge_complete:MT5AutomationBridge.run_backtest"
+    },
+    "list_eas": {
+      "description": "List all available Expert Advisors",
+      "usage": "/ea list",
+      "handler": "agents.openclaw_ea_trigger_gui:OpenClawEATrigger.list_available_eas"
+    },
+    "extract_logs": {
+      "description": "Extract and parse MT5 logs",
+      "usage": "/ea logs [type]",
+      "handler": "automation.mt5_bridge_complete:MT5AutomationBridge.extract_mt5_logs"
+    }
+  },
+  "social": {
+    "create_post": {
+      "description": "Generate and queue a social media post",
+      "usage": "/social create <topic> [platform]",
+      "handler": "agents.social_media_agent:SocialMediaAgent.create_content"
+    },
+    "schedule": {
+      "description": "View/manage content schedule",
+      "usage": "/social schedule [view|add|remove]",
+      "handler": "social.content_pipeline:ContentPipeline.get_schedule"
+    },
+    "publish": {
+      "description": "Publish queued content via Postiz",
+      "usage": "/social publish [content_id]",
+      "handler": "social.postiz_connector:PostizConnector.publish_content"
+    },
+    "analytics": {
+      "description": "Get social media performance analytics",
+      "usage": "/social analytics [platform]",
+      "handler": "social.analytics_tracker:get_analytics"
+    }
+  }
+}

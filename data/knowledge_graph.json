@@ -1,0 +1,1379 @@
+{
+  "metadata": {
+    "created": "2026-05-11T08:07:01.986587",
+    "statistics": {
+      "total_nodes": 110,
+      "total_edges": 84,
+      "node_types": {
+        "agent": 7,
+        "skill": 33,
+        "verification": 20,
+        "backtest": 18,
+        "strategy": 2,
+        "task": 30
+      },
+      "relationship_types": {
+        "has_skill": 33,
+        "verified_by": 1,
+        "produced_by": 19,
+        "used_by": 1,
+        "completed_by": 30
+      },
+      "density": 0.007005838198498749
+    }
+  },
+  "nodes": [
+    {
+      "id": "agent_openclaw",
+      "type": "agent",
+      "label": "Openclaw",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979282"
+    },
+    {
+      "id": "agent_hermes",
+      "type": "agent",
+      "label": "Hermes",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979326"
+    },
+    {
+      "id": "agent_opencode",
+      "type": "agent",
+      "label": "Opencode",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979329"
+    },
+    {
+      "id": "agent_pidev",
+      "type": "agent",
+      "label": "Pidev",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979332"
+    },
+    {
+      "id": "agent_freqtrade",
+      "type": "agent",
+      "label": "Freqtrade",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979335"
+    },
+    {
+      "id": "agent_ea",
+      "type": "agent",
+      "label": "Ea",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979337"
+    },
+    {
+      "id": "agent_social_media",
+      "type": "agent",
+      "label": "Social_Media",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979340"
+    },
+    {
+      "id": "skill_openclaw_trigger_agent",
+      "type": "skill",
+      "label": "openclaw/trigger_agent",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979672"
+    },
+    {
+      "id": "skill_openclaw_system_status",
+      "type": "skill",
+      "label": "openclaw/system_status",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979680"
+    },
+    {
+      "id": "skill_openclaw_deploy_coordinator",
+      "type": "skill",
+      "label": "openclaw/deploy_coordinator",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979683"
+    },
+    {
+      "id": "skill_openclaw_task_manager",
+      "type": "skill",
+      "label": "openclaw/task_manager",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979686"
+    },
+    {
+      "id": "skill_openclaw_sync_all",
+      "type": "skill",
+      "label": "openclaw/sync_all",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979689"
+    },
+    {
+      "id": "skill_hermes_strategy_review",
+      "type": "skill",
+      "label": "hermes/strategy_review",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979692"
+    },
+    {
+      "id": "skill_hermes_decision_intelligence",
+      "type": "skill",
+      "label": "hermes/decision_intelligence",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979694"
+    },
+    {
+      "id": "skill_hermes_knowledge_synthesis",
+      "type": "skill",
+      "label": "hermes/knowledge_synthesis",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979696"
+    },
+    {
+      "id": "skill_hermes_architecture_audit",
+      "type": "skill",
+      "label": "hermes/architecture_audit",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979704"
+    },
+    {
+      "id": "skill_hermes_dify_query",
+      "type": "skill",
+      "label": "hermes/dify_query",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979709"
+    },
+    {
+      "id": "skill_opencode_implement_task",
+      "type": "skill",
+      "label": "opencode/implement_task",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979712"
+    },
+    {
+      "id": "skill_opencode_run_tests",
+      "type": "skill",
+      "label": "opencode/run_tests",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979714"
+    },
+    {
+      "id": "skill_opencode_code_review",
+      "type": "skill",
+      "label": "opencode/code_review",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979716"
+    },
+    {
+      "id": "skill_opencode_refactor",
+      "type": "skill",
+      "label": "opencode/refactor",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979719"
+    },
+    {
+      "id": "skill_opencode_generate_tests",
+      "type": "skill",
+      "label": "opencode/generate_tests",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979721"
+    },
+    {
+      "id": "skill_pidev_security_audit",
+      "type": "skill",
+      "label": "pidev/security_audit",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979727"
+    },
+    {
+      "id": "skill_pidev_verify_output",
+      "type": "skill",
+      "label": "pidev/verify_output",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979801"
+    },
+    {
+      "id": "skill_pidev_credential_scan",
+      "type": "skill",
+      "label": "pidev/credential_scan",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979804"
+    },
+    {
+      "id": "skill_pidev_knowledge_graph",
+      "type": "skill",
+      "label": "pidev/knowledge_graph",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979806"
+    },
+    {
+      "id": "skill_pidev_obsidian_parse",
+      "type": "skill",
+      "label": "pidev/obsidian_parse",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979808"
+    },
+    {
+      "id": "skill_freqtrade_run_backtest",
+      "type": "skill",
+      "label": "freqtrade/run_backtest",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979811"
+    },
+    {
+      "id": "skill_freqtrade_start_bot",
+      "type": "skill",
+      "label": "freqtrade/start_bot",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979813"
+    },
+    {
+      "id": "skill_freqtrade_stop_bot",
+      "type": "skill",
+      "label": "freqtrade/stop_bot",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979815"
+    },
+    {
+      "id": "skill_freqtrade_trade_history",
+      "type": "skill",
+      "label": "freqtrade/trade_history",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979817"
+    },
+    {
+      "id": "skill_freqtrade_download_data",
+      "type": "skill",
+      "label": "freqtrade/download_data",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979819"
+    },
+    {
+      "id": "skill_ea_compile",
+      "type": "skill",
+      "label": "ea/compile",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979847"
+    },
+    {
+      "id": "skill_ea_backtest",
+      "type": "skill",
+      "label": "ea/backtest",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979856"
+    },
+    {
+      "id": "skill_ea_list_eas",
+      "type": "skill",
+      "label": "ea/list_eas",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979859"
+    },
+    {
+      "id": "skill_ea_extract_logs",
+      "type": "skill",
+      "label": "ea/extract_logs",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979861"
+    },
+    {
+      "id": "skill_social_create_post",
+      "type": "skill",
+      "label": "social/create_post",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979863"
+    },
+    {
+      "id": "skill_social_schedule",
+      "type": "skill",
+      "label": "social/schedule",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979868"
+    },
+    {
+      "id": "skill_social_publish",
+      "type": "skill",
+      "label": "social/publish",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979870"
+    },
+    {
+      "id": "skill_social_analytics",
+      "type": "skill",
+      "label": "social/analytics",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.979873"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_175433",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_175433",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_175433.md"
+      },
+      "created": "2026-05-11T08:07:01.982471"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_181836",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_181836",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_181836.md"
+      },
+      "created": "2026-05-11T08:07:01.982579"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_183319",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_183319",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_183319.md"
+      },
+      "created": "2026-05-11T08:07:01.982639"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_185547",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_185547",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_185547.md"
+      },
+      "created": "2026-05-11T08:07:01.982689"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_195142",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_195142",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_195142.md"
+      },
+      "created": "2026-05-11T08:07:01.982786"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_201029",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_201029",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_201029.md"
+      },
+      "created": "2026-05-11T08:07:01.982857"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_203138",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_203138",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_203138.md"
+      },
+      "created": "2026-05-11T08:07:01.982981"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_203258",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_203258",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_203258.md"
+      },
+      "created": "2026-05-11T08:07:01.983043"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_212348",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_212348",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_212348.md"
+      },
+      "created": "2026-05-11T08:07:01.983149"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_224534",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_224534",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_224534.md"
+      },
+      "created": "2026-05-11T08:07:01.983257"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_225612",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_225612",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_225612.md"
+      },
+      "created": "2026-05-11T08:07:01.983329"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_225847",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_225847",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_225847.md"
+      },
+      "created": "2026-05-11T08:07:01.983418"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_230104",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_230104",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_230104.md"
+      },
+      "created": "2026-05-11T08:07:01.983519"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_232728",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_232728",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_232728.md"
+      },
+      "created": "2026-05-11T08:07:01.983650"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-20260509_235335",
+      "type": "verification",
+      "label": "pi-dev-task-manager-20260509_235335",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-20260509_235335.md"
+      },
+      "created": "2026-05-11T08:07:01.983704"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-LATEST",
+      "type": "verification",
+      "label": "pi-dev-task-manager-LATEST",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-LATEST.md"
+      },
+      "created": "2026-05-11T08:07:01.984956"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-final-20260508_162845",
+      "type": "verification",
+      "label": "pi-dev-task-manager-final-20260508_162845",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-final-20260508_162845.md"
+      },
+      "created": "2026-05-11T08:07:01.985019"
+    },
+    {
+      "id": "verif_pi-dev-task-manager-latest",
+      "type": "verification",
+      "label": "pi-dev-task-manager-latest",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/pi-dev-task-manager-latest.md"
+      },
+      "created": "2026-05-11T08:07:01.985070"
+    },
+    {
+      "id": "verif_queue_sync_audit",
+      "type": "verification",
+      "label": "queue_sync_audit",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/queue_sync_audit.md"
+      },
+      "created": "2026-05-11T08:07:01.985111"
+    },
+    {
+      "id": "verif_report_template",
+      "type": "verification",
+      "label": "report_template",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/docs/verification/report_template.md"
+      },
+      "created": "2026-05-11T08:07:01.985148"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_1x_20260509_193258",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_1x_20260509_193258",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_1x_20260509_193258.json"
+      },
+      "created": "2026-05-11T08:07:01.985482"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V4_20260509_192128",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V4_20260509_192128",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V4_20260509_192128.json"
+      },
+      "created": "2026-05-11T08:07:01.985567"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214555",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214555",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214555.json"
+      },
+      "created": "2026-05-11T08:07:01.985575"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_20260509_015945",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_20260509_015945",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_20260509_015945.json"
+      },
+      "created": "2026-05-11T08:07:01.985582"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214553",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214553",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214553.json"
+      },
+      "created": "2026-05-11T08:07:01.985589"
+    },
+    {
+      "id": "backtest_robust_summary_V6_20260509_213031",
+      "type": "backtest",
+      "label": "robust_summary_V6_20260509_213031",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/robust_summary_V6_20260509_213031.json"
+      },
+      "created": "2026-05-11T08:07:01.985596"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_3x_20260509_213030",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_3x_20260509_213030",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_3x_20260509_213030.json"
+      },
+      "created": "2026-05-11T08:07:01.985602"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_1x_20260509_213030",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_1x_20260509_213030",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_1x_20260509_213030.json"
+      },
+      "created": "2026-05-11T08:07:01.985612"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_5x_20260509_193259",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_5x_20260509_193259",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_5x_20260509_193259.json"
+      },
+      "created": "2026-05-11T08:07:01.985619"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V3_20260509_191750",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V3_20260509_191750",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V3_20260509_191750.json"
+      },
+      "created": "2026-05-11T08:07:01.985626"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_3x_20260509_193258",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_3x_20260509_193258",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_3x_20260509_193258.json"
+      },
+      "created": "2026-05-11T08:07:01.985633"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213030",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213030",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213030.json"
+      },
+      "created": "2026-05-11T08:07:01.985640"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214554",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214554",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214554.json"
+      },
+      "created": "2026-05-11T08:07:01.985646"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_3x_20260509_214554",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_3x_20260509_214554",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_3x_20260509_214554.json"
+      },
+      "created": "2026-05-11T08:07:01.985652"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213031",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213031",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213031.json"
+      },
+      "created": "2026-05-11T08:07:01.985659"
+    },
+    {
+      "id": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214554",
+      "type": "backtest",
+      "label": "backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214554",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214554.json"
+      },
+      "created": "2026-05-11T08:07:01.985664"
+    },
+    {
+      "id": "backtest_robust_summary_V7_20260509_214555",
+      "type": "backtest",
+      "label": "robust_summary_V7_20260509_214555",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/robust_summary_V7_20260509_214555.json"
+      },
+      "created": "2026-05-11T08:07:01.985671"
+    },
+    {
+      "id": "backtest_backtest_summary_V5_20260509_193259",
+      "type": "backtest",
+      "label": "backtest_summary_V5_20260509_193259",
+      "metadata": {
+        "path": "/home/yahwehatwork/human-ai/validation/freqtrade_backtests/backtest_summary_V5_20260509_193259.json"
+      },
+      "created": "2026-05-11T08:07:01.985677"
+    },
+    {
+      "id": "ea_master_metals",
+      "type": "strategy",
+      "label": "MasterMetalsEA_v56",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.985707"
+    },
+    {
+      "id": "strategy_v8",
+      "type": "strategy",
+      "label": "SwarmIntelligenceStrategy_V8",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.985732"
+    },
+    {
+      "id": "task_e2e-gui-proof",
+      "type": "task",
+      "label": "E2E Proof: Execute GUI-First Dummy Task (Funding R",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986370"
+    },
+    {
+      "id": "task_T23",
+      "type": "task",
+      "label": "Connect FAISS Semantic Memory to Trading Agent for",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986378"
+    },
+    {
+      "id": "task_T27",
+      "type": "task",
+      "label": "Aggregate market sentiment analysis from crypto ne",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986387"
+    },
+    {
+      "id": "task_T31",
+      "type": "task",
+      "label": "Map trending Twitter/X topics to Postiz Topic-Swit",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986390"
+    },
+    {
+      "id": "task_T200",
+      "type": "task",
+      "label": "Connect FAISS Semantic Memory to Trading Agent for",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986399"
+    },
+    {
+      "id": "task_T201",
+      "type": "task",
+      "label": "Map trending Twitter/X topics to Postiz Topic-Swit",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986402"
+    },
+    {
+      "id": "task_T204",
+      "type": "task",
+      "label": "Develop real-time market anomaly detection system ",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986410"
+    },
+    {
+      "id": "task_T205",
+      "type": "task",
+      "label": "Create automated research paper synthesis system t",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986415"
+    },
+    {
+      "id": "task_T213",
+      "type": "task",
+      "label": "Develop Real-Time Market Regime Classification Das",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986419"
+    },
+    {
+      "id": "task_T218",
+      "type": "task",
+      "label": "Create a real-time news sentiment aggregation syst",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986423"
+    },
+    {
+      "id": "task_T223",
+      "type": "task",
+      "label": "Build Final Decision extractor from AI agent outpu",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986425"
+    },
+    {
+      "id": "task_T224",
+      "type": "task",
+      "label": "Test end-to-end signal flow from AI systems to Fre",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986429"
+    },
+    {
+      "id": "task_T230",
+      "type": "task",
+      "label": "Build real-time knowledge graph that connects mark",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986432"
+    },
+    {
+      "id": "task_T232",
+      "type": "task",
+      "label": "Install obsidian-skills for OpenClaw (copy to ~/.o",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986435"
+    },
+    {
+      "id": "task_T233",
+      "type": "task",
+      "label": "Verify/install obsidian-skills for Hermes (already",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986438"
+    },
+    {
+      "id": "task_T236",
+      "type": "task",
+      "label": "Create semantic memory analytics dashboard for tra",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986441"
+    },
+    {
+      "id": "task_T239",
+      "type": "task",
+      "label": "Create social media content performance analytics ",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986443"
+    },
+    {
+      "id": "task_T254",
+      "type": "task",
+      "label": "Ensure all files and folders are in correct subfol",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986446"
+    },
+    {
+      "id": "task_T255",
+      "type": "task",
+      "label": "Ensure all files and folders are in correct subfol",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986449"
+    },
+    {
+      "id": "task_T268",
+      "type": "task",
+      "label": "Implement comprehensive observability system with ",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986455"
+    },
+    {
+      "id": "task_T271",
+      "type": "task",
+      "label": "Build comprehensive testing framework with unit, i",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986460"
+    },
+    {
+      "id": "task_T275",
+      "type": "task",
+      "label": "Create real-time agent performance dashboard with ",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986463"
+    },
+    {
+      "id": "task_T276",
+      "type": "task",
+      "label": "Implement anomaly detection for agent behavior and",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986466"
+    },
+    {
+      "id": "task_T277",
+      "type": "task",
+      "label": "Develop automated SLA monitoring for task processi",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986469"
+    },
+    {
+      "id": "task_T278",
+      "type": "task",
+      "label": "Create property-based testing framework for tradin",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986472"
+    },
+    {
+      "id": "task_T281",
+      "type": "task",
+      "label": "Create documentation versioning system that ties d",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986475"
+    },
+    {
+      "id": "task_T285",
+      "type": "task",
+      "label": "Develop performance profiler for trading agent str",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986477"
+    },
+    {
+      "id": "task_T300",
+      "type": "task",
+      "label": "Create real-time market anomaly detection system u",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986480"
+    },
+    {
+      "id": "task_T301",
+      "type": "task",
+      "label": "Create intelligent task prioritization system that",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986483"
+    },
+    {
+      "id": "task_T303",
+      "type": "task",
+      "label": "Implement cross-agent learning system that shares ",
+      "metadata": {},
+      "created": "2026-05-11T08:07:01.986486"
+    }
+  ],
+  "edges": [
+    {
+      "source": "agent_openclaw",
+      "target": "skill_openclaw_trigger_agent",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_openclaw",
+      "target": "skill_openclaw_system_status",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_openclaw",
+      "target": "skill_openclaw_deploy_coordinator",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_openclaw",
+      "target": "skill_openclaw_task_manager",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_openclaw",
+      "target": "skill_openclaw_sync_all",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_hermes",
+      "target": "skill_hermes_strategy_review",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_hermes",
+      "target": "skill_hermes_decision_intelligence",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_hermes",
+      "target": "skill_hermes_knowledge_synthesis",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_hermes",
+      "target": "skill_hermes_architecture_audit",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_hermes",
+      "target": "skill_hermes_dify_query",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_opencode",
+      "target": "skill_opencode_implement_task",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_opencode",
+      "target": "skill_opencode_run_tests",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_opencode",
+      "target": "skill_opencode_code_review",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_opencode",
+      "target": "skill_opencode_refactor",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_opencode",
+      "target": "skill_opencode_generate_tests",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_pidev",
+      "target": "skill_pidev_security_audit",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_pidev",
+      "target": "skill_pidev_verify_output",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_pidev",
+      "target": "skill_pidev_credential_scan",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_pidev",
+      "target": "skill_pidev_knowledge_graph",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_pidev",
+      "target": "skill_pidev_obsidian_parse",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_freqtrade",
+      "target": "skill_freqtrade_run_backtest",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_freqtrade",
+      "target": "skill_freqtrade_start_bot",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_freqtrade",
+      "target": "skill_freqtrade_stop_bot",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_freqtrade",
+      "target": "skill_freqtrade_trade_history",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_freqtrade",
+      "target": "skill_freqtrade_download_data",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_ea",
+      "target": "skill_ea_compile",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_ea",
+      "target": "skill_ea_backtest",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_ea",
+      "target": "skill_ea_list_eas",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_ea",
+      "target": "skill_ea_extract_logs",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_social",
+      "target": "skill_social_create_post",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_social",
+      "target": "skill_social_schedule",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_social",
+      "target": "skill_social_publish",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_social",
+      "target": "skill_social_analytics",
+      "relationship": "has_skill",
+      "weight": 1.0
+    },
+    {
+      "source": "verif_queue_sync_audit",
+      "target": "agent_hermes",
+      "relationship": "verified_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_1x_20260509_193258",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V4_20260509_192128",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214555",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_20260509_015945",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214553",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_robust_summary_V6_20260509_213031",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_3x_20260509_213030",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_1x_20260509_213030",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_5x_20260509_193259",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V3_20260509_191750",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V5_BTC_USDT_1h_3x_20260509_193258",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213030",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_1x_20260509_214554",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_3x_20260509_214554",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V6_BTC_USDT_1h_5x_20260509_213031",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_AI_Driven_BTC_Strategy_V7_BTC_USDT_1h_5x_20260509_214554",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_robust_summary_V7_20260509_214555",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_backtest_summary_V5_20260509_193259",
+      "target": "agent_freqtrade",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "ea_master_metals",
+      "target": "agent_ea",
+      "relationship": "produced_by",
+      "weight": 1.0
+    },
+    {
+      "source": "strategy_v8",
+      "target": "agent_freqtrade",
+      "relationship": "used_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_e2e-gui-proof",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T23",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T27",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T31",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T200",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T201",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T204",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T205",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T213",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T218",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T223",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T224",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T230",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T232",
+      "target": "agent_openclaw",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T233",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T236",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T239",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T254",
+      "target": "agent_openclaw",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T255",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T268",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T271",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T275",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T276",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T277",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T278",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T281",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T285",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T300",
+      "target": "agent_pidev",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T301",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    },
+    {
+      "source": "task_T303",
+      "target": "agent_hermes",
+      "relationship": "completed_by",
+      "weight": 1.0
+    }
+  ]
+}

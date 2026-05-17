@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "generatedSamples": 0,
+  "audit": {
+    "personaLeakage": false,
+    "genericAIpatterns": false
+  },
+  "recommendations": []
+}

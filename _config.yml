@@ -1,0 +1,4 @@
+# Disable Jekyll processing - serve files as-is
+# This is required because GitHub Pages tries to run Jekyll on all .md files
+exclude:
+  - "**/*"

@@ -1,0 +1,60 @@
+{
+  "llm_routing": {
+    "description": "Agent-specific LLM routing configuration. ALL agents use NVIDIA API directly. No OpenRouter.",
+    "agents": {
+      "openclaw": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Gateway coordination, task routing. Direct NVIDIA API."
+      },
+      "hermes": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Strategy design, architecture, reasoning. Direct NVIDIA API."
+      },
+      "opencode": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Code implementation, refactoring, testing. Direct NVIDIA API."
+      },
+      "pidev": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Security audits, verification, analysis. Direct NVIDIA API."
+      },
+      "social_media": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Content generation. Direct NVIDIA API."
+      },
+      "research": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "Research synthesis, deep analysis. Direct NVIDIA API."
+      },
+      "pai": {
+        "provider": "nvidia",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+        "api_key_env": "NVIDIA_API_KEY",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "purpose": "PAI skill routing. Direct NVIDIA API."
+      }
+    },
+    "fallback_chain": [
+      {"provider": "nvidia", "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free", "api_key_env": "NVIDIA_API_KEY", "base_url": "https://integrate.api.nvidia.com/v1"},
+      {"provider": "nvidia", "model": "meta/llama-3.3-70b-instruct:free", "api_key_env": "NVIDIA_API_KEY", "base_url": "https://integrate.api.nvidia.com/v1"}
+    ]
+  }
+}

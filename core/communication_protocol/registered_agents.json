@@ -1,0 +1,19 @@
+{
+  "agents": {
+    "SocialMediaAgent": {
+      "agent_id": "SocialMediaAgent",
+      "registered_at": "2026-05-17T15:05:32.465676",
+      "last_heartbeat": "2026-05-17T15:05:32.465691",
+      "capabilities": [
+        "social_media_publishing",
+        "content_generation",
+        "analytics_tracking",
+        "multi_platform"
+      ],
+      "endpoint": "agent://SocialMediaAgent",
+      "status": "active",
+      "message_count": 0
+    }
+  },
+  "last_updated": "2026-05-17T15:05:32.465694"
+}

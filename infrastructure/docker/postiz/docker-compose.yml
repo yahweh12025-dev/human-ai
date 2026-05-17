@@ -1,0 +1,96 @@
+version: "3.8"
+
+# Postiz Self-Hosted — YouTube/TikTok/Instagram social scheduling
+# ─────────────────────────────────────────────────────────────────
+# SETUP:
+#   1. Add POSTIZ_HOST=<your-server-ip-or-domain> to your .env file
+#      e.g. POSTIZ_HOST=1.2.3.4  or  POSTIZ_HOST=myserver.example.com
+#      For local-only access use POSTIZ_HOST=localhost
+#   2. Run: cd infrastructure/docker/postiz && docker-compose up -d
+#   3. Visit: http://${POSTIZ_HOST}:4200  → create admin account
+#   4. Settings → Social Channels → Add YouTube / TikTok / Instagram
+#   5. Settings → API Keys → copy key → add POSTIZ_API_KEY to .env
+#
+# Google OAuth:  add http://${POSTIZ_HOST}:4200/oauth2/callback to Google Console
+# YouTube OAuth: Client ID + Secret from .env (YOUTUBE_CLIENT_ID / YOUTUBE_CLIENT_SECRET)
+# ─────────────────────────────────────────────────────────────────
+
+services:
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app:latest
+    container_name: postiz
+    restart: unless-stopped
+    ports:
+      - "4200:4200"   # frontend (Next.js)
+      - "3000:3000"   # backend API (NestJS)
+      - "3002:3002"   # orchestrator health
+    environment:
+      # Set POSTIZ_HOST in your .env file — use server IP or domain, not localhost
+      # Example: POSTIZ_HOST=34.35.48.139  or  POSTIZ_HOST=myserver.com
+      MAIN_URL: "http://${POSTIZ_HOST:-localhost}:3000"
+      FRONTEND_URL: "http://${POSTIZ_HOST:-localhost}:4200"
+      NEXT_PUBLIC_BACKEND_URL: "http://${POSTIZ_HOST:-localhost}:3000"
+      IS_GENERAL: "true"
+      # Database
+      DATABASE_URL: "postgresql://postiz:postiz@postiz-db:5432/postiz"
+      # Redis
+      REDIS_URL: "redis://postiz-redis:6379"
+      # Storage
+      UPLOAD_DIRECTORY: "/uploads"
+      NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY: "/uploads"
+      # JWT secret — override POSTIZ_JWT_SECRET in .env
+      JWT_SECRET: "${POSTIZ_JWT_SECRET:-postiz-change-this-secret}"
+      # Disable Temporal (not needed for basic publishing)
+      TEMPORAL_WORKER_DISABLED: "true"
+      # Disable analytics
+      DISABLE_ANALYTICS: "true"
+      # YouTube OAuth2 — set in .env
+      YOUTUBE_CLIENT_ID: "${YOUTUBE_CLIENT_ID:-}"
+      YOUTUBE_CLIENT_SECRET: "${YOUTUBE_CLIENT_SECRET:-}"
+    env_file:
+      - ../../../.env
+    volumes:
+      - postiz_uploads:/uploads
+    depends_on:
+      postiz-db:
+        condition: service_healthy
+      postiz-redis:
+        condition: service_started
+    networks:
+      - postiz_net
+
+  postiz-db:
+    image: postgres:16-alpine
+    container_name: postiz-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postiz
+      POSTGRES_PASSWORD: postiz
+      POSTGRES_DB: postiz
+    volumes:
+      - postiz_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postiz"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - postiz_net
+
+  postiz-redis:
+    image: redis:7-alpine
+    container_name: postiz-redis
+    restart: unless-stopped
+    volumes:
+      - postiz_redis:/data
+    networks:
+      - postiz_net
+
+volumes:
+  postiz_uploads:
+  postiz_db:
+  postiz_redis:
+
+networks:
+  postiz_net:
+    driver: bridge

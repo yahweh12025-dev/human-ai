@@ -1,0 +1,83 @@
+# Jekyll configuration for GitHub Pages
+# Enable sitemap generation for SEO
+
+title: Human-AI Browser Agents System
+description: A system of stealth browser agents for AI interactions using Camoufox
+url: "https://yahweh12025-dev.github.io"  # GitHub Pages URL
+baseurl: "/human-ai"  # The subpath of your site (repository name)
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-sitemap
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache
+  - __pycache__
+  - "*.pyc"
+  - .env
+  - .venv
+  - venv/
+  - .idea/
+  - .vscode/
+  - "*.log"
+
+  - "*.sqlite"
+
+  - "*.db"
+
+
+# Collections (if needed)
+collections:
+  agents:
+    output: true
+    permalink: /agents/:path/
+
+# Defaults
+defaults:
+  -
+    scope:
+      path: ""  # empty string for all files
+      type: "pages"
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""  # empty string for all files
+      type: "posts"
+    values:
+      layout: "post"
+
+# Sitemap settings
+sitemap:
+  exclude: 
+    - "/feed.xml"
+    - "/sitemap.xml"  # Don't include the sitemap in the sitemap
+  include_posts: true
+  include_pages: true
+  include_collections: true
+  exclude:
+    - "*.py"
+    - "*.pyc"
+    - "__pycache__"
+    - ".env"
+    - "*.log"
+    - "*.db"
+    - "*.sqlite"
+  changefreq_name: 
+    - "always": "always"
+    - "hourly": "hourly"
+    - "daily": "daily"
+    - "weekly": "weekly"
+    - "monthly": "monthly"
+    - "yearly": "yearly"
+    - "never": "never"

@@ -1,0 +1,26 @@
+Technical Critique:
+- The circuit breaker uses fixed thresholds (5 consecutive losses, 10% daily loss, 15% drawdown) without dynamic adjustment, leading to premature halts or insufficient protection during high‑volatility periods.
+- Position sizing in `_apply_market_intelligence_sizing` only multiplies quantity by a sentiment factor, ignoring volatility and equity drawdown, which can cause over‑leveraged trades.
+- Peak equity for drawdown calculation is never reset, so a sustained equity rise can mask later drawdowns, delaying the 15% limit trigger.
+- Daily loss limit applies to cumulative `daily_pnl` across all symbols; a large winning trade can offset losses, making the limit ineffective at preventing equity erosion.
+- The volatility spike check is incomplete (commented out), leaving the circuit breaker blind to rapid volatility changes.
+
+Proposed Mathematical Improvement:
+Modify position sizing to include a volatility‑adjusted multiplier that scales size inversely with market volatility:
+
+```python
+# Desired risk per trade as a fraction of current equity (e.g., 1%)
+risk_per_trade = 0.01 * self.circuit_breaker_state['current_equity']
+
+# Stop‑loss distance in price units
+stop_loss_distance = abs(entry_price - stop_loss_price)
+
+# Base quantity based on risk budget
+base_quantity = risk_per_trade / stop_loss_distance
+
+# Volatility scaling: reduce size when volatility is high
+volatility_factor = 1.0 + 0.5 * (self.circuit_breaker_state['volatility_measure'] / self._average_volatility)
+adjusted_quantity = base_quantity * self._sentiment_multiplier / volatility_factor
+```
+
+This keeps the actual dollar risk (risk_per_trade) constant while dynamically shrinking position size as volatility increases, aligning risk with market conditions.

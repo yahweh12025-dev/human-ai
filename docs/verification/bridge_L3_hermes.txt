@@ -1,0 +1,31 @@
+Technical Critique of Risk Management in TradingAgent
+
+1. Risk Scaling Logic
+   - Current implementation uses a flat stop_loss_percent from RiskManager and a positional size based only on that percent.  This ignores volatility, position correlation, and exposure limits.
+
+2. Circuit Breaker Integration
+   - Circuit breaker conditions are checked, but the run loop only pauses when blocked. The state of `trade_result` never reaches the update functions because signals are built in _process_symbol but never passed to `_update_circuit_breaker_state`.
+
+3. Position Sizing
+   - `calculate_position_size` is called but its return value is never used because the code path to set `order['quantity']` is broken – the variable `quantity` is defined only inside the if-block; if a signal exists but the code path fails, `quantity` is undefined.
+
+4. Sentiment Filters
+   - MarketIntel sentiment thresholds are hard‑coded (-0.3 / 0.3).  A more nuanced approach would weigh sentiment against volatility.
+
+5. Documentation & Logging
+   - Many branches lack explicit logging; on failure the system silently returns without state change.
+
+Specific Improvement
+----------------------
+Implement volatility‑adjusted position sizing:
+```
+# Pseudocode
+volatility = risk_manager.get_annualized_volatility(symbol)
+lambda = 1 / (1 + volatility)               # higher vol -> lower weight
+position_size = (risk_manager.base_capital * (1 - stop_loss_percent/100)) * lambda
+```
+This scales position size inversely with volatility, preserving target equity exposure while reducing risk in turbulent markets.
+
+Please review and apply this change.
+
+Verification: run `ls /home/yahwehatwork/human-ai/docs/verification/` to confirm file creation.

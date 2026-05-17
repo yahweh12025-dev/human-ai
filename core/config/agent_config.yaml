@@ -1,0 +1,89 @@
+# AI Agent Configuration
+agents:
+  deepseek:
+    identity: "deepseek"
+    login_url: "https://chat.deepseek.com"
+    rate_limit_indicators:
+      - "rate limit"
+      - "too many requests"
+      - "429"
+      - "capacity"
+      - "busy"
+    input_selectors:
+      - 'textarea[placeholder*="Message"]'
+      - '[role="textbox"]'
+      - 'textarea'
+    submit_selectors:
+      - 'button:has-text("Send")'
+      - '[aria-label="Send"]'
+    response_selectors:
+      - '.message:last-child'
+      - '[data-message-role="assistant"]:last-child'
+      - '.chat-message:last-child'
+    headless: true
+    max_retries: 3
+    base_wait_time: 30  # seconds
+    
+  claude:
+    identity: "claude"
+    login_url: "https://claude.ai/chat"
+    rate_limit_indicators:
+      - "rate limit"
+      - "too many requests"
+      - "429"
+      - "capacity"
+      - "busy"
+      - "usage limit"
+      - "quota exceeded"
+    input_selectors:
+      - 'textarea[placeholder*="Message"]'
+      - '[contenteditable="true"]'
+      - 'textarea'
+    submit_selectors:
+      - 'button[type="submit"]'
+      - 'button:has-text("Send")'
+    response_selectors:
+      - '[data-testid="message-assistant"]:last-child'
+      - '.assistant-message:last-child'
+      - '[role="presentation"]:last-child [role="article"]'
+    headless: true
+    max_retries: 3
+    base_wait_time: 45  # seconds
+    
+  perplexity:
+    identity: "perplexity"
+    login_url: "https://www.perplexity.ai"
+    rate_limit_indicators:
+      - "rate limit"
+      - "too many requests"
+      - "429"
+      - "capacity"
+      - "busy"
+      - "usage limit"
+      - "quota exceeded"
+      - "try again later"
+    input_selectors:
+      - 'textarea[placeholder*="Ask"]'
+      - 'textarea[placeholder*="Search"]'
+      - 'textarea'
+    submit_selectors:
+      - 'button[type="submit"]'
+      - 'button:has-text("Search")'
+    response_selectors:
+      - '[data-testid="answer"]'
+      - '.answer-content'
+      - '[class*="answer"]'
+    headless: true
+    max_retries: 3
+    base_wait_time: 40  # seconds
+
+# Global settings
+global:
+  profile_base_dir: "/home/yahwehatwork/human-ai/data/browser_profiles"
+  master_profile: "master_profile"
+  output_base_dir: "/home/yahwehatwork/human-ai/research"
+  log_level: "INFO"
+  enable_stealth: true
+  viewport:
+    width: 1366
+    height: 768

@@ -1,0 +1,171 @@
+# --- SENSITIVE / SECRET FILES (user backs up .env manually) ---
+.env
+*.env
+.env.*
+firebase-key.json
+google-service-account.json
+service-account.json
+*.key
+*.pem
+*.p12
+*.keystore
+secrets/
+.secrets/
+agents/*/configs/*_secrets.py
+agents/*/tests/*_keys.py
+agents/*/tests/*_key*
+scripts/*sync_*key*.py
+scripts/*sync_*secret*.py
+
+# --- BACKUP / TEMP FILES ---
+*.bak
+*.backup
+*.backup*
+*.tmp
+*.test.py
+
+# --- VIRTUAL ENVIRONMENTS ---
+venv/
+venv-*/
+__pycache__/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+session/
+node_modules/
+
+# --- LOGS ---
+logs/
+!infrastructure/logs/hermes-autonomous.log
+errors/
+master_log.json
+autodev.log
+autopilot.log
+routing.log
+researcher_login.log
+improvement.log
+scripts/repo_mapper.log
+
+# --- BROWSER PROFILES ---
+.browser-profile/
+browser_profiles/
+test_profile/
+
+# --- BROWSER SESSION DATA (contains cookies/auth tokens) ---
+data/claude_sessions/
+
+# --- LARGE DATA / CACHE ---
+memory/*
+!memory/.gitignore
+backups/
+backtest_logs/
+master_logs/
+saves/
+exhaustive_logs/
+browser_profiles/**/Cache/
+browser_profiles/**/Code Cache/
+browser_profiles/**/GPUCache/
+browser_profiles/**/DawnGraphiteCache/
+browser_profiles/**/DawnWebGPUCache/
+
+# --- GIT / MISC ---
+.DS_Store
+Thumbs.db
+.aider*
+.github/
+.hermes/
+
+# --- GENERATED OUTPUT DIRECTORIES ---
+graphify-out/
+data/media_output/
+core/data/media_output/
+research/*.txt
+research/trading-research/
+
+# --- EXTERNAL AGENTS ---
+agents/freqtrade/
+
+# --- NEXT.JS CACHE ---
+infrastructure/mission-control/.next/cache/
+
+# --- PERSONAL DIRECTORIES (user backs up Obsidian vault manually) ---
+personal/
+personal_template/
+knowledge/Obsidian/
+projects/
+!projects/freqtrade/freqtrade/user_data/backtest_results/
+archive/
+
+# --- GITIGNORE END ---
+.venv/
+.venvs/
+trading_venv/
+
+# --- TEST KEY FILES ---
+tests/*_keys*
+infrastructure/configs/audit_results.json
+
+apps/pulseaudio-module-xrdp
+apps/tradingagents
+anythingllm/
+
+# ── Trade data (live, don't commit) ──────────────────────────
+agents/trading-agent/trades/binance/
+agents/trading-agent/trades/mt5/trade_*.json
+agents/trading-agent/trades/mt5/trades_*.jsonl
+agents/trading-agent/trades/mt5/*.pid
+swarm/*.jsonl
+core/swarm/*.jsonl
+data/market_cache/
+logs/*.log
+*.pid
+swarm/
+
+# ── New data/ subdirectory gitignore rules ──────────────
+data/logs/
+data/obsidian/
+data/market_cache/
+data/feeds/*.jsonl
+data/tests/
+
+# ── Claude Code internal files ───────────────────────────────
+.claude/
+.claudeignore
+
+# ── GitHub Pages / Environment ──────────────────────────────
+.env.example
+
+# ── Complete data/ exclusions (all runtime/generated content) ──
+data/feeds/
+data/tests/
+data/logs/
+data/obsidian/
+data/market_cache/
+data/media_output/
+
+# Runtime logs (never commit)
+data/logs/*.log
+data/logs/**/*.log
+infrastructure/*.log
+infrastructure/bridge/*.log
+logs/*.log
+
+# Compiled EA
+agents/trading-agent/mq5/*.ex5
+
+# PID files
+**/*.pid
+agents/trading-agent/trades/mt5/.compile_done
+agents/trading-agent/trades/mt5/.test_done
+agents/trading-agent/.telegram_gold_session.session
+agents/trading-agent/*.session
+docs/pow/
+docs/task_archive/
+automode.log
+core/mcp/agent_registry.json
+core/mcp/shared_memory.json
+core/mcp/signals.json
+config/firebase-key.json
+
+# Trade data - never commit
+agents/trading-agent/trades/

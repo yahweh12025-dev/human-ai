@@ -1,0 +1,110 @@
+# Schedules Manager (Timezone Aware)
+# Configuration for scheduled social media posts with timezone support
+
+timezone: UTC  # Default timezone, can be overridden per schedule
+
+# Schedule definitions
+schedules:
+  # Daily market update
+  daily_market_update:
+    cron: "0 9 * * *"  # 9:00 AM daily
+    timezone: "America/New_York"  # Eastern Time
+    enabled: true
+    payload:
+      topic_category: "MARKET_ANALYSIS"
+      priority: "medium"
+      template: "DAILY_OVERVIEW"
+
+  # Weekly performance review
+  weekly_performance:
+    cron: "0 16 * * 5"  # 4:00 PM every Friday
+    timezone: "America/Los_Angeles"  # Pacific Time
+    enabled: true
+    payload:
+      topic_category: "PORTFOLIO_UPDATES"
+      priority: "medium"
+      template: "WEEKLY_REVIEW"
+
+  # Real-time signal alerts (every 15 minutes during market hours)
+  signal_alerts:
+    cron: "*/15 9-16 * * 1-5"  # Every 15 minutes, 9AM-4PM, weekdays
+    timezone: "America/New_York"  # Eastern Time (market hours)
+    enabled: true
+    payload:
+      topic_category: "TRADING_SIGNALS"
+      priority: "high"
+      template: "SIGNAL_ALERT"
+      throttle: 5  # Max 5 alerts per hour
+
+  # Educational content (weekends)
+  weekend_education:
+    cron: "0 11 * * 6,0"  # 11:00 AM on Saturday and Sunday
+    timezone: "Europe/London"  # GMT/BST
+    enabled: true
+    payload:
+      topic_category: "EDUCATIONAL"
+      priority: "medium"
+      template: "WEEKEND_LEARNING"
+
+  # News commentary (major market openings)
+  market_open_commentary:
+    cron: "0 9,14,21 * * 1-5"  # 9AM, 2PM, 9PM ET (major openings)
+    timezone: "America/New_York"
+    enabled: true
+    payload:
+      topic_category: "NEWS_COMMENTARY"
+      priority: "high"
+      template: "MARKET_OPENING"
+
+  # Technical analysis (mid-week)
+  weekly_technical:
+    cron: "0 10 * * 3"  # 10:00 AM every Wednesday
+    timezone: "Asia/Tokyo"  # JST
+    enabled: true
+    payload:
+      topic_category: "TECHNICAL_ANALYSIS"
+      priority: "medium"
+      template: "TECHNICAL_ANALYSIS_WEEKLY"
+
+  # Motivational content (Monday mornings)
+  monday_motivation:
+    cron: "0 8 * * 1"  # 8:00 AM every Monday
+    timezone: "America/Chicago"  # Central Time
+    enabled: true
+    payload:
+      topic_category: "MOTIVATIONAL"
+      priority: "low"
+      template: "MONDAY_MOTIVATION"
+
+# Global settings
+global_settings:
+  max_posts_per_hour: 10
+  retry_failed_attempts: 3
+  retry_delay_minutes: 5
+  timezone_database_url: "https://github.com/eggert/tz/releases/latest"  # For timezone updates
+  daylight_saving_auto_adjust: true
+
+# Holiday calendars (skip posting on these dates)
+holidays:
+  - "2026-01-01"  # New Year's Day
+  - "2026-07-04"  # Independence Day
+  - "2026-12-25"  # Christmas
+  # Add more as needed
+
+# Blackout periods (avoid posting during these times)
+blackout_periods:
+  - start: "22:00"
+    end: "06:00"
+    timezone: "America/New_York"
+    days: ["1", "2", "3", "4", "5"]  # Weekdays only
+    reason: "After market hours"
+
+# Notification settings for failed schedules
+notifications:
+  enabled: true
+  channels:
+    - type: "log"
+      level: "WARN"
+    - type: "email"
+      recipients: ["admin@trading-system.com"]
+      threshold: 3  # Notify after 3 consecutive failures

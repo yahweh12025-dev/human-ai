@@ -1,0 +1,72 @@
+{
+  "max_open_trades": 5,
+  "stake_currency": "USDT",
+  "stake_amount": 100,
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+  "dry_run": false,
+  "dry_run_wallet": 0,
+  "cancel_open_orders_on_exit": false,
+  "trading_mode": "spot",
+  "margin_mode": "",
+  "unfilledtimeout": {
+    "buy": 10,
+    "sell": 30,
+    "stoploss": 30
+  },
+  "order_time_in_force": {
+    "buy": "gtc",
+    "sell": "gtc"
+  },
+  "order_types": {
+    "buy": "limit",
+    "sell": "limit",
+    "stoploss": "market",
+    "stoploss_on_exchange": false
+  },
+  "exchange": {
+    "name": "binance",
+    "key": "${BINANCE_TESTNET_API_KEY}",
+    "secret": "${BINANCE_TESTNET_SECRET_KEY}",
+    "ccxt_config": {
+      "enableRateLimit": true,
+      "options": {
+        "defaultType": "spot",
+        "adjustForTimeDifference": true
+      }
+    },
+    "ccxt_async_config": {
+      "enableRateLimit": true,
+      "options": {
+        "defaultType": "spot",
+        "adjustForTimeDifference": true
+      }
+    },
+    "pair_whitelist": [
+      "BTC/USDT"
+    ],
+    "pair_blacklist": []
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "telegram": {
+    "enabled": false,
+    "token": "dummy_token_for_backtest",
+    "chat_id": "dummy_chat_id"
+  },
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": false,
+    "ask_last_balance": 0.0,
+    "bid_last_balance": 0.0
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": false,
+    "ask_last_balance": 0.0,
+    "bid_last_balance": 0.0
+  }
+}

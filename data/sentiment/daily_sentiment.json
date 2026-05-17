@@ -1,0 +1,31 @@
+{
+  "date": "2026-05-08T17:00:06.599365",
+  "global_sentiment": -0.02470955765496119,
+  "asset_sentiment": {
+    "BTC": {
+      "score": 0.41938188422074885,
+      "volume": 62477,
+      "trend": "neutral"
+    },
+    "ETH": {
+      "score": -0.8647479763865629,
+      "volume": 38825,
+      "trend": "bullish"
+    },
+    "SOL": {
+      "score": -0.33964835600668675,
+      "volume": 10738,
+      "trend": "bearish"
+    },
+    "BNB": {
+      "score": 0.106632124366427,
+      "volume": 55173,
+      "trend": "neutral"
+    },
+    "XRP": {
+      "score": 0.07886095241891211,
+      "volume": 40137,
+      "trend": "bearish"
+    }
+  }
+}

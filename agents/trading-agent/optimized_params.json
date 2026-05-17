@@ -1,0 +1,1 @@
+{"ema_fast": 8, "ema_slow": 26, "rsi_period": 14, "overbought": 65, "oversold": 35, "atr_multiplier": 1.3, "min_volume_per_trade": 1000}

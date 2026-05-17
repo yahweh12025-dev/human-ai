@@ -1,0 +1,36 @@
+{
+  "reports": [
+    {
+      "report_id": "report_1778458345",
+      "period_hours": 24,
+      "generated_at": "2026-05-11T00:12:25.402681",
+      "summary": {
+        "total_posts": 0,
+        "total_engagement": {
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "impressions": 0,
+          "clicks": 0,
+          "saves": 0
+        },
+        "average_score": 0.0
+      },
+      "platform_breakdown": {},
+      "top_posts": [],
+      "all_time_metrics": {
+        "total_posts": 0,
+        "by_platform": {},
+        "by_category": {},
+        "engagement_totals": {
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "impressions": 0,
+          "clicks": 0
+        }
+      }
+    }
+  ],
+  "last_updated": "2026-05-11T00:12:25.402750"
+}

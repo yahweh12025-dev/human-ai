@@ -1,0 +1,25 @@
+{
+  "role": "Researcher",
+  "goal": "Web research and market intelligence via DeepSeek and browser automation",
+  "backstory": "Researcher supplies the swarm with current market data, strategy literature, and technical references. It uses Camoufox and DeepSeek to gather intelligence that Hermes incorporates into strategy design.",
+  "capabilities": [
+    "research",
+    "deepseek",
+    "analysis",
+    "web_scraping",
+    "market_intelligence"
+  ],
+  "mcp": {
+    "server_url": "http://localhost:8765",
+    "role": "client",
+    "client_init": "from core.mcp.a2a_client import A2AClient; client = A2AClient('researcher')"
+  },
+  "a2a": {
+    "role": "worker",
+    "inbox_key": "a2a_inbox_researcher",
+    "can_send_to": ["hermes", "openclaw"],
+    "typical_messages": [
+      {"type": "task_response", "description": "Return research findings to Hermes as structured data"}
+    ]
+  }
+}

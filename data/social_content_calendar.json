@@ -1,0 +1,55 @@
+{
+  "calendar": [
+    {
+      "id": "cal_20260511_0_twitter",
+      "topic": "Daily Market Update",
+      "category": "market_analysis",
+      "platform": "twitter",
+      "scheduled_time": "2026-05-11T09:00:00",
+      "status": "planned",
+      "created_at": "2026-05-11T00:12:39.118728",
+      "content": null
+    },
+    {
+      "id": "cal_20260511_1_instagram",
+      "topic": "Daily Market Update",
+      "category": "market_analysis",
+      "platform": "instagram",
+      "scheduled_time": "2026-05-11T11:00:00",
+      "status": "planned",
+      "created_at": "2026-05-11T00:12:39.118728",
+      "content": null
+    },
+    {
+      "id": "cal_20260511_2_youtube",
+      "topic": "Daily Market Update",
+      "category": "market_analysis",
+      "platform": "youtube",
+      "scheduled_time": "2026-05-11T18:00:00",
+      "status": "planned",
+      "created_at": "2026-05-11T00:12:39.118728",
+      "content": null
+    },
+    {
+      "id": "cal_20260512_0_twitter",
+      "topic": "Daily Market Update",
+      "category": "market_analysis",
+      "platform": "twitter",
+      "scheduled_time": "2026-05-12T09:00:00",
+      "status": "planned",
+      "created_at": "2026-05-11T00:12:39.118728",
+      "content": null
+    },
+    {
+      "id": "cal_20260512_1_instagram",
+      "topic": "Daily Market Update",
+      "category": "market_analysis",
+      "platform": "instagram",
+      "scheduled_time": "2026-05-12T11:00:00",
+      "status": "planned",
+      "created_at": "2026-05-11T00:12:39.118728",
+      "content": null
+    }
+  ],
+  "last_updated": "2026-05-11T00:12:39.118996"
+}
