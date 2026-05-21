@@ -1,0 +1,4 @@
+# GitHub Pages config — serve static files
+theme: jekyll-theme-minimal
+title: "Human-AI Swarm"
+description: "Autonomous multi-agent swarm for high-alpha trading and content creation"

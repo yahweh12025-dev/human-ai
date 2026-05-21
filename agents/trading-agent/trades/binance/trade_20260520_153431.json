@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "BTCUSDT",
+  "side": "SELL",
+  "direction": "BUY",
+  "entry_price": 77546.0,
+  "exit_price": 77588.0,
+  "qty": 0.0072,
+  "entry": 77546.0,
+  "exit": 77588.0,
+  "pnl": 37.8,
+  "pnl_pct": 6.7702,
+  "leverage": 125,
+  "reason": "TIMEOUT",
+  "elapsed": 151,
+  "order_id": 13168449392,
+  "total_pnl": -14.068,
+  "timestamp": "2026-05-20T15:34:31.245893"
+}

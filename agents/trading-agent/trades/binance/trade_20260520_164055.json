@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "BNBUSDT",
+  "side": "SELL",
+  "qty": 0.12,
+  "price": 647.76,
+  "sl": 648.537312,
+  "tp1": 645.81672,
+  "tp2": 643.87344,
+  "leverage": 37,
+  "equity_used": 2.25,
+  "signal": {
+    "direction": "SELL",
+    "strength": 0.65,
+    "atr_ratio": 0.96,
+    "rsi": 65.1,
+    "avg_atr": 0.324286,
+    "vol_ok": true,
+    "bias": "NEUTRAL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "N"
+  },
+  "balance": 4460.56735105,
+  "order_id": 1370510564,
+  "timestamp": "2026-05-20T16:40:55.342194"
+}

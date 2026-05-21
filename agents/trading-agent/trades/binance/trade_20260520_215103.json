@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "SOLUSDT",
+  "side": "BUY",
+  "qty": 0.69,
+  "price": 86.15,
+  "sl": 86.04662,
+  "tp1": 86.40845,
+  "tp2": 86.66690000000001,
+  "leverage": 50,
+  "equity_used": 1.2,
+  "signal": {
+    "direction": "BUY",
+    "strength": 1.0,
+    "atr_ratio": 1.49,
+    "rsi": 58.3,
+    "avg_atr": 0.033571,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4463.67650756,
+  "order_id": 1885877020,
+  "timestamp": "2026-05-20T21:51:03.757559"
+}

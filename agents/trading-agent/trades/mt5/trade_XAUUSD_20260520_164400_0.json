@@ -1,0 +1,33 @@
+{
+  "type": "ENTRY",
+  "symbol": "XAUUSD",
+  "direction": "BUY",
+  "lot": 0.01,
+  "entry_price": 4532.38,
+  "sl": 4518.78,
+  "tp": 4550.74,
+  "sl_dist": 13.597140000000001,
+  "tp_dist": 18.356139000000002,
+  "tp_r": 1.35,
+  "atr": 1.6671,
+  "signal": {
+    "direction": "BUY",
+    "score": 5,
+    "score_bull": 5,
+    "score_bear": 0,
+    "atr": 1.6671,
+    "avg_atr": 2.177,
+    "rsi": 43.9,
+    "atr_ratio": 1.11,
+    "pillars_bull": 2,
+    "pillars_bear": 0,
+    "regime": "SCALP",
+    "h1_bias": "BULL"
+  },
+  "trend_15m": "BULL",
+  "regime": "SCALP",
+  "session": "london_ny",
+  "sig_id": "XAUUSD_BUY_20260520_164358_c348c1",
+  "mode": "real_mt5",
+  "timestamp": "2026-05-20T16:44:00.005479"
+}

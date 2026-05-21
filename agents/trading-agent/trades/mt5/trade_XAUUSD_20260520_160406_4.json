@@ -1,0 +1,23 @@
+{
+  "type": "EXIT",
+  "symbol": "XAUUSD",
+  "direction": "BUY",
+  "lot": 0.02,
+  "entry_price": 4535.7,
+  "exit_price": 4529.92,
+  "pnl": -11.56,
+  "reason": "TIMEOUT",
+  "elapsed": 1203,
+  "trail_active": false,
+  "streak_after": -1,
+  "sig_id": "CLOSE_XAUUSD_160403_27830",
+  "mt5_result": {
+    "sig_id": "CLOSE_XAUUSD_160403_27830",
+    "action": "CLOSE",
+    "symbol": "XAUUSD",
+    "success": true,
+    "ts": "2026.05.20 19:04:05"
+  },
+  "mode": "real_mt5",
+  "timestamp": "2026-05-20T16:04:06.499820"
+}

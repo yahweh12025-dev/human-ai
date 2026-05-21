@@ -1,0 +1,30 @@
+{
+  "claude_code": {
+    "preferred_model": "claude-opus-4-7",
+    "auto_planning": true,
+    "auto_testing": true,
+    "respect_hardening": true,
+    "pi_dev_verification_required": true,
+    "dashboard_port": 10000,
+    "project_root": "../..",
+    "memory_dir": "./memory",
+    "obsidian_vault": "/home/yahwehatwork/obsidian-vault"
+  },
+  "development": {
+    "python_version": "3.11",
+    "default_test_runner": "pytest",
+    "linter": "ruff",
+    "formatter": "black"
+  },
+  "trading": {
+    "default_exchange": "binance",
+    "paper_trading_first": true,
+    "circuit_breaker_enabled": true,
+    "max_position_size_usd": 10000
+  },
+  "social_media": {
+    "enabled": true,
+    "platforms": ["youtube", "tiktok"],
+    "scheduler_config": "../config/social_cron.yaml"
+  }
+}

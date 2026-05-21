@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "BNBUSDT",
+  "side": "BUY",
+  "direction": "SELL",
+  "entry_price": 648.53,
+  "exit_price": 648.37,
+  "qty": 0.06,
+  "entry": 648.53,
+  "exit": 648.37,
+  "pnl": 0.72,
+  "pnl_pct": 1.8503,
+  "leverage": 75,
+  "reason": "TIMEOUT",
+  "elapsed": 146,
+  "order_id": 1370729808,
+  "total_pnl": -15.47095,
+  "timestamp": "2026-05-20T22:17:23.093821"
+}

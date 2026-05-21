@@ -1,0 +1,47 @@
+# Self-hosted Supabase for Human-AI Swarm
+# Backed up to Google Drive via cron
+
+services:
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-oracle26supabase}
+      POSTGRES_DB: human_ai
+      POSTGRES_USER: postgres
+    volumes:
+      - supabase_db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rest:
+    image: postgrest/postgrest:v12.0.2
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgres://postgres:${SUPABASE_DB_PASSWORD:-oracle26supabase}@db:5432/human_ai
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${SUPABASE_JWT_SECRET:-super-secret-jwt-key-for-human-ai-swarm}
+      PGRST_DB_SCHEMA: public
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - "3100:8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  supabase_db:
+    driver: local

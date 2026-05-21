@@ -1,0 +1,66 @@
+{
+  "max_open_trades": 3,
+  "stake_currency": "USDT",
+  "stake_amount": 100.0,
+  "tradable_balance_ratio": 0.95,
+  "fiat_display_currency": "USD",
+  "timeframe": "1h",
+  "dry_run": false,
+  "dry_run_wallet": 5000.0,
+  "cancel_open_orders_on_exit": true,
+  "trading_mode": "futures",
+  "margin_mode": "isolated",
+  "exchange": {
+    "name": "binance",
+    "key": "${BINANCE_TESTNET_API_KEY}",
+    "secret": "${BINANCE_TESTNET_SECRET_KEY}",
+    "ccxt_config": {
+      "defaultType": "future",
+      "urls": {
+        "api": {
+          "fapiPublic": "https://demo-fapi.binance.com/fapi/v1",
+          "fapiPrivate": "https://demo-fapi.binance.com/fapi/v1",
+          "fapiPublicV2": "https://demo-fapi.binance.com/fapi/v2",
+          "fapiPrivateV2": "https://demo-fapi.binance.com/fapi/v2"
+        }
+      }
+    },
+    "ccxt_async_config": {
+      "defaultType": "future"
+    },
+    "pair_whitelist": [
+      "BTC/USDT:USDT",
+      "ETH/USDT:USDT"
+    ]
+  },
+  "entry_pricing": {
+    "price_side": "other",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exit_pricing": {
+    "price_side": "other",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "pairlists": [{"method": "StaticPairList"}],
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": ""
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "verbosity": "error",
+    "enable_openapi": true,
+    "jwt_secret_key": "human-ai-swarm-jwt-secret",
+    "username": "freqtrade",
+    "password": "swarm2026"
+  },
+  "bot_name": "SwarmIntelligence_V8",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "internals": {"process_throttle_secs": 5}
+}

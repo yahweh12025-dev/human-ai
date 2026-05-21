@@ -1,0 +1,21 @@
+{
+  "name": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "version": "Opus 4.7",
+  "provider": "Anthropic",
+  "context_window": "1M tokens",
+  "type": "CLI for Claude",
+  "capabilities": [
+    "code generation",
+    "code review",
+    "architecture design",
+    "debugging",
+    "test writing",
+    "documentation",
+    "infrastructure as code",
+    "multi-agent coordination"
+  ],
+  "specialization": "software engineering tasks",
+  "memory_system": "file-based at ~/.claude/projects/",
+  "created_for": "Human-AI Project integration"
+}

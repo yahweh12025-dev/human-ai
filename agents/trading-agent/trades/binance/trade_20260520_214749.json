@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "ETHUSDT",
+  "side": "BUY",
+  "direction": "SELL",
+  "entry_price": 2132.13,
+  "exit_price": 2132.09,
+  "qty": 0.094,
+  "entry": 2132.13,
+  "exit": 2132.09,
+  "pnl": 0.376,
+  "pnl_pct": 0.1876,
+  "leverage": 100,
+  "reason": "TIMEOUT",
+  "elapsed": 136,
+  "order_id": 8718110716,
+  "total_pnl": -12.66095,
+  "timestamp": "2026-05-20T21:47:49.034599"
+}

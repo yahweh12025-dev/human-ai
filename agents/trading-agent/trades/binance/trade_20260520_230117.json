@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "XRPUSDT",
+  "side": "SELL",
+  "direction": "BUY",
+  "entry_price": 1.3655,
+  "exit_price": 1.3641,
+  "qty": 29.2,
+  "entry": 1.3655,
+  "exit": 1.3641,
+  "pnl": -2.044,
+  "pnl_pct": -5.1263,
+  "leverage": 50,
+  "reason": "TIMEOUT",
+  "elapsed": 141,
+  "order_id": 1643348528,
+  "total_pnl": -9.5137,
+  "timestamp": "2026-05-20T23:01:17.134633"
+}

@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "ETHUSDT",
+  "side": "SELL",
+  "qty": 0.187,
+  "price": 2132.13,
+  "sl": 2134.688556,
+  "tp1": 2125.73361,
+  "tp2": 2119.33722,
+  "leverage": 100,
+  "equity_used": 4.0,
+  "signal": {
+    "direction": "SELL",
+    "strength": 0.7,
+    "atr_ratio": 1.3,
+    "rsi": 46.3,
+    "avg_atr": 0.447857,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4460.46603081,
+  "order_id": 8718106625,
+  "timestamp": "2026-05-20T21:45:31.331228"
+}

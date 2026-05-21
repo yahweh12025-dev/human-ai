@@ -1,0 +1,14 @@
+{
+  "type": "PARTIAL_EXIT",
+  "symbol": "BTCUSDT",
+  "side": "SELL",
+  "qty": 0.0009,
+  "entry": 77441.4,
+  "exit": 77457.7,
+  "pnl": 1.83375,
+  "reason": "PARTIAL_TP_ATR",
+  "leverage": 125,
+  "elapsed": 74,
+  "total_pnl": -7.9447,
+  "timestamp": "2026-05-20T22:59:59.106768"
+}

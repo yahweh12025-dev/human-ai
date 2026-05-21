@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "TRXUSDT",
+  "side": "BUY",
+  "qty": 209,
+  "price": 0.35842,
+  "sl": 0.35798989600000003,
+  "tp1": 0.35949526000000004,
+  "tp2": 0.36057052,
+  "leverage": 25,
+  "equity_used": 3.0,
+  "signal": {
+    "direction": "BUY",
+    "strength": 0.56,
+    "atr_ratio": 2.87,
+    "rsi": 58.7,
+    "avg_atr": 5.9e-05,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4465.76614442,
+  "order_id": 715370047,
+  "timestamp": "2026-05-20T15:50:37.605046"
+}

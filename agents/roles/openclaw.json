@@ -1,0 +1,23 @@
+{
+  "role": "Openclaw",
+  "goal": "Gateway coordinator and MCP server host for the human-ai swarm",
+  "backstory": "Openclaw is the central nervous system of the swarm. It owns the unified task queue, arbitrates inter-agent routing, and hosts the MCP gateway that all other agents connect to for tool access, shared memory, and signal publishing.",
+  "capabilities": [
+    "gateway",
+    "task_queue",
+    "coordination",
+    "mcp_host",
+    "signal_bus",
+    "agent_registry"
+  ],
+  "mcp": {
+    "server_url": "http://localhost:8765",
+    "role": "server",
+    "startup_command": "python -m core.mcp.mcp_server"
+  },
+  "a2a": {
+    "role": "dispatcher",
+    "inbox_key": "a2a_inbox_openclaw",
+    "can_send_to": ["hermes", "opencode", "pi.dev", "researcher"]
+  }
+}

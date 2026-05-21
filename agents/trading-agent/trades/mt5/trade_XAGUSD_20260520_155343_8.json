@@ -1,0 +1,23 @@
+{
+  "type": "EXIT",
+  "symbol": "XAGUSD",
+  "direction": "BUY",
+  "lot": 0.01,
+  "entry_price": 76.006,
+  "exit_price": 75.907,
+  "pnl": -4.95,
+  "reason": "TRAIL_SL",
+  "elapsed": 518,
+  "trail_active": true,
+  "streak_after": -1,
+  "sig_id": "CLOSE_XAGUSD_155342_62887",
+  "mt5_result": {
+    "sig_id": "CLOSE_XAGUSD_155342_62887",
+    "action": "CLOSE",
+    "symbol": "XAGUSD",
+    "success": true,
+    "ts": "2026.05.20 18:53:43"
+  },
+  "mode": "real_mt5",
+  "timestamp": "2026-05-20T15:53:43.830985"
+}

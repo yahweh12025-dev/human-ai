@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "ADAUSDT",
+  "side": "BUY",
+  "qty": 120,
+  "price": 0.249,
+  "sl": 0.2487012,
+  "tp1": 0.249747,
+  "tp2": 0.250494,
+  "leverage": 25,
+  "equity_used": 1.2,
+  "signal": {
+    "direction": "BUY",
+    "strength": 1.0,
+    "atr_ratio": 1.0,
+    "rsi": 57.1,
+    "avg_atr": 0.0001,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4463.43678057,
+  "order_id": 637889771,
+  "timestamp": "2026-05-20T23:46:56.908013"
+}

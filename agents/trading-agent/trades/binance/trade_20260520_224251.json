@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "XRPUSDT",
+  "side": "BUY",
+  "qty": 29.2,
+  "price": 1.3658,
+  "sl": 1.36416104,
+  "tp1": 1.3698974,
+  "tp2": 1.3739948,
+  "leverage": 50,
+  "equity_used": 0.8,
+  "signal": {
+    "direction": "BUY",
+    "strength": 1.0,
+    "atr_ratio": 2.53,
+    "rsi": 44.4,
+    "avg_atr": 0.000593,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4464.70499677,
+  "order_id": 1643334348,
+  "timestamp": "2026-05-20T22:42:51.671814"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "TRXUSDT",
+  "side": "SELL",
+  "direction": "BUY",
+  "entry_price": 0.35852,
+  "exit_price": 0.3584,
+  "qty": 209,
+  "entry": 0.35852,
+  "exit": 0.3584,
+  "pnl": -0.627,
+  "pnl_pct": -0.8368,
+  "leverage": 25,
+  "reason": "TIMEOUT",
+  "elapsed": 130,
+  "order_id": 715373605,
+  "total_pnl": -9.631,
+  "timestamp": "2026-05-20T15:56:17.734448"
+}

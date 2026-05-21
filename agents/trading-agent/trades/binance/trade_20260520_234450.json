@@ -1,0 +1,14 @@
+{
+  "type": "PARTIAL_EXIT",
+  "symbol": "ADAUSDT",
+  "side": "SELL",
+  "qty": 60,
+  "entry": 0.2489,
+  "exit": 0.249,
+  "pnl": 0.15,
+  "reason": "PARTIAL_TP_ATR",
+  "leverage": 25,
+  "elapsed": 45,
+  "total_pnl": -24.3555,
+  "timestamp": "2026-05-20T23:44:50.563932"
+}

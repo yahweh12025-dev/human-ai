@@ -1,0 +1,33 @@
+{
+  "type": "ENTRY",
+  "symbol": "XAGUSD",
+  "direction": "SELL",
+  "lot": 0.01,
+  "entry_price": 75.777,
+  "sl": 76.004,
+  "tp": 75.47,
+  "sl_dist": 0.227331,
+  "tp_dist": 0.30689685000000005,
+  "tp_r": 1.35,
+  "atr": 0.0991,
+  "signal": {
+    "direction": "SELL",
+    "score": 4,
+    "score_bull": 1,
+    "score_bear": 4,
+    "atr": 0.0991,
+    "avg_atr": 0.1499,
+    "rsi": 26.1,
+    "atr_ratio": 1.62,
+    "pillars_bull": 0,
+    "pillars_bear": 3,
+    "regime": "SCALP",
+    "h1_bias": "BULL"
+  },
+  "trend_15m": "BULL",
+  "regime": "SCALP",
+  "session": "london_ny",
+  "sig_id": "XAGUSD_SELL_20260520_164138_7b9a02",
+  "mode": "real_mt5",
+  "timestamp": "2026-05-20T16:41:40.136892"
+}

@@ -1,0 +1,9 @@
+- [Architecture Overview](project_architecture_overview.md) — Human-AI project architecture with 4 core agents
+- [Development Workflow](project_development_workflow.md) — Feature dev, Pi.dev review, verification, deployment
+- [Key Directories](reference_key_directories.md) — Quick reference for core/, agents/, apps/, tests/
+- [Ports & Services](reference_ports_and_services.md) — Mission Control dashboard on port 10000 and other services
+- [External APIs](reference_external_apis.md) — Alpaca, CCXT, DeepSeek, OpenRouter, Telethon, Camoufox
+- [Obsidian Integration](integration_obsidian_vault.md) — Second brain via obsidian-vault
+- [Superpowers Skills Library](external_superpowers_skills.md) — Imported skill library from obra/superpowers
+- [Everything Claude Code Skills](external_everything_claude_code_skills.md) — Additional skill library from affaan-m/everything-claude-code
+- [Skill Selection Policy](skill_selection_policy.md) — How Claude Code automatically selects relevant skills

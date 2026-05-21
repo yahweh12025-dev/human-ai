@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "ADAUSDT",
+  "side": "SELL",
+  "direction": "BUY",
+  "entry_price": 0.249,
+  "exit_price": 0.249,
+  "qty": 60,
+  "entry": 0.249,
+  "exit": 0.249,
+  "pnl": 0.0,
+  "pnl_pct": 0.0,
+  "leverage": 25,
+  "reason": "SL",
+  "elapsed": 91,
+  "order_id": 637890712,
+  "total_pnl": -24.0555,
+  "timestamp": "2026-05-20T23:48:29.584408"
+}

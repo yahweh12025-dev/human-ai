@@ -1,0 +1,27 @@
+{
+  "type": "ENTRY",
+  "symbol": "BTCUSDT",
+  "side": "BUY",
+  "qty": 0.0019,
+  "price": 77441.4,
+  "sl": 77348.47032,
+  "tp1": 77673.7242,
+  "tp2": 77906.0484,
+  "leverage": 125,
+  "equity_used": 1.2,
+  "signal": {
+    "direction": "BUY",
+    "strength": 0.76,
+    "atr_ratio": 0.21,
+    "rsi": 47.8,
+    "avg_atr": 18.528571,
+    "vol_ok": true,
+    "bias": "BULL",
+    "fg": 27,
+    "alpaca": "BULL",
+    "mi_tag": "B"
+  },
+  "balance": 4464.20833429,
+  "order_id": 13170092163,
+  "timestamp": "2026-05-20T22:58:43.314227"
+}

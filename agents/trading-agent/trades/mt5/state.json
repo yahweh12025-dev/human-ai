@@ -1,0 +1,26 @@
+{
+  "balance": 4348.92,
+  "equity": 4347.33,
+  "floating_pnl": 0.05,
+  "open_positions": 1,
+  "mt5_live": true,
+  "deposit": 4337.79,
+  "total_pnl": 0.0,
+  "pnl_today": -1.59,
+  "trade_count": 17,
+  "peak_equity": 4348.92,
+  "streak": 0,
+  "daily_start": 4348.92,
+  "daily_date": "2026-05-21",
+  "daily_loss_pct": 0.04,
+  "drawdown_pct": 0.04,
+  "session_active": true,
+  "symbols_active": [
+    "XAUUSD",
+    "XAGUSD",
+    "EURUSD",
+    "GBPUSD"
+  ],
+  "last_update": "2026-05-21T00:14:06.994681",
+  "version": "v11"
+}

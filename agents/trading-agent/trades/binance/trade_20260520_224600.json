@@ -1,0 +1,14 @@
+{
+  "type": "PARTIAL_EXIT",
+  "symbol": "BNBUSDT",
+  "side": "SELL",
+  "qty": 0.03,
+  "entry": 648.63,
+  "exit": 648.78,
+  "pnl": 0.3375,
+  "reason": "PARTIAL_TP_ATR",
+  "leverage": 75,
+  "elapsed": 142,
+  "total_pnl": -15.86345,
+  "timestamp": "2026-05-20T22:46:00.044776"
+}

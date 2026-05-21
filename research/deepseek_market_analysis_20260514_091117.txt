@@ -1,0 +1,125 @@
+DeepSeek Market Analysis - BTC/USDT
+========================================
+
+Prompt:
+Analyze the current market conditions for BTC/USDT and provide:
+1. Key support and resistance levels
+2. Current trend direction
+3. Volume analysis
+4. Recommended trading strategy
+5. Risk management suggestions
+
+Response:
+Here is the specific trading-focused breakdown for BTC/USDT based on current market conditions as of May 14, 2026.
+
+1. Key Support and Resistance Levels
+
+Resistance Levels (Upside Hurdles):
+
+Immediate Resistance: 
+80,600–
+80,600–81,200 (Broken support turned resistance / 4h EMA20)
+
+Major Resistance: 
+83,500–
+83,500–84,000 (Daily descending trendline + heavy sell-wall)
+
+Critical Resistance: $86,900 (50-day EMA & macro pivot for bullish reversal)
+
+Support Levels (Downside Floors):
+
+Immediate Support: 
+78,600–
+78,600–79,000 (Local demand zone & psychological round number)
+
+Major Support: 
+76,400–
+76,400–76,800 (50-day & 100-day EMA cluster)
+
+Critical Support: 
+74,500–
+74,500–75,000 (Primary invalidation zone; break here targets $70k)
+
+2. Current Trend Direction
+
+Overall Trend: Bearish / Corrective (Short-term), Neutral (Medium-term)
+
+Short-term (1h–4h): Bearish. Price below both 20 and 50 EMA on 4h timeframe. Lower highs and lower lows established since the rejection at $82k.
+
+Medium-term (Daily): Neutral to cautious bearish. Price holds above 50 & 100 DMA (
+76.4k–
+76.4k–76.8k) keeping macro uptrend technically alive, but momentum oscillators (MACD, RSI) are rolling over.
+
+Volatility Pattern: "Broadening formation" on 6h chart – expect sharp two-way wicks until a breakdown or breakout occurs.
+
+3. Volume Analysis
+
+Spot Volume: Below 20-day average. Sellers are not aggressive, but buyers are also absent – typical of a "low-liquidity flush environment."
+
+CVD (Cumulative Volume Delta): Negative on Binance & Bybit spot. Large taker sell orders dominated the move from 
+81.5k→
+81.5k→79.7k.
+
+Derivatives: Open Interest (OI) down ~8% in 24h. Long liquidations totaled ~$311M. Funding rates near zero – no excessive leverage bias.
+
+Key Insight: Low-volume grind downward suggests stop hunting rather than true distribution. A volume spike near 
+78k–
+78k–78.5k with a long wick would signal a local bottom.
+
+4. Recommended Trading Strategy
+
+Given the macro uncertainty (Fed handover tomorrow) and technical fragility, two scenarios apply:
+
+Scenario A – Aggressive Scalp (High risk, short timeframe):
+
+Entry Zone: 
+78,200–
+78,200–78,800 (wait for 15-min bullish reversal candle, e.g., hammer or engulfing)
+
+Target 1: $80,200
+
+Target 2: $81,000
+
+Stop Loss: $77,800
+
+Valid only before Fed announcement (May 15).
+
+Scenario B – Conservative Swing (Safest approach):
+
+No entry yet. Wait for either:
+
+Liquidity grab: A wick below 
+78,000to
+78,000to76,800 followed by a 4h close back above $79,500 → enter long.
+
+Breakout confirmation: 4h close above 
+84,000→retestentrynear
+84,000→retestentrynear83,200.
+
+Direction: Long only. Shorting near $80k has poor risk/reward with support clusters below.
+
+5. Risk Management Suggestions
+
+Position Size: Use 50–60% of normal size due to the broadening formation and upcoming Fed event – volatility can double unexpectedly.
+
+Leverage (if any): Max 3x–4x on perps; spot trading is strongly preferred.
+
+Stop-loss discipline:
+
+For long entries near 
+78.5k,placestopsat∗∗
+78.5k,placestopsat∗∗77,700** (below the liquidity sweep zone).
+
+Never hold a losing trade into the Fed announcement (May 15, 14:00 UTC expected).
+
+Hedging: Consider buying a $75k put option (1–2% of position value) if holding spot through the event, or simply reduce exposure to 30% cash.
+
+Key Warning: If daily closes below 
+76,400–∗∗exitalllongs∗∗andwaitfor
+76,400–∗∗exitalllongs∗∗andwaitfor74k–
+74.5kforre−entry.Thebullishstructurediesbelow
+74.5kforre−entry.Thebullishstructurediesbelow76k.
+
+Final Verdict: Do not force trades. Let price sweep the 
+77k–
+77k–78k range first. The highest probability trade is a reclaim long above $79,500 after a lower wick, not a preemptive buy.

@@ -1,0 +1,14 @@
+{
+  "type": "PARTIAL_EXIT",
+  "symbol": "ETHUSDT",
+  "side": "SELL",
+  "qty": 0.046,
+  "entry": 2128.49,
+  "exit": 2129.09,
+  "pnl": 2.76,
+  "reason": "PARTIAL_TP_ATR",
+  "leverage": 100,
+  "elapsed": 22,
+  "total_pnl": -21.1315,
+  "timestamp": "2026-05-21T00:03:08.809007"
+}

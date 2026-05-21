@@ -1,0 +1,19 @@
+{
+  "type": "EXIT",
+  "symbol": "SOLUSDT",
+  "side": "BUY",
+  "direction": "SELL",
+  "entry_price": 85.96,
+  "exit_price": 85.96,
+  "qty": 0.34,
+  "entry": 85.96,
+  "exit": 85.96,
+  "pnl": -0.0,
+  "pnl_pct": -0.0,
+  "leverage": 50,
+  "reason": "TIMEOUT",
+  "elapsed": 143,
+  "order_id": 1885941160,
+  "total_pnl": -9.77845,
+  "timestamp": "2026-05-20T22:55:12.887219"
+}
