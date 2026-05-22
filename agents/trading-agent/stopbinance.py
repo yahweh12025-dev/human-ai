@@ -4,7 +4,7 @@ import os, sys, signal, time
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent
-PID_FILE     = PROJECT_ROOT / "agents/trading-agent/trades/binance/binance_trader.pid"
+PID_FILE     = PROJECT_ROOT / "trades/binance/binance_trader.pid"
 
 def main():
     if not PID_FILE.exists():

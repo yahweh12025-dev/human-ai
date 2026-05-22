@@ -15,13 +15,13 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PIPELINES = [
     {
         "name": "Crypto",
-        "script": str(PROJECT_ROOT / "agents/numerai/crypto_pipeline.py"),
+        "script": str(PROJECT_ROOT / "core/agents/numerai/crypto_pipeline.py"),
         "model_config_key": "crypto_model_alpha",
         "tournament": "crypto",
     },
     {
         "name": "Signals",
-        "script": str(PROJECT_ROOT / "agents/numerai/signal_pipeline.py"),
+        "script": str(PROJECT_ROOT / "core/agents/numerai/signal_pipeline.py"),
         "model_config_key": "signal_model_alpha",
         "tournament": "signals",
     },

@@ -4,9 +4,9 @@ import subprocess, sys, os, time
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent
-BINANCE_SCRIPT = PROJECT_ROOT / "agents/trading-agent/live_trading_binance.py"
-LOG_FILE       = PROJECT_ROOT / "data/logs/live_trading_binance.log"
-PID_FILE       = PROJECT_ROOT / "agents/trading-agent/trades/binance/binance_trader.pid"
+BINANCE_SCRIPT = PROJECT_ROOT / "live_trading_binance.py"
+LOG_FILE       = PROJECT_ROOT.parent / "data/logs/live_trading_binance.log"
+PID_FILE       = PROJECT_ROOT / "trades/binance/binance_trader.pid"
 
 def main():
     # Kill any stale instance

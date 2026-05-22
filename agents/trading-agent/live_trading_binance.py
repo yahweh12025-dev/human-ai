@@ -880,17 +880,6 @@ class BinanceTrader:
                         "leverage": pos.get("leverage", 1), "reason": reason, "elapsed": elapsed,
                         "order_id": order_id,
                         "total_pnl": round(self.pnl, 6), "timestamp": datetime.now().isoformat()})
-                # Non-blocking: trigger trade content hook to generate video + queue to Postiz
-                try:
-                    subprocess.Popen(
-                        [sys.executable,
-                         str(PROJECT_ROOT / "core" / "orchestration" / "trade_content_hook.py"),
-                         "--once"],
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                        start_new_session=True,
-                    )
-                except Exception as _hook_err:
-                    print(f"   [WARN] trade_content_hook launch failed: {_hook_err}")
                 _obsidian(f"Binance EXIT [{reason}]: {symbol}",
                     f"- PnL: ${raw_pnl:+.4f} ({pnl_pct:+.2f}%)\n- Total: ${self.pnl:+.2f}\n- Balance: ${bal:,.2f}")
                 self.trades += 1

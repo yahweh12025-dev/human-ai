@@ -14,7 +14,6 @@ Core agents:
 - **Hermes**: High-reasoning architect for strategy design and orchestration
 - **OpenCode**: Implementation engine for coding and refactoring
 - **Social**: Video production and social media content (100+ videos produced)
-- **PAI**: Life OS skills agent (Research, ExtractWisdom, WorldThreatModel, etc.)
 - **GSD**: Phase automation agent (code-review, audit-fix, docs-update, codebase-map)
 - **Researcher**: DeepSeek browser-based market research
 - **Hermes Trade / OpenCode Trade**: Trading improvement loop agents
@@ -41,7 +40,6 @@ The system integrates with:
 - Obsidian (second brain at `data/obsidian/`)
 - Postiz (social media publishing)
 - **GSD** (Get Shit Done) — meta-prompting / phase automation via `core/gsd_integration.py`
-- **PAI** (Personal AI Infrastructure) — Life OS skills (Research, ExtractWisdom, etc.) via `agents/pai_agent.py`
 
 ## Repository Structure
 
@@ -63,7 +61,6 @@ human-ai/                    # Main project directory
 │   │   ├── ea/                     # MQ5 source (MasterMetalsEA_v56.mq5, etc.)
 │   │   └── strategies/             # FreqTrade strategies
 │   ├── social/              # media_generator, content_pipeline, post_scheduler
-│   ├── pai_agent.py         # PAI skill wrapper
 │   └── social_media_agent.py
 │
 ├── core/                    # Core libraries + applications
@@ -271,21 +268,14 @@ freqtrade download-data --pairs BTC/USDT --timerange 20240101-20250101
 - Self-healing deployment systems
 
 ### GSD Integration
-- **GSD SDK** installed at `~/.claude/get-shit-done/` and `~/.claude/skills/gsd-*/`
+- **gsd-opencode v1.38.5** installed at `~/.config/opencode/` — GSD for OpenCode
+  Run: `npx gsd-opencode` or `gsd-opencode install --global`
+- **pi-gsd** installed via `pi install npm:pi-gsd` — GSD for Pi
 - Python wrapper: `core/gsd_integration.py` — `invoke_gsd_skill(skill_name, context)`
 - Registered as `'gsd'` agent in `core/orchestration/automode.py` `_AGENT_TASK_BANK`
 - Routes in `_execute_gsd_task()`: auto-selects skill from task description keywords
 - GSD skills available: plan-phase, code-review, audit-fix, progress, map-codebase, docs-update, debug, validate-phase
 - Logs to `data/logs/gsd_integration.log`
-
-### PAI Integration
-- **PAI v5.0.0** skills installed at `~/.claude/skills/` (45 skills, all available)
-- Python wrapper: `agents/pai_agent.py` — `PAIAgent`, `invoke_pai_skill()`, convenience wrappers
-- Registered as `'pai'` agent in `core/orchestration/automode.py` `_AGENT_TASK_BANK`
-- Routes in `_execute_pai_task()`: `PAIAgent.execute_task()` auto-selects skill via `SKILL_HINTS`
-- Key PAI skills: Research, ExtractWisdom, WorldThreatModel, RootCauseAnalysis, SystemsThinking, FirstPrinciples, ISA, Telos
-- NVIDIA_API_KEY from `.env` is forwarded to PAI subprocesses (for NIM-hosted skills)
-- Logs to `data/logs/pai_agent.log`
 
 ## Configuration Files
 
