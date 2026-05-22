@@ -24,7 +24,7 @@ def run_command(command, cwd=None):
         return False, str(e)
 
 def push_updates():
-    repo_dir = "/home/ubuntu/human-ai"
+    repo_dir = "/home/yahwehatwork/human-ai"
     
     if not os.path.exists(repo_dir):
         print(f"❌ Repository directory not found: {repo_dir}")

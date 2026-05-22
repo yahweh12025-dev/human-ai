@@ -13,12 +13,11 @@ Core agents:
 - **OpenClaw**: Gateway coordinator managing inter-agent communication
 - **Hermes**: High-reasoning architect for strategy design and orchestration
 - **OpenCode**: Implementation engine for coding and refactoring
-- **Pi.dev**: Guardian for security audits and verification
 - **Social**: Video production and social media content (100+ videos produced)
 - **PAI**: Life OS skills agent (Research, ExtractWisdom, WorldThreatModel, etc.)
 - **GSD**: Phase automation agent (code-review, audit-fix, docs-update, codebase-map)
 - **Researcher**: DeepSeek browser-based market research
-- **Hermes Trade / OpenCode Trade / PiDev Monitor**: Trading improvement loop agents
+- **Hermes Trade / OpenCode Trade**: Trading improvement loop agents
 
 Trading engines:
 - **EA Trader v11** (`agents/trading-agent/live_trading_ea.py`) — XAUUSD/XAGUSD/EURUSD/GBPUSD via MT5 file bridge.
@@ -33,7 +32,6 @@ The system integrates with:
 - MetaTrader 5 — metals/forex trading via file bridge
 - DeepSeek (research via browser agent)
 - OpenRouter + Groq + NVIDIA NIM (LLM routing)
-- Telegram (Telethon)
 - Camoufox (stealth browser automation)
 - Supabase (self-hosted Docker + cloud — agent_backups, agent_logs)
 - Firebase (file storage)
@@ -70,7 +68,7 @@ human-ai/                    # Main project directory
 │
 ├── core/                    # Core libraries + applications
 │   ├── orchestration/       # Automode logic, task_dispatcher, trading loops
-│   ├── agents/              # Core agent implementations (Hermes, Pi.dev, etc.)
+│   ├── agents/              # Core agent implementations (Hermes, etc.)
 │   ├── apps/dashboard/      # Mission Control dashboard (port 10000)
 │   ├── integrations/        # supabase_logger, dify_brain, graphify_bridge, mcp_bridge
 │   ├── health/              # Health monitoring
@@ -246,7 +244,7 @@ freqtrade download-data --pairs BTC/USDT --timerange 20240101-20250101
 - Agents communicate via `agent_communication_protocol.py` using message passing
 - The system uses a gateway pattern with OpenClaw as the central coordinator
 - Cross-agent knowledge sharing enabled through `knowledge_sharing_system.py`
-- PiDev Monitor agent watches liveea.py and live_trading_binance.py, auto-restarts if dead
+
 
 ### Swarm Features
 - **Self-Tasking**: Automode v6 injects fresh tasks from per-agent task banks when queue is low
@@ -315,7 +313,6 @@ freqtrade download-data --pairs BTC/USDT --timerange 20240101-20250101
 - **OpenRouter**: LLM routing and model selection (GPT-4, Claude, Gemini, etc.)
 - **Groq**: Fast inference for time-sensitive agent tasks
 - **NVIDIA NIM**: Hosted PAI skills via `NVIDIA_API_KEY`
-- **Telethon**: Telegram bot integration
 - **Camoufox**: Anti-detection browser automation (stealth-first)
 - **Supabase**: Self-hosted Docker at localhost:3000; agent_backups + agent_logs tables
 - **Firebase**: File storage for backups
@@ -329,14 +326,14 @@ freqtrade download-data --pairs BTC/USDT --timerange 20240101-20250101
 ## Development Workflow
 
 1. **Feature Development**: OpenCode agent handles implementation tasks
-2. **Code Review**: Pi.dev performs security and quality audits before merge
+2. **Code Review**: Self-review and cross-agent verification
 3. **Verification**: Cross-agent output verification ensures correctness
 4. **Deployment**: Infrastructure automation handles CI/CD
 5. **Monitoring**: Mission Control dashboard provides real-time visibility
 
 ## Important Notes
 
-- All code changes must pass Pi.dev's verification before deployment
+- All code changes undergo OpenCode self-review and cross-agent verification before deployment
 - The system includes automated circuit breakers for trading protection
 - Stealth-first approach for browser interactions (avoid bot detection)
 - Knowledge persists in the Merkle Chain for auditability

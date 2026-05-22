@@ -26,7 +26,6 @@ class AgentSkillRegistry:
             "openclaw": {},
             "hermes": {},
             "opencode": {},
-            "pidev": {},
             "freqtrade": {},
             "ea": {},
             "social": {},
@@ -120,35 +119,6 @@ class AgentSkillRegistry:
                 "description": "Auto-generate test cases for a module",
                 "usage": "/opencode gen_tests <module>",
                 "handler": "scripts.automated_verification_test_generator:generate"
-            },
-        }
-
-        # Pi.dev Skills (Security/Verification)
-        self.skills["pidev"] = {
-            "security_audit": {
-                "description": "Run full security audit on codebase",
-                "usage": "/pidev audit [scope]",
-                "handler": "security_audit.run_audit:full_audit"
-            },
-            "verify_output": {
-                "description": "Verify agent output meets quality standards",
-                "usage": "/pidev verify <agent> <output_file>",
-                "handler": "verification.cross_verify:verify"
-            },
-            "credential_scan": {
-                "description": "Scan for leaked credentials in tracked files",
-                "usage": "/pidev scan_creds",
-                "handler": "scripts.credential_scanner:scan"
-            },
-            "knowledge_graph": {
-                "description": "Update knowledge graph with new findings",
-                "usage": "/pidev update_kg <data>",
-                "handler": "core.knowledge_graph:update"
-            },
-            "obsidian_parse": {
-                "description": "Parse Obsidian vault for structured knowledge extraction",
-                "usage": "/pidev parse_obsidian",
-                "handler": "skills.pi-obsidian-md-parser.pi_obsidian_md_parser:parse"
             },
         }
 

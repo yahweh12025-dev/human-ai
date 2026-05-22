@@ -1,18 +1,18 @@
 {
-  "balance": 4361.4,
-  "equity": 4361.4,
-  "floating_pnl": 0.0,
+  "balance": 4293.05,
+  "equity": 4293.05,
+  "floating_pnl": 0,
   "open_positions": 0,
   "mt5_live": true,
-  "deposit": 4337.79,
+  "deposit": 4293.05,
   "total_pnl": 0.0,
-  "pnl_today": 12.48,
-  "trade_count": 17,
-  "peak_equity": 4361.4,
+  "pnl_today": 0.0,
+  "trade_count": 31,
+  "peak_equity": 4293.05,
   "streak": 0,
-  "daily_start": 4348.92,
+  "daily_start": 4293.05,
   "daily_date": "2026-05-21",
-  "daily_loss_pct": -0.29,
+  "daily_loss_pct": 0.0,
   "drawdown_pct": 0.0,
   "session_active": true,
   "symbols_active": [
@@ -21,6 +21,6 @@
     "EURUSD",
     "GBPUSD"
   ],
-  "last_update": "2026-05-21T01:50:37.390411",
+  "last_update": "2026-05-21T16:31:43.002729",
   "version": "v11"
 }

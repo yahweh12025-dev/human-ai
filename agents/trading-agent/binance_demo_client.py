@@ -11,6 +11,7 @@ import json
 import os
 import time
 import requests
+import math
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -32,6 +33,10 @@ class BinanceDemoClient:
 
         if not self.api_key or not self.secret:
             raise ValueError("BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_SECRET_KEY required in .env")
+
+        # Load exchange info for symbol precision (tick size, step size)
+        self._exchange_info = {}
+        self._load_exchange_info()
 
     def _sign(self, params: Dict) -> Dict:
         """Add timestamp and HMAC signature to params"""
@@ -68,6 +73,57 @@ class BinanceDemoClient:
         resp.raise_for_status()
         return resp.json()
 
+    def _load_exchange_info(self):
+        """Fetch and cache exchange info for symbol filters."""
+        try:
+            data = self._get_public('/fapi/v1/exchangeInfo', {})
+            self._exchange_info = data
+        except Exception as e:
+            print(f"[WARN] Failed to load exchange info: {e}")
+            self._exchange_info = {}
+
+    def _get_price_filter(self, symbol: str) -> Dict:
+        """Return PRICE_FILTER dict for symbol, or empty dict."""
+        for s in self._exchange_info.get('symbols', []):
+            if s['symbol'] == symbol:
+                for f in s['filters']:
+                    if f['filterType'] == 'PRICE_FILTER':
+                        return f
+        return {}
+
+    def _get_lot_size(self, symbol: str) -> Dict:
+        """Return LOT_SIZE filter dict for symbol, or empty dict."""
+        for s in self._exchange_info.get('symbols', []):
+            if s['symbol'] == symbol:
+                for f in s['filters']:
+                    if f['filterType'] == 'LOT_SIZE':
+                        return f
+        return {}
+
+    def _round_price(self, symbol: str, price: float) -> float:
+        """Round price to the symbol's tickSize."""
+        pf = self._get_price_filter(symbol)
+        tick = float(pf.get('tickSize', 0.001))
+        rounded = round(price / tick) * tick
+        tick_str = str(tick).rstrip('0')
+        if '.' in tick_str:
+            decimals = len(tick_str.split('.')[-1])
+        else:
+            decimals = 0
+        return round(rounded, decimals)
+
+    def _round_qty(self, symbol: str, qty: float) -> float:
+        """Round quantity to the symbol's stepSize."""
+        ls = self._get_lot_size(symbol)
+        step = float(ls.get('stepSize', 0.001))
+        rounded = math.floor(qty / step) * step
+        step_str = str(step).rstrip('0')
+        if '.' in step_str:
+            decimals = len(step_str.split('.')[-1])
+        else:
+            decimals = 0
+        return round(rounded, decimals)
+
     # === Public Endpoints ===
 
     def get_price(self, symbol: str = 'BTCUSDT') -> float:
@@ -99,26 +155,28 @@ class BinanceDemoClient:
 
     def get_open_orders(self, symbol: str = 'BTCUSDT') -> List[Dict]:
         return self._get_private('/fapi/v1/openOrders', {'symbol': symbol})
-
     def place_market_order(self, symbol: str, side: str, quantity: float) -> Dict:
         """Place a market order. side: BUY or SELL"""
+        qty = self._round_qty(symbol, quantity)
         params = {
             'symbol': symbol,
             'side': side.upper(),
             'type': 'MARKET',
-            'quantity': quantity,
+            'quantity': qty,
         }
         return self._post_private('/fapi/v1/order', params)
-
     def place_stop_market_order(self, symbol: str, side: str, quantity: float,
                                stop_price: float) -> Dict:
         """Place a STOP_MARKET order (exchange-side stop loss). side: BUY or SELL"""
+        # Round to exchange requirements
+        qty = self._round_qty(symbol, quantity)
+        stop = self._round_price(symbol, stop_price)
         params = {
             'symbol': symbol,
             'side': side.upper(),
             'type': 'STOP_MARKET',
-            'quantity': quantity,
-            'stopPrice': round(stop_price, 4),
+            'quantity': qty,
+            'stopPrice': stop,
             'reduceOnly': 'true',
         }
         return self._post_private('/fapi/v1/order', params)

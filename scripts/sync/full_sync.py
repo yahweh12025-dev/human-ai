@@ -61,8 +61,8 @@ def sync_to_obsidian():
     state = {
         "last_sync": datetime.now().isoformat(),
         "project_root": str(PROJECT_ROOT),
-        "agents": ["OpenClaw", "Hermes", "OpenCode", "Pi.dev", "FreqTrade", "EA", "SocialMedia"],
-        "active_services": ["OpenRouter", "Groq", "Telegram", "Binance Testnet"],
+        "agents": ["OpenClaw", "Hermes", "OpenCode", "FreqTrade", "EA", "SocialMedia"],
+        "active_services": ["OpenRouter", "Groq", "Binance Testnet"],
     }
     state_file = OBSIDIAN_VAULT / "HumanAI" / "state" / "system_state.json"
     with open(state_file, 'w') as f:

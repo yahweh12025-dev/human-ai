@@ -103,26 +103,6 @@ def verify_groq() -> Dict:
         return {"status": "error", "service": "Groq", "error": str(e)}
 
 
-def verify_telegram() -> Dict:
-    """Verify Telegram bot connection"""
-    token = os.getenv("OPENCLAW_BOT_TOKEN")
-    if not token:
-        return {"status": "not_configured", "service": "Telegram"}
-    try:
-        resp = requests.get(
-            f"https://api.telegram.org/bot{token}/getMe",
-            timeout=10
-        )
-        data = resp.json()
-        return {
-            "status": "connected" if data.get("ok") else "error",
-            "service": "Telegram",
-            "bot_name": data.get("result", {}).get("username", "unknown")
-        }
-    except Exception as e:
-        return {"status": "error", "service": "Telegram", "error": str(e)}
-
-
 def verify_binance_testnet() -> Dict:
     """Verify Binance testnet connectivity"""
     try:
@@ -175,7 +155,6 @@ def run_all_verifications() -> Dict:
         verify_dify,
         verify_openrouter,
         verify_groq,
-        verify_telegram,
         verify_binance_testnet,
         verify_n8n,
         verify_firebase,

@@ -41,6 +41,7 @@ v10 improvements (retained):
 """
 
 import json, os, sys, time, signal, subprocess
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -93,14 +94,16 @@ ATR_SL_MULT  = 1.2       # v11: tighter SL (1.5→1.2) — cut losers faster per
 ATR_TP1_MULT = 2.0       # v11: TP1 at 2.0×ATR (was 1.5) — let trades breathe to profit
 ATR_TP2_MULT = 3.5       # v11: TP2 at 3.5×ATR (was 2.5) — capture big moves like BTC +$199
 # Volume filter thresholds
-VOL_FILTER_BARS   = 20   # compare current bar volume to 20-bar average
-VOL_FILTER_MULT   = 1.0  # require current volume >= 1.0× avg (any above-average volume)
+VOL_FILTER_BARS   = 20
+VOL_FILTER_MULT   = 0.8  # require current volume >= 0.8× avg (relaxed for low-vol periods)
 ASIAN_VOL_MULT    = 1.5  # stricter 1.5× avg during Asian session (22-07 UTC)
+ASIAN_VOL_MULT    = 1.2  # relaxed from 1.5 to 1.2 per auto-tune
 # Daily loss circuit breaker
 DAILY_LOSS_LIMIT  = -300.0  # halt new entries if pnl_today falls below this
-MAX_ERRORS   = 10
-MIN_STRENGTH = 0.50      # v11: lowered from 0.55 — more entries (data shows need volume)
+MIN_ERRORS   = 10
+MIN_STRENGTH = 0.40      # v11: lowered from 0.50 — more entries per auto-tune
 MAX_OPEN     = 5         # v11: allow 5 concurrent (was 4) — more opportunities
+MAX_OPEN     = 7         # increased to 7 per auto-tune for more concurrent trades
 MAX_HOLD_S   = 130       # v11: RESTORED to 130s — data: 120-150s bucket is +$2094 net PROFIT
 
 # ── Session-adaptive risk multipliers ────────────────────────

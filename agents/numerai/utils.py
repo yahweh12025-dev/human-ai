@@ -72,7 +72,7 @@ def hash_features(feature_cols: list[str]) -> str:
     return hashlib.sha256("|".join(sorted(feature_cols)).encode()).hexdigest()[:12]
 
 
-def save_model(model, model_name: str, feature_cols: list[str], metrics: Optional[dict] = None):
+def save_model(model, model_name: str, feature_cols: list[str], metrics: Optional[dict] = None, extra: Optional[dict] = None):
     import joblib
     path = pickle_path(model_name)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -86,6 +86,8 @@ def save_model(model, model_name: str, feature_cols: list[str], metrics: Optiona
         "metrics": metrics or {},
         "size_bytes": path.stat().st_size,
     }
+    if extra:
+        meta.update(extra)
     metadata_path(model_name).write_text(json.dumps(meta, indent=2))
     log.info("Model '%s' saved (%d features, %d bytes)", model_name, len(feature_cols), meta["size_bytes"])
     return path
@@ -180,26 +182,39 @@ def backup_model_pickle(model_name: str):
 def _format_submission(df: pd.DataFrame, tournament: str) -> pd.DataFrame:
     fmt = df.copy()
     if tournament == "crypto":
-        if fmt.index.name == "ucid" or "ucid" in fmt.columns:
+        if "ucid" in fmt.columns:
+            fmt = fmt.rename(columns={"ucid": "symbol"})
+        elif fmt.index.name == "ucid" or (fmt.index.name is None and not isinstance(fmt.index, pd.RangeIndex)):
+            fmt = fmt.reset_index()
             if "ucid" in fmt.columns:
                 fmt = fmt.rename(columns={"ucid": "symbol"})
-            else:
-                fmt = fmt.reset_index().rename(columns={"ucid": "symbol"})
-        if "prediction" in fmt.columns:
-            pass
-        elif "signal" in fmt.columns:
+        elif "symbol" not in fmt.columns:
+            fmt = fmt.reset_index()
+        if "prediction" not in fmt.columns and "signal" in fmt.columns:
             fmt = fmt.rename(columns={"signal": "prediction"})
         cols = [c for c in fmt.columns if c in ("symbol", "prediction")]
         return fmt[cols]
     elif tournament == "signals":
-        keep = [c for c in ("bloomberg_ticker", "symbol", "friday_date", "signal", "prediction") if c in fmt.columns]
-        fmt = fmt[keep]
-        if "friday_date" in fmt.columns and "prediction" not in fmt.columns and "signal" not in fmt.columns:
-            pass
-        if "prediction" in fmt.columns and "signal" not in fmt.columns:
-            fmt = fmt.rename(columns={"prediction": "signal"})
-        keep2 = [c for c in ("bloomberg_ticker", "symbol", "friday_date", "signal") if c in fmt.columns]
-        return fmt[keep2]
+        if "numerai_ticker" in fmt.columns:
+            fmt = fmt[["numerai_ticker", "signal"]]
+        else:
+            keep = [c for c in ("bloomberg_ticker", "symbol", "friday_date", "signal", "prediction") if c in fmt.columns]
+            fmt = fmt[keep]
+            if "prediction" in fmt.columns and "signal" not in fmt.columns:
+                fmt = fmt.rename(columns={"prediction": "signal"})
+            keep2 = [c for c in ("bloomberg_ticker", "symbol", "friday_date", "signal") if c in fmt.columns]
+            fmt = fmt[keep2]
+    else:  # main tournament
+        if "id" not in fmt.columns and fmt.index.name == "id":
+            fmt = fmt.reset_index()
+        keep = [c for c in ("id", "prediction", "probability") if c in fmt.columns]
+        if keep:
+            fmt = fmt[keep]
+        if "prediction" in fmt.columns:
+            fmt["prediction"] = fmt["prediction"].clip(1e-9, 1 - 1e-9)
+        elif "probability" in fmt.columns:
+            fmt = fmt.rename(columns={"probability": "prediction"})
+            fmt["prediction"] = fmt["prediction"].clip(1e-9, 1 - 1e-9)
     return fmt
 
 

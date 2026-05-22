@@ -75,8 +75,6 @@ MT5_FILES.mkdir(parents=True, exist_ok=True)
 # ── Symbols ─────────────────────────────────────────────────
 SYMBOLS  = ["XAUUSD", "XAGUSD", "EURUSD", "GBPUSD"]
 YF_MAP   = {"XAUUSD": "GC=F", "XAGUSD": "SI=F", "EURUSD": "EURUSD=X", "GBPUSD": "GBPUSD=X"}
-YF_BACKUP = {"EURUSD": ["EURUSD", "EUR=X"], "GBPUSD": ["GBPUSD", "GBP=X"]}  # v12: fallback sources
-
 
 # ── Risk parameters ──────────────────────────────────────────
 DEPOSIT          = 5000.0
@@ -118,8 +116,8 @@ REGIME_SL_MULT = {"TREND": 1.5, "SCALP": 1.2, "RANGE": 1.0, "DEAD": 0.0}
 ATR_DEAD_THRESHOLD = {
     "XAUUSD": 1.00,   # 5m ATR: normal $2-8; block truly dead market < $1
     "XAGUSD": 0.05,   # 5m ATR: normal $0.05-0.20; block < $0.05
-    "EURUSD": 0.00008,
-    "GBPUSD": 0.00010,
+    "EURUSD": 0.0002,
+    "GBPUSD": 0.0003,
 }
 
 # ── Score-proportional lot scaling ───────────────────────────
@@ -183,36 +181,20 @@ def get_session() -> tuple:
 
 
 def get_price(symbol: str) -> float:
-    """v12: Multi-source fallback for EURUSD/GBPUSD reliability"""
     try:
         if MT5_STATUS.exists():
             age = time.time() - MT5_STATUS.stat().st_mtime
             if age < 15:
-                status = read_mt5_status()
+                status = json.loads(MT5_STATUS.read_text())
                 key = f"{symbol.lower()}_bid"
                 val = status.get(key, 0)
                 if val and float(val) > 0:
                     return float(val)
     except Exception:
         pass
-    
     if YFINANCE_OK:
-        # Try primary YF source
-        try:
-            price = float(yf.Ticker(YF_MAP[symbol]).fast_info.last_price)
-            if price > 0: return price
-        except Exception:
-            pass
-        
-        # v12: Try fallback sources for forex pairs
-        if symbol in YF_BACKUP:
-            for fallback in YF_BACKUP[symbol]:
-                try:
-                    price = float(yf.Ticker(fallback).fast_info.last_price)
-                    if price > 0: return price
-                except Exception:
-                    pass
-    
+        try: return float(yf.Ticker(YF_MAP[symbol]).fast_info.last_price)
+        except Exception: pass
     try:
         import glob as _glob
         files = sorted(_glob.glob(str(TRADES_DIR / f"trade_{symbol}_*.json")))
@@ -222,7 +204,6 @@ def get_price(symbol: str) -> float:
             if p: return float(p)
     except Exception:
         pass
-    
     return {"XAUUSD": 4540.0, "XAGUSD": 76.0, "EURUSD": 1.0850, "GBPUSD": 1.2700}.get(symbol, 1.0)
 
 
@@ -352,8 +333,6 @@ def compute_signal(prices: list, trend_15m: str = "NEUTRAL", h1_bias: str = "NEU
         return {"direction": "NONE", "score": 0}
 
     atr = compute_atr(prices)
-    # v12: Skip HEARTBEAT_OK logs for DEAD markets
-
     if atr == 0:
         return {"direction": "NONE", "score": 0}
 
@@ -566,11 +545,7 @@ def read_mt5_status() -> dict:
     try:
         age = time.time() - MT5_STATUS.stat().st_mtime
         if age > 90: return {}
-        raw = MT5_STATUS.read_text()
-        # Fix unquoted timestamps like 2026.05.21 17:45:32 → quoted string
-        import re
-        raw = re.sub(r'(?<=:)(\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}:\d{2})(?=[,}])', r'"\1"', raw)
-        return json.loads(raw)
+        return json.loads(MT5_STATUS.read_text())
     except: return {}
 
 
@@ -582,20 +557,20 @@ def wait_for_mt5(timeout_seconds: int = 300) -> dict:
     deadline = time.time() + timeout_seconds
     warned_at = 0
     print("\n" + "="*70)
-    print("WAITING FOR MT5 EA (MetalEA_v3)...")
+    print("WAITING FOR MT5 EA (MetalEA_v2)...")
     print("="*70)
     print("In MetaTrader 5:")
-    print("  1. Navigator (Ctrl+N) → Expert Advisors → MetalEA_v3")
+    print("  1. Navigator (Ctrl+N) → Expert Advisors → MetalEA_v2")
     print("  2. Drag onto XAUUSD chart")
     print("  3. Tick 'Allow automated trading' → OK")
     print("  4. AutoTrading toolbar button must be GREEN")
-    print("\nPython starts trading automatically once MetalEA_v3 confirms.")
+    print("\nPython starts trading automatically once MetalEA_v2 confirms.")
     print("="*70 + "\n")
 
     while time.time() < deadline:
         status = read_mt5_status()
         if status:
-            print(f"\nMT5 MetalEA_v3 CONFIRMED ACTIVE")
+            print(f"\nMT5 MetalEA_v2 CONFIRMED ACTIVE")
             print(f"  Account  : #{status.get('account', '?')} @ {status.get('server', '?')}")
             print(f"  Balance  : ${status.get('balance', '?')}")
             print(f"  Equity   : ${status.get('equity', '?')}")
@@ -606,12 +581,12 @@ def wait_for_mt5(timeout_seconds: int = 300) -> dict:
         now = time.time()
         if now - warned_at >= 30:
             remaining = int(deadline - now)
-            print(f"  Waiting for MetalEA_v3... ({remaining}s remaining)")
+            print(f"  Waiting for MetalEA_v2... ({remaining}s remaining)")
             warned_at = now
         time.sleep(5)
 
-    print(f"\nTIMEOUT: MetalEA_v3 not detected after {timeout_seconds}s.")
-    print("Attach MetalEA_v3 to a chart and restart.\n")
+    print(f"\nTIMEOUT: MetalEA_v2 not detected after {timeout_seconds}s.")
+    print("Attach MetalEA_v2 to a chart and restart.\n")
     return {}
 
 
@@ -882,7 +857,7 @@ class EATrader:
 
         mt5 = wait_for_mt5(timeout_seconds=300)
         if not mt5:
-            print("Exiting — MT5 EA not confirmed. Restart after attaching MetalEA_v3.")
+            print("Exiting — MT5 EA not confirmed. Restart after attaching MetalEA_v2.")
             sys.exit(0)
 
         live_balance = mt5.get("balance", 0)
@@ -928,7 +903,7 @@ class EATrader:
                     print(f"[{datetime.now().strftime('%H:%M:%S')}] WARNING: MT5 stale (tick {self._stale_ticks}) — no new entries")
                     if self._stale_ticks == 10:
                         _obsidian("MT5 STALE ~5min — trading paused",
-                            "- ACTION: Check MetalEA_v3 is attached and Algo Trading is enabled",
+                            "- ACTION: Check MetalEA_v2 is attached and Algo Trading is enabled",
                             "ea_warn")
                     if self._stale_ticks == 20:
                         try:

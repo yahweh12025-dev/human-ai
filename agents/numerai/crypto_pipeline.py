@@ -330,12 +330,32 @@ def train_model(train: pd.DataFrame, feature_cols: list[str]):
 def generate_predictions(model, live: pd.DataFrame, feature_cols: list[str]) -> pd.DataFrame:
     log.info("Generating predictions for %d coins ...", len(live))
     preds = model.predict(live[feature_cols].fillna(0))
-    submission = pd.Series(preds, index=live["ucid"], name="prediction").clip(0, 1)
+    submission = pd.DataFrame({"ucid": live["ucid"].values, "prediction": np.clip(preds, 1e-9, 1 - 1e-9)})
     log.info(
         "Predictions — mean: %.4f  std: %.4f  min: %.4f  max: %.4f",
-        submission.mean(), submission.std(), submission.min(), submission.max(),
+        submission["prediction"].mean(), submission["prediction"].std(),
+        submission["prediction"].min(), submission["prediction"].max(),
     )
-    return submission.to_frame("prediction")
+    # Map ucid to coin symbol via meta_model.csv
+    try:
+        mm_path = CRYPTO_DATA_DIR / "meta_model.csv"
+        if not mm_path.exists():
+            import numerapi
+            capi = _get_capi()
+            capi.download_dataset("crypto/v2.0/meta_model.csv", dest_path=str(mm_path))
+        mm = pd.read_csv(mm_path)
+        mm["id"] = mm["id"].astype(str)
+        id_to_symbol = dict(zip(mm["id"], mm["symbol"]))
+        submission["symbol"] = submission["ucid"].astype(str).map(id_to_symbol)
+        submission = submission.dropna(subset=["symbol"])
+        log.info("Mapped %d/%d ucids to symbols", len(submission), len(live))
+    except Exception as e:
+        log.warning("ucid→symbol mapping failed: %s — using ucid as-is", e)
+        submission["symbol"] = submission["ucid"].astype(str)
+
+    submission = submission.set_index("symbol")[["prediction"]]
+    submission.index.name = "symbol"
+    return submission
 
 
 def submit_predictions(predictions: pd.DataFrame, model_id: str, dry_run: bool = False) -> bool:

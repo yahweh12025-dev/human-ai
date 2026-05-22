@@ -1,16 +1,12 @@
 """
 CrewAI-based trading improvement loop — mirrors the Human-AI swarm's
-Hermes -> OpenCode -> PiDev review pipeline as a formal CrewAI Crew.
+Hermes -> OpenCode pipeline as a formal CrewAI Crew.
 
 crewAI (~22k stars): https://github.com/crewAIInc/crewAI
 
 Architecture:
   - Hermes Agent  : Architect — strategy design, improvement proposals
   - OpenCode Agent: Implementer — code analysis and refactoring tasks
-  - PiDev Agent   : Guardian — security audit, verification, risk assessment
-
-This Crew mirrors the existing automode loop but provides structured
-multi-agent task delegation with built-in peer review and output chaining.
 
 Usage:
     from core.integrations.crewai_trading_loop import TradingImprovementCrew
@@ -83,12 +79,11 @@ def _build_llm(provider: str = "openrouter", model: str = "openai/gpt-4o-mini"):
 class TradingImprovementCrew:
     """
     A CrewAI Crew that replicates the Human-AI swarm's
-    Hermes -> OpenCode -> PiDev improvement loop.
+    Hermes -> OpenCode improvement loop.
 
     Roles:
       - Hermes (Architect): Identifies trading strategy improvement opportunities
       - OpenCode (Implementer): Proposes concrete code changes
-      - PiDev (Guardian): Audits changes for safety, correctness, and risk compliance
     """
 
     def __init__(
@@ -106,7 +101,7 @@ class TradingImprovementCrew:
         self._crew: Optional[Crew] = None
 
     def _make_agents(self) -> tuple:
-        """Instantiate the three core swarm agents as CrewAI Agents."""
+        """Instantiate the two core swarm agents as CrewAI Agents."""
         common = {"llm": self.llm, "verbose": self.verbose, "allow_delegation": False}
 
         hermes = Agent(
@@ -142,34 +137,16 @@ class TradingImprovementCrew:
             **common,
         )
 
-        pidev = Agent(
-            role="PiDev — Security Guardian & Risk Auditor",
-            goal=(
-                "Audit every proposed code change for: (1) security vulnerabilities, "
-                "(2) prop-firm compliance violations, (3) logic errors that could cause "
-                "runaway losses, (4) missing circuit breakers. Approve or reject with "
-                "detailed justification."
-            ),
-            backstory=(
-                "You are PiDev, the guardian of the Human-AI swarm. You perform rigorous "
-                "code review with a trading-risk lens. You know the dead-man switch logic, "
-                "the 3%/5% drawdown limits, and the 0.05L hard cap. You flag anything that "
-                "could cause unexpected losses or API abuse."
-            ),
-            **common,
-        )
-
-        return hermes, opencode, pidev
+        return hermes, opencode
 
     def _make_tasks(
         self,
         hermes: "Agent",
         opencode: "Agent",
-        pidev: "Agent",
         focus: str,
         code_snippet: str = "",
     ) -> list:
-        """Build the three-stage task chain."""
+        """Build the two-stage task chain (Hermes -> OpenCode)."""
         snippet_block = f"\n\nCode under review:\n```python\n{code_snippet}\n```" if code_snippet else ""
 
         task_hermes = Task(
@@ -198,36 +175,18 @@ class TradingImprovementCrew:
                 "2. New function/class signatures if applicable\n"
                 "3. Integration notes (which files to modify)\n"
                 "4. Unit test sketch for the new behavior\n"
-                "5. Rollback instructions if the change needs reverting"
+                "5. Rollback instructions if the change needs reverting\n\n"
+                "Also include a brief self-review of the change for security and correctness."
             ),
             expected_output=(
                 "Python code implementation with diff, integration notes, test sketch, "
-                "and rollback instructions."
+                "rollback instructions, and self-review."
             ),
             agent=opencode,
             context=[task_hermes],
         )
 
-        task_pidev = Task(
-            description=(
-                "Audit the code change proposed by OpenCode.\n\n"
-                "Check for:\n"
-                "1. Security issues (injection, secret leakage, API key exposure)\n"
-                "2. Prop-firm compliance (drawdown limits, position size caps)\n"
-                "3. Logic errors or off-by-one errors in risk calculations\n"
-                "4. Missing circuit breakers or error handlers\n"
-                "5. Performance regressions\n\n"
-                "Output: APPROVED / APPROVED_WITH_CONDITIONS / REJECTED with full justification."
-            ),
-            expected_output=(
-                "Audit verdict (APPROVED / APPROVED_WITH_CONDITIONS / REJECTED) with "
-                "detailed finding list and required changes if conditional."
-            ),
-            agent=pidev,
-            context=[task_hermes, task_opencode],
-        )
-
-        return [task_hermes, task_opencode, task_pidev]
+        return [task_hermes, task_opencode]
 
     def run_improvement_cycle(
         self,
@@ -236,7 +195,7 @@ class TradingImprovementCrew:
         process: str = "sequential",
     ) -> dict:
         """
-        Run the full Hermes -> OpenCode -> PiDev improvement cycle.
+        Run the full Hermes -> OpenCode improvement cycle.
 
         Args:
             focus: Description of the trading area to improve
@@ -246,13 +205,13 @@ class TradingImprovementCrew:
         Returns:
             dict with crew output and individual agent results
         """
-        hermes, opencode, pidev = self._make_agents()
-        tasks = self._make_tasks(hermes, opencode, pidev, focus, code_snippet)
+        hermes, opencode = self._make_agents()
+        tasks = self._make_tasks(hermes, opencode, focus, code_snippet)
 
         crew_process = Process.sequential if process == "sequential" else Process.hierarchical
 
         crew = Crew(
-            agents=[hermes, opencode, pidev],
+            agents=[hermes, opencode],
             tasks=tasks,
             process=crew_process,
             verbose=self.verbose,
@@ -277,40 +236,12 @@ class TradingImprovementCrew:
                 "source": "crewai-trading-loop",
             }
 
-    def run_code_review(self, code: str, file_path: str = "unknown") -> dict:
-        """
-        Shortcut: run only PiDev code review (single-agent task).
-
-        Useful for quick security/compliance audits without the full improvement cycle.
-        """
-        if not CREWAI_OK:
-            return {"error": "crewai not installed"}
-
-        _, _, pidev = self._make_agents()
-
-        review_task = Task(
-            description=(
-                f"Perform a comprehensive security and trading-risk audit of the following "
-                f"file: {file_path}\n\n```python\n{code}\n```\n\n"
-                "Check for security issues, prop-firm compliance, logic errors, and missing safeguards."
-            ),
-            expected_output="Security audit report with APPROVED/REJECTED verdict and finding list.",
-            agent=pidev,
-        )
-
-        crew = Crew(agents=[pidev], tasks=[review_task], process=Process.sequential, verbose=self.verbose)
-        try:
-            result = crew.kickoff()
-            return {"status": "success", "verdict": str(result), "file": file_path, "source": "crewai-pidev-review"}
-        except Exception as exc:
-            return {"status": "error", "error": str(exc), "file": file_path}
-
     @property
     def status(self) -> dict:
         return {
             "crewai_available": CREWAI_OK,
             "crewai_version": __import__("crewai").__version__ if CREWAI_OK else None,
-            "agents": ["Hermes (Architect)", "OpenCode (Implementer)", "PiDev (Guardian)"],
+            "agents": ["Hermes (Architect)", "OpenCode (Implementer)"],
             "process_modes": ["sequential", "hierarchical"],
             "source_repo": "https://github.com/crewAIInc/crewAI",
             "stars": "~22k",
@@ -328,7 +259,7 @@ def run_trading_improvement(
     verbose: bool = False,
 ) -> dict:
     """
-    Convenience function: run the Hermes->OpenCode->PiDev crew on a trading improvement focus.
+    Convenience function: run the Hermes->OpenCode crew on a trading improvement focus.
 
     Args:
         focus: What to improve (e.g. "EA v9 XAUUSD drawdown management")

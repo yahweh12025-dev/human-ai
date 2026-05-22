@@ -588,7 +588,6 @@ class MCPServer:
             "openclaw":  {"capabilities": ["gateway", "task_queue", "coordination"], "endpoint": ""},
             "hermes":    {"capabilities": ["architect", "strategy", "orchestration"], "endpoint": ""},
             "opencode":  {"capabilities": ["coding", "refactoring", "implementation"], "endpoint": ""},
-            "pi.dev":    {"capabilities": ["security", "audit", "verification"], "endpoint": ""},
             "researcher": {"capabilities": ["research", "deepseek", "analysis"], "endpoint": ""},
         }
         changed = False

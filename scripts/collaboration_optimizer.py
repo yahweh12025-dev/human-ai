@@ -284,7 +284,7 @@ class CollaborationOptimizer:
         
         if not all_agents:
             # Default to known agents if no data
-            all_agents = {'Hermes', 'OpenCode', 'Pi.dev', 'Researcher'}
+            all_agents = {'Hermes', 'OpenCode', 'Researcher'}
         
         optimizations = []
         for task in tasks_to_optimize:

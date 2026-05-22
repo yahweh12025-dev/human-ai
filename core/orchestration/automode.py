@@ -91,41 +91,6 @@ def query_deepseek(prompt: str, agent: str = "automode", timeout: int = 120,
 
     return f"[DeepSeek unavailable — session may need seeding via scripts/utility/masterseed.py]"
 
-# ── Pi.dev greedy search ─────────────────────────────────────
-
-def pidev_greedy_search(pattern: str, paths: List[str] = None,
-                        file_types: List[str] = None, agent: str = "pi.dev") -> str:
-    """
-    Pi.dev greedy search: recursive grep across the codebase.
-    Returns findings as a formatted string.
-    """
-    if paths is None:
-        paths = ["agents", "apps", "core", "scripts"]
-    if file_types is None:
-        file_types = ["*.py", "*.yaml", "*.yml", "*.json", "*.sh"]
-
-    _agent_log(agent, f"[GREEDY] Searching for: {pattern} in {paths}")
-    results = []
-
-    for search_path in paths:
-        full_path = _project_root / search_path
-        if not full_path.exists():
-            continue
-        for ft in file_types:
-            try:
-                r = subprocess.run(
-                    ["grep", "-rn", "--include", ft, pattern, str(full_path)],
-                    capture_output=True, text=True, timeout=30
-                )
-                if r.stdout.strip():
-                    results.append(r.stdout.strip())
-            except Exception:
-                pass
-
-    combined = "\n".join(results)
-    _agent_log(agent, f"[GREEDY] Found {len(combined.splitlines())} matching lines")
-    return combined or f"[No matches for '{pattern}' in {paths}]"
-
 # ── Log reader utility ────────────────────────────────────────
 
 class AgentLogReader:
@@ -136,7 +101,6 @@ class AgentLogReader:
         'openclaw':   'openclaw.log',
         'hermes':     'hermes.log',
         'opencode':   'opencode.log',
-        'pi.dev':     'pidev.log',
         'researcher': 'researcher.log',
         'liveea':     'liveea.log',
         'binance':    'live_trading_binance.log',

@@ -379,10 +379,10 @@ and generate actionable improvement tasks. Focus on:
         """Generate a single task from a pattern."""
         # Determine best agent based on category
         agent_map = {
-            "security": "Pi.dev",
+            "security": "OpenCode",
             "performance": "OpenCode",
             "correctness": "OpenCode",
-            "compliance": "Pi.dev",
+            "compliance": "OpenCode",
             "testing": "OpenCode",
             "infrastructure": "OpenCode",
             "general": "Hermes",
@@ -433,7 +433,7 @@ For each task, provide JSON:
 [{{
   "title": "...",
   "description": "...",
-  "suggested_agent": "Hermes|OpenCode|Pi.dev|OpenClaw|Researcher",
+  "suggested_agent": "Hermes|OpenCode|OpenClaw|Researcher",
   "priority": 1,
   "estimated_impact": "high|medium"
 }}]"""

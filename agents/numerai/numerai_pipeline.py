@@ -400,7 +400,9 @@ def generate_predictions(
         "Predictions stats — mean: %.4f  std: %.4f  min: %.4f  max: %.4f",
         submission.mean(), submission.std(), submission.min(), submission.max(),
     )
-    return submission.to_frame("prediction")
+    result = submission.to_frame("prediction")
+    result.index.name = "id"
+    return result.reset_index()
 
 
 # ---------------------------------------------------------------------------

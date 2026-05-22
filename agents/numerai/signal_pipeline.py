@@ -81,31 +81,43 @@ def get_model_id(args_model_id: str) -> str:
         return ""
 
 
+DATA_VERSION = "signals/v2.1"
+SIGNALS_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
 def download_data(dry_run: bool = False) -> pd.DataFrame:
     if dry_run:
-        n_dates = 5
         n_tickers = 100
-        dates = pd.date_range(end="2026-05-20", periods=n_dates, freq="W")
         tickers = [f"US_{i:05d}" for i in range(n_tickers)]
         records = []
-        for d in dates:
-            for t in tickers:
-                records.append({
-                    "friday_date": d,
-                    "bloomberg_ticker": t,
-                    "data_type": np.random.choice(["returns", "volatility", "volume", "momentum"]),
-                    "value": np.random.randn(),
-                })
+        for t in tickers:
+            records.append({
+                "numerai_ticker": t,
+                "data_type": np.random.choice(["train", "validation"]),
+                "feature_country": np.random.choice(["US", "JP", "KR", "HK", "DE"]),
+                "feature_adv_20d_factor": np.random.randn(),
+                "feature_beta_factor": np.random.randn(),
+                "feature_market_cap_factor": np.random.randn(),
+                "feature_momentum_12w_factor": np.random.randn(),
+                "target": 0.5 + 0.1 * np.random.randn(),
+            })
         log.info("Generated synthetic data: %d rows", len(records))
         return pd.DataFrame(records)
 
     try:
         import numerapi
-        napi = numerapi.SignalsAPI()
-        log.info("Downloading Signals training data...")
-        train = napi.download_dataset("signals_train_val")
+        pub_key = os.environ.get("NUMERAI_PUBLIC_ID", "")
+        sec_key = os.environ.get("NUMERAI_SECRET_KEY", "")
+        napi = numerapi.SignalsAPI(public_id=pub_key, secret_key=sec_key) if pub_key and sec_key else numerapi.SignalsAPI()
+        log.info("Downloading Signals training data (%s/train.parquet)...", DATA_VERSION)
+        train_path = SIGNALS_DATA_DIR / "train.parquet"
+        napi.download_dataset(f"{DATA_VERSION}/train.parquet", dest_path=str(train_path))
+        train = pd.read_parquet(train_path)
         log.info("Downloaded training data: %s", train.shape)
-        return train
+        val_path = SIGNALS_DATA_DIR / "validation.parquet"
+        napi.download_dataset(f"{DATA_VERSION}/validation.parquet", dest_path=str(val_path))
+        val = pd.read_parquet(val_path)
+        log.info("Downloaded validation data: %s", val.shape)
+        return pd.concat([train, val], ignore_index=True)
     except Exception as e:
         log.warning("Failed to download Signals data from Numerai: %s", e)
         log.warning("Falling back to synthetic data for testing...")
@@ -144,7 +156,24 @@ def engineer_features(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     return df_pivot, feature_cols
 
 
-def train_model(df: pd.DataFrame, feature_cols: list[str]) -> object:
+def _encode_categoricals(df: pd.DataFrame, feature_cols: list[str], mapping: dict | None = None) -> tuple[pd.DataFrame, list[str], dict]:
+    """Convert object dtype features to integer codes. Returns cleaned cols and mapping dict."""
+    cleaned = df.copy()
+    cat_encoders = mapping or {}
+    for col in feature_cols:
+        if cleaned[col].dtype.kind == "O":
+            if mapping is None:
+                cleaned[col], uniques = pd.factorize(cleaned[col].fillna("__NA__"))
+                cat_encoders[col] = list(uniques)
+            else:
+                uniques = cat_encoders.get(col, [])
+                cleaned[col] = cleaned[col].fillna("__NA__").map({v: i for i, v in enumerate(uniques)})
+                cleaned[col] = cleaned[col].fillna(-1).astype(int)
+    numeric_cols = [c for c in feature_cols if cleaned[c].dtype.kind in ("i", "f", "b")]
+    return cleaned, numeric_cols, cat_encoders
+
+
+def train_model(df: pd.DataFrame, feature_cols: list[str]) -> tuple[object, dict]:
     try:
         import lightgbm as lgb
     except ImportError:
@@ -160,10 +189,12 @@ def train_model(df: pd.DataFrame, feature_cols: list[str]) -> object:
     train_mask = df["data_type"] == "train" if "data_type" in df.columns else slice(None)
     train_df = df[train_mask].copy() if isinstance(train_mask, pd.Series) else df.copy()
 
-    X = train_df[feature_cols].fillna(0)
+    train_df, numeric_cols, cat_mapping = _encode_categoricals(train_df, feature_cols)
+
+    X = train_df[numeric_cols].fillna(0)
     y = train_df[target_col]
 
-    log.info("Training LightGBM on %d samples with %d features...", len(X), len(feature_cols))
+    log.info("Training LightGBM on %d samples with %d features...", len(X), len(numeric_cols))
     params = {
         "objective": "regression",
         "metric": "rmse",
@@ -176,16 +207,34 @@ def train_model(df: pd.DataFrame, feature_cols: list[str]) -> object:
     }
     model = lgb.train(params, lgb.Dataset(X, y), num_boost_round=500)
     log.info("Training complete")
-    return model
+    return model, cat_mapping
 
 
-def generate_predictions(model: object, df: pd.DataFrame, feature_cols: list[str]) -> pd.DataFrame:
-    X = df[feature_cols].fillna(0)
+def generate_predictions(model: object, df: pd.DataFrame, feature_cols: list[str], cat_mapping: dict | None = None) -> pd.DataFrame:
+    df, numeric_cols, _ = _encode_categoricals(df, feature_cols, mapping=cat_mapping)
+    X = df[numeric_cols].fillna(0)
     preds = model.predict(X)
 
-    result = df[["friday_date", "bloomberg_ticker"]].copy()
-    result["signal"] = preds
+    ticker_col = "numerai_ticker" if "numerai_ticker" in df.columns else "bloomberg_ticker"
+    result = pd.DataFrame({"numerai_ticker": df[ticker_col].values, "signal": np.clip(preds, 1e-9, 1 - 1e-9)})
     return result
+
+
+def get_live_data() -> pd.DataFrame | None:
+    """Download the Signals live universe data with features for prediction."""
+    try:
+        import numerapi
+        pub_key = os.environ.get("NUMERAI_PUBLIC_ID", "")
+        sec_key = os.environ.get("NUMERAI_SECRET_KEY", "")
+        napi = numerapi.SignalsAPI(public_id=pub_key, secret_key=sec_key) if pub_key and sec_key else numerapi.SignalsAPI()
+        live_path = SIGNALS_DATA_DIR / "live.parquet"
+        napi.download_dataset(f"{DATA_VERSION}/live.parquet", dest_path=str(live_path))
+        live = pd.read_parquet(live_path)
+        log.info("Downloaded live data: %s", live.shape)
+        return live
+    except Exception as e:
+        log.warning("Failed to download live data: %s", e)
+        return None
 
 
 def main() -> int:
@@ -209,6 +258,7 @@ def main() -> int:
 
     df_aug, feature_cols = engineer_features(df)
 
+    cat_mapping = None
     model = None
     if args.use_cached:
         model, meta = load_model(MODEL_NAME)
@@ -220,17 +270,23 @@ def main() -> int:
                 model = None
             else:
                 log.info("Using cached model from %s", meta.get("saved_at", "?"))
+                cat_mapping = meta.get("cat_mapping")
 
     if model is None:
-        model = train_model(df_aug, feature_cols)
-        save_model(model, MODEL_NAME, feature_cols)
+        model, cat_mapping = train_model(df_aug, feature_cols)
+        save_model(model, MODEL_NAME, feature_cols, extra={"cat_mapping": cat_mapping})
         backup_model_pickle(MODEL_NAME)
 
     if args.save_only:
         log.info("Model saved — skipping submission (--save-only)")
         return 0
 
-    predictions = generate_predictions(model, df_aug, feature_cols)
+    live_data = get_live_data()
+    if live_data is not None:
+        log.info("Predicting on Signals live data: %s", live_data.shape)
+        predictions = generate_predictions(model, live_data, feature_cols, cat_mapping=cat_mapping)
+    else:
+        predictions = generate_predictions(model, df_aug, feature_cols, cat_mapping=cat_mapping)
 
     success = submit_predictions_numerai(
         predictions,

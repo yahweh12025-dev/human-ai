@@ -7,7 +7,7 @@ Usage:
     vault_log("hermes", "DECISION", "Chose ATR-based SL over fixed % due to volatility", data={"atr": 1.5})
     vault_log("openclaw", "HEALTH", "All agents nominal", data={"ea": "RUNNING", "binance": "DOWN"})
     vault_log("opencode", "CODE_CHANGE", "Updated Binance v10 TP multiplier", data={"file": "live_trading_binance.py"})
-    vault_log("pidev", "SECURITY", "No critical findings in agents/", data={"files_scanned": 42})
+
     vault_log("social", "VIDEO", "Produced XAUUSD BUY signal video", data={"output": "path/to/video.mp4"})
 """
 
@@ -23,8 +23,6 @@ _AGENT_DIRS = {
     "openclaw":   _VAULT_ROOT / "agents" / "openclaw",
     "hermes":     _VAULT_ROOT / "agents" / "hermes",
     "opencode":   _VAULT_ROOT / "agents" / "opencode",
-    "pidev":      _VAULT_ROOT / "agents" / "pidev",
-    "pi.dev":     _VAULT_ROOT / "agents" / "pidev",
     "social":     _VAULT_ROOT / "agents" / "social",
     "social_media": _VAULT_ROOT / "agents" / "social",
     "pai":        _VAULT_ROOT / "agents" / "shared",
@@ -57,7 +55,7 @@ def vault_log(
     Append a structured log entry to the agent's daily vault file.
 
     Args:
-        agent: Agent name (openclaw, hermes, opencode, pidev, social, ea, binance, ...)
+        agent: Agent name (openclaw, hermes, opencode, social, ea, binance, ...)
         action_type: Short tag (DECISION, CODE_CHANGE, HEALTH, SECURITY, VIDEO, TRADE, etc.)
         description: Human-readable description of what happened
         data: Optional dict of structured data to include

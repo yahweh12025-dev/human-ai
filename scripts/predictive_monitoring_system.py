@@ -141,7 +141,6 @@ class PredictiveMonitoringSystem:
             performance = {
                 "Hermes": {"completion_rate": 0.85, "priority_efficiency": 0.8, "total_tasks": 20, "completed_tasks": 17},
                 "OpenCode": {"completion_rate": 0.78, "priority_efficiency": 0.75, "total_tasks": 15, "completed_tasks": 12},
-                "Pi.dev": {"completion_rate": 0.82, "priority_efficiency": 0.8, "total_tasks": 18, "completed_tasks": 15},
                 "Researcher": {"completion_rate": 0.8, "priority_efficiency": 0.78, "total_tasks": 12, "completed_tasks": 10}
             }
         

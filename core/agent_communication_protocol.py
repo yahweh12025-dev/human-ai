@@ -63,10 +63,9 @@ class AgentCommunicationProtocol:
                 "version": "1.0",
                 "last_updated": datetime.now().isoformat(),
                 "routes": {
-                    "Hermes": ["OpenCode", "Pi.dev", "Researcher"],
-                    "OpenCode": ["Hermes", "Pi.dev"],
-                    "Pi.dev": ["Hermes", "OpenCode", "Researcher"],
-                    "Researcher": ["Hermes", "Pi.dev"]
+                    "Hermes": ["OpenCode", "Researcher"],
+                    "OpenCode": ["Hermes"],
+                    "Researcher": ["Hermes"]
                 }
             }
             with open(self.routes_file, 'w') as f:
@@ -297,7 +296,7 @@ def main():
     protocol = AgentCommunicationProtocol()
     
     # Register default agents if not already registered
-    default_agents = ["Hermes", "OpenCode", "Pi.dev", "Researcher"]
+    default_agents = ["Hermes", "OpenCode", "Researcher"]
     for agent in default_agents:
         protocol.register_agent(agent, 
                                capabilities=["task_execution", "communication"],

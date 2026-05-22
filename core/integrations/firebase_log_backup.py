@@ -3,7 +3,7 @@
 Firebase Log Backup — stores logs and important info NOT in other systems.
 
 What goes to Firebase (backup-only, no duplication):
-  - Agent logs: liveea, live_trading_binance, automode, hermes, opencode, pidev, openclaw, pai
+   - Agent logs: liveea, live_trading_binance, automode, hermes, opencode, openclaw, pai
   - Improvement suggestions (data/logs/improvement_suggestions.json)
   - Automode task archive snapshots
   - Video generation log (data/media_output/generation_log.jsonl)
@@ -45,7 +45,6 @@ LOG_FILES = {
     'automode':      LOGS_DIR / 'automode.log',
     'hermes':        LOGS_DIR / 'hermes.log',
     'opencode':      LOGS_DIR / 'opencode.log',
-    'pidev':         LOGS_DIR / 'pidev.log',
     'openclaw':      LOGS_DIR / 'openclaw.log',
     'pai':           LOGS_DIR / 'pai_agent.log',
     'social':        LOGS_DIR / 'social.log',

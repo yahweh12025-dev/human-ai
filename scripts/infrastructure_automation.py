@@ -126,13 +126,6 @@ class EnvironmentSpecGenerator:
             max_concurrent_tasks=10,
             required_packages=["pytest", "black", "ruff", "requests", "pyyaml"],
         ),
-        "pi.dev": ResourceRequirements(
-            cpu_cores=2.0,
-            memory_mb=2048,
-            disk_mb=4096,
-            max_concurrent_tasks=6,
-            required_packages=["numpy", "pandas", "ccxt", "ta-lib", "requests"],
-        ),
         "openclaw": ResourceRequirements(
             cpu_cores=1.0,
             memory_mb=1024,
@@ -163,14 +156,6 @@ class EnvironmentSpecGenerator:
             health_check_interval_seconds=60,
             min_verification_pass_rate=0.85,
             required_audit_categories=["code_quality", "testing"],
-        ),
-        "pi.dev": VerificationRequirements(
-            pre_deploy_checks=["security_scan", "dependency_audit", "config_validation"],
-            post_deploy_checks=["health_endpoint", "exchange_connectivity", "risk_limits"],
-            health_check_interval_seconds=30,
-            min_verification_pass_rate=0.95,
-            required_audit_categories=["security", "trading"],
-            auto_rollback_on_failure=True,
         ),
         "openclaw": VerificationRequirements(
             pre_deploy_checks=["config_validation", "template_check"],
@@ -250,11 +235,6 @@ class EnvironmentSpecGenerator:
         agent_specific = {
             "hermes": {"OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"},
             "opencode": {"OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"},
-            "pi.dev": {
-                "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
-                "ALPACA_API_KEY": "${ALPACA_API_KEY}",
-                "ALPACA_SECRET_KEY": "${ALPACA_SECRET_KEY}",
-            },
             "openclaw": {"OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"},
             "researcher": {"OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"},
         }
@@ -657,7 +637,7 @@ class InfrastructureAutomation:
 
     def provision_all_agents(self) -> List[ProvisioningResult]:
         """Provision environments for all agents."""
-        agents = ["hermes", "opencode", "pi.dev", "openclaw", "researcher"]
+        agents = ["hermes", "opencode", "openclaw", "researcher"]
         results = []
 
         for agent in agents:

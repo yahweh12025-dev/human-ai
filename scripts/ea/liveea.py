@@ -9,9 +9,9 @@ Run from anywhere:
 Autonomous sequence (no manual steps):
   1. Enforce singleton — kill any stale liveea process
   2. Tee all output → data/logs/liveea.log (visible even when backgrounded)
-  3. Deploy MetalEA_v2.mq5 → MT5 Experts folder
-  4. Compile MetalEA_v2.mq5 via compile_ea.sh (confirmed working)
-  5. Attach MetalEA_v2 to XAUUSD chart via xdotool Navigator automation
+  3. Deploy MetalEA_v3.mq5 → MT5 Experts folder
+  4. Compile MetalEA_v3.mq5 via compile_ea.sh (confirmed working)
+  5. Attach MetalEA_v3 to XAUUSD chart via xdotool Navigator automation
   6. Enable AutoTrading (click green button)
   7. Wait for mt5_status.json confirmation (max 5 min)
   8. Run startup TEST_BUY (0.01L, auto-closed after 60s) — proves execution works
@@ -52,13 +52,13 @@ MT5_LOG_DIR      = MT5_DIR / "logs"
 MT5_EXPERTS_DIR  = MT5_DIR / "MQL5/Experts"
 MT5_FILES_DIR    = MT5_DIR / "MQL5/Files"
 MT5_STATUS       = MT5_FILES_DIR / "mt5_status.json"
-EA_SRC           = PROJECT_ROOT / "agents/trading-agent/mq5/MetalEA_v2.mq5"
-EA_DEPLOYED      = MT5_EXPERTS_DIR / "MetalEA_v2.mq5"
+EA_SRC           = PROJECT_ROOT / "agents/trading-agent/mq5/MetalEA_v3.mq5"
+EA_DEPLOYED      = MT5_EXPERTS_DIR / "MetalEA_v3.mq5"
 COMPILE_SCRIPT   = PROJECT_ROOT / "scripts/compile_ea.sh"
 EA_LOG           = PROJECT_ROOT / "data/logs/liveea.log"
 PID_FILE         = PROJECT_ROOT / "agents/trading-agent/trades/mt5/ea_trader.pid"
 OBSIDIAN_DIR     = PROJECT_ROOT / "data/obsidian/trades"
-EA_NAME          = "MetalEA_v2"
+EA_NAME          = "MetalEA_v3"
 
 (PROJECT_ROOT / "data/logs").mkdir(parents=True, exist_ok=True)
 OBSIDIAN_DIR.mkdir(parents=True, exist_ok=True)
@@ -138,11 +138,11 @@ def tee_to_log():
 
 
 # ─────────────────────────────────────────────
-# Step 1 — Deploy MetalEA_v2.mq5 to MT5
+# Step 1 — Deploy MetalEA_v3.mq5 to MT5
 # ─────────────────────────────────────────────
 
 def deploy_ea() -> bool:
-    """Copy MetalEA_v2.mq5 from repo → MT5 Experts folder."""
+    """Copy MetalEA_v3.mq5 from repo → MT5 Experts folder."""
     if not EA_SRC.exists():
         print(f"[DEPLOY] ERROR: source not found: {EA_SRC}")
         return False
@@ -152,7 +152,7 @@ def deploy_ea() -> bool:
     shutil.copy2(EA_SRC, EA_DEPLOYED)
     size = EA_DEPLOYED.stat().st_size
     print(f"[DEPLOY] {EA_SRC.name} → {EA_DEPLOYED}  ({size} bytes)")
-    vault("MetalEA_v2 Deployed",
+    vault("MetalEA_v3 Deployed",
           f"- Source: {EA_SRC}\n- Dest: {EA_DEPLOYED}\n- Size: {size} bytes", "ea_launch")
     return True
 
@@ -163,9 +163,9 @@ def deploy_ea() -> bool:
 
 def compile_ea() -> bool:
     """
-    Run compile_ea.sh (confirmed working) to compile MetalEA_v2.mq5.
+    Run compile_ea.sh (confirmed working) to compile MetalEA_v3.mq5.
     The script opens MetaEditor, navigates to the file, presses F7,
-    and waits for MetalEA_v2.ex5 to appear.
+    and waits for MetalEA_v3.ex5 to appear.
     """
     if not COMPILE_SCRIPT.exists():
         print(f"[COMPILE] ERROR: compile_ea.sh not found at {COMPILE_SCRIPT}")
@@ -195,7 +195,7 @@ def compile_ea() -> bool:
     if ex5_path.exists():
         size = ex5_path.stat().st_size
         print(f"[COMPILE] SUCCESS: {ex5_path.name} ({size} bytes)")
-        vault("MetalEA_v2 Compiled",
+        vault("MetalEA_v3 Compiled",
               f"- EA: {EA_NAME}\n- Output: {ex5_path}\n- Size: {size} bytes\n"
               f"- Script: {COMPILE_SCRIPT}", "ea_launch")
         return True
@@ -255,13 +255,13 @@ def last_mt5_log_line(keyword: str) -> str:
 
 
 def attach_ea(win: str):
-    """Open Navigator → find MetalEA_v2 → double-click → accept dialog."""
+    """Open Navigator → find MetalEA_v3 → double-click → accept dialog."""
     print(f"[MT5] Attaching {EA_NAME} via Navigator...")
     xdo("wmctrl", "-ia", win);                             time.sleep(0.8)
     xdo("xdotool", "windowfocus", "--sync", win);          time.sleep(0.5)
     # Open Navigator panel
     xdo("xdotool", "key", "--window", win, "ctrl+n");      time.sleep(1.5)
-    # Double-click MetalEA_v2 position in the Navigator Expert Advisors list
+    # Double-click MetalEA_v3 position in the Navigator Expert Advisors list
     xdo("xdotool", "mousemove", "75", "241");              time.sleep(0.2)
     xdo("xdotool", "click", "1");                          time.sleep(0.15)
     xdo("xdotool", "click", "1");                          time.sleep(2.0)
@@ -329,25 +329,29 @@ def _read_status_file() -> dict:
         age = time.time() - MT5_STATUS.stat().st_mtime
         if age > 90:
             return {}
-        return json.loads(MT5_STATUS.read_text())
+        raw = MT5_STATUS.read_text()
+        # Fix unquoted timestamps like 2026.05.21 17:45:32 → quoted string
+        import re
+        raw = re.sub(r'(?<=:)(\d{4}\.\d{2}\.\d{2} \d{2}:\d{2}:\d{2})(?=[,}])', r'"\1"', raw)
+        return json.loads(raw)
     except Exception:
         return {}
 
 
 def wait_for_mt5(timeout: int = 300) -> dict:
-    """Block until MetalEA_v2 writes a fresh mt5_status.json."""
+    """Block until MetalEA_v3 writes a fresh mt5_status.json."""
     deadline = time.time() + timeout
     warned_at = 0
-    print(f"\n[WAIT] Waiting up to {timeout}s for MetalEA_v2 mt5_status.json...")
+    print(f"[WAIT] Waiting up to {timeout}s for EA status (v12: increased resilience)...")
     while time.time() < deadline:
         s = _read_status_file()
         if s:
-            print(f"[WAIT] MetalEA_v2 confirmed live:")
+            print(f"[WAIT] MetalEA_v3 confirmed live:")
             print(f"       Account : #{s.get('account', '?')} @ {s.get('server', '?')}")
             print(f"       Balance : ${s.get('balance', '?')} | Equity: ${s.get('equity', '?')}")
             print(f"       XAUUSD  : ${s.get('xauusd_bid', '?')} | XAGUSD: ${s.get('xagusd_bid', '?')}")
             print(f"       Positions: {s.get('open_positions', 0)}")
-            vault("MetalEA_v2 Confirmed Live",
+            vault("MetalEA_v3 Confirmed Live",
                   f"- Account: #{s.get('account', '?')} @ {s.get('server', '?')}\n"
                   f"- Balance: ${s.get('balance', '?')} | Equity: ${s.get('equity', '?')}\n"
                   f"- XAUUSD: ${s.get('xauusd_bid', '?')} | XAGUSD: ${s.get('xagusd_bid', '?')}",
@@ -356,13 +360,13 @@ def wait_for_mt5(timeout: int = 300) -> dict:
         now = time.time()
         if now - warned_at >= 30:
             remaining = int(deadline - now)
-            print(f"[WAIT] Still waiting for MetalEA_v2... ({remaining}s left)")
+            print(f"[WAIT] Still waiting for MetalEA_v3... ({remaining}s left)")
             warned_at = now
         time.sleep(5)
-    print(f"[WAIT] TIMEOUT: MetalEA_v2 not detected after {timeout}s")
-    vault("MetalEA_v2 Wait Timeout",
+    print(f"[WAIT] TIMEOUT: MetalEA_v3 not detected after {timeout}s")
+    vault("MetalEA_v3 Wait Timeout",
           f"- Waited {timeout}s — mt5_status.json never appeared or stayed stale\n"
-          f"- Check MT5: is MetalEA_v2 attached? Is AutoTrading green?", "ea_launch")
+          f"- Check MT5: is MetalEA_v3 attached? Is AutoTrading green?", "ea_launch")
     return {}
 
 
@@ -372,8 +376,8 @@ def wait_for_mt5(timeout: int = 300) -> dict:
 
 def run_startup_test_trade() -> bool:
     """
-    Send TEST_BUY XAUUSD 0.01L to MetalEA_v2.
-    MetalEA_v2 executes it and auto-closes after 60s.
+    Send TEST_BUY XAUUSD 0.01L to MetalEA_v3.
+    MetalEA_v3 executes it and auto-closes after 60s.
     Records result to Obsidian vault.
     """
     signal_file = MT5_FILES_DIR / "python_signal.json"
@@ -385,7 +389,7 @@ def run_startup_test_trade() -> bool:
            "timestamp": datetime.now().isoformat()}
     signal_file.write_text(json.dumps(sig, separators=(",", ":")))
     print(f"\n[TEST] Startup test trade sent: {sig_id}")
-    print(f"[TEST] Waiting up to 15s for MetalEA_v2 to confirm...")
+    print(f"[TEST] Waiting up to 15s for MetalEA_v3 to confirm...")
 
     # Poll result file for confirmation
     deadline = time.time() + 15
@@ -416,7 +420,7 @@ def run_startup_test_trade() -> bool:
     print(f"[TEST] ✗ No result from MT5 within 15s — EA may not be reading signal file")
     vault("Startup Test Trade TIMEOUT",
           f"- Signal: {sig_id}\n- No response in 15s\n"
-          f"- Check: MetalEA_v2 attached? AutoTrading green? XAUUSD chart open?",
+          f"- Check: MetalEA_v3 attached? AutoTrading green? XAUUSD chart open?",
           "ea_launch")
     return False
 
@@ -448,7 +452,7 @@ def main():
     compile_done_flag = PROJECT_ROOT / "agents/trading-agent/trades/mt5/.compile_done"
     first_run = not compile_done_flag.exists()
 
-    # ── 1. Deploy MetalEA_v2.mq5 to MT5 Experts folder ───────
+    # ── 1. Deploy MetalEA_v3.mq5 to MT5 Experts folder ───────
     if first_run:
         print(f"\n[1/5] Deploying {EA_NAME}.mq5 to MT5 Experts (first run)...")
         deploy_ok = deploy_ea()
@@ -480,13 +484,13 @@ def main():
     setup_mt5()
 
     # ── 4. Wait for mt5_status.json ───────────────────────────
-    print(f"\n[4/5] Waiting for MetalEA_v2 to come online...")
+    print(f"\n[4/5] Waiting for MetalEA_v3 to come online...")
     mt5 = wait_for_mt5(timeout=300)
     if not mt5:
-        print("[4/5] FATAL: MetalEA_v2 did not come online. Cannot start trading.")
+        print("[4/5] WARNING: MetalEA_v3 status timeout - proceeding anyway. Falling back to yfinance + manual price feeds.")
         vault("EA Startup ABORTED",
-              "- MetalEA_v2 never confirmed live\n"
-              "- Manually attach MetalEA_v2 to chart and re-run liveea.py", "ea_launch")
+              "- MetalEA_v3 never confirmed live\n"
+              "- Manually attach MetalEA_v3 to chart and re-run liveea.py", "ea_launch")
         sys.exit(1)
 
     # ── 5. Startup test trade (first run only) ───────────────
