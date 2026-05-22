@@ -1,11 +1,11 @@
 {
-  "current_balance": 4299.91472313,
+  "current_balance": 4298.42250562,
   "starting_balance": 4312.25675772,
   "total_pnl": 211.84413,
   "trade_count": 534,
   "open_positions": 0,
   "symbols": [],
-  "last_update": "2026-05-22T22:41:25.401311",
+  "last_update": "2026-05-22T22:44:18.080314",
   "pnl_today": 124.49899,
   "daily_reset_date": "2026-05-22"
 }

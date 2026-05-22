@@ -1,0 +1,3 @@
+[submodule "antfarm"]
+	path = antfarm
+	url = https://github.com/snarktank/antfarm.git
