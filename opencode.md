@@ -366,3 +366,14 @@ pytest tests/test_binance.py tests/test_kraken.py tests/test_bybit.py
 - GDrive: all 100 trading videos synced to gdrive:HumanAI/videos/trading/
 - Numerai skeleton: agents/numerai/ (activate by adding NUMERAI_API_KEY to .env)
 - SECURITY: .env and firebase-key.json were accidentally in Obsidian vault — now removed. Rotate API keys.
+
+## Backup & Sync
+
+| Asset | Destination | Schedule | Script |
+|---|---|---|---|
+| Obsidian vault | `gdrive:backups/obsidian/` | Every 30 min | `~/sync_obsidian_to_gdrive.sh` |
+| mt5_node config | `gdrive:backups/mt5_node/` | Every 6h | `~/sync_mt5_to_gdrive.sh` |
+| Trading videos | `gdrive:videos/trading/` | Continuous (on generation) | `data/media_output/` → rclone sync |
+| Firebase logs | Firestore collections | Every 30 min | `core/integrations/firebase_log_backup.py` |
+| Supabase DB | `gdrive:backups/supabase/` | Manual | `scripts/backup_supabase_to_gdrive.sh` |
+| .env secrets | `gdrive:backups/env/` | Manual | rclone copy
