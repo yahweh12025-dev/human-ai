@@ -14,6 +14,12 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PIPELINES = [
     {
+        "name": "Main",
+        "script": str(PROJECT_ROOT / "core/agents/numerai/numerai_pipeline.py"),
+        "model_config_key": "human_ai_alpha",
+        "tournament": "main",
+    },
+    {
         "name": "Crypto",
         "script": str(PROJECT_ROOT / "core/agents/numerai/crypto_pipeline.py"),
         "model_config_key": "crypto_model_alpha",

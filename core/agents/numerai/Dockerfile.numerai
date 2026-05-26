@@ -2,7 +2,8 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -10,22 +11,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip && \
-    pip install lightgbm numerapi pandas numpy scikit-learn joblib
+    pip install lightgbm numerapi pandas numpy scikit-learn joblib cloudpickle
 
 WORKDIR /app
 
-# Copy files directly since we are building from agents/numerai context
-COPY numerai_pipeline.py .
-COPY crypto_pipeline.py .
-COPY signal_pipeline.py .
-COPY utils.py .
-COPY models_config.json .
-COPY run_all.sh .
+# Build the exact directory structure matching the repo layout
+# so PROJECT_ROOT = Path(__file__).parent.parent.parent resolves to /app
+RUN mkdir -p /app/core/agents/numerai /app/agents/numerai /app/data/logs
 
-# Copy pre-trained models
-COPY models/*.pkl ./data/numerai/models/
-COPY models/*.json ./data/numerai/models/
+# Pipeline scripts in core/agents/numerai/ (matching repo layout)
+COPY numerai_pipeline.py /app/core/agents/numerai/
+COPY crypto_pipeline.py /app/core/agents/numerai/
+COPY signal_pipeline.py /app/core/agents/numerai/
+COPY utils.py /app/core/agents/numerai/
+COPY models_config.json /app/core/agents/numerai/
 
-RUN chmod +x run_all.sh
+# Create agents.numerai package for the import (symlink or copy utils)
+COPY utils.py /app/agents/numerai/
+COPY models_config.json /app/agents/numerai/
+RUN touch /app/agents/__init__.py && touch /app/agents/numerai/__init__.py
 
+# Entrypoint script at repo root equivalent
+COPY run_all.sh /app/core/agents/numerai/
+
+# Pre-trained models
+COPY models/*.pkl /app/data/numerai/models/
+COPY models/*.json /app/data/numerai/models/
+
+RUN chmod +x /app/core/agents/numerai/run_all.sh
+
+WORKDIR /app/core/agents/numerai
 CMD ["./run_all.sh"]

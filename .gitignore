@@ -86,5 +86,8 @@ obsidian/
 # Backups
 backups/
 
+# Process output
+nohup.out
+
 # Configs that may contain secrets
 config/
