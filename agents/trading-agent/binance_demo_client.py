@@ -133,56 +133,23 @@ class BinanceDemoClient:
     def get_ticker(self, symbol: str = 'BTCUSDT') -> Dict:
         return self._get_public('/fapi/v1/ticker/24hr', {'symbol': symbol})
 
+    def get_funding_rate(self, symbol: str = 'BTCUSDT') -> float:
+        """Return current funding rate for the symbol."""
+        data = self._get_public('/fapi/v1/premiumIndex', {'symbol': symbol})
+        return float(data.get('lastFundingRate', 0.0))
+
     def get_klines(self, symbol: str = 'BTCUSDT', interval: str = '1h', limit: int = 200) -> List:
         return self._get_public('/fapi/v1/klines', {'symbol': symbol, 'interval': interval, 'limit': limit})
 
     def get_orderbook(self, symbol: str = 'BTCUSDT', limit: int = 10) -> Dict:
         return self._get_public('/fapi/v1/depth', {'symbol': symbol, 'limit': limit})
 
-    # === Private Endpoints ===
-
-    def get_balance(self) -> List[Dict]:
-        return self._get_private('/fapi/v2/balance')
-
-    def get_usdt_balance(self) -> float:
-        balances = self.get_balance()
-        usdt = next((b for b in balances if b['asset'] == 'USDT'), None)
-        return float(usdt['availableBalance']) if usdt else 0.0
-
-    def get_positions(self) -> List[Dict]:
-        data = self._get_private('/fapi/v2/positionRisk')
-        return [p for p in data if float(p.get('positionAmt', 0)) != 0]
-
-    def get_open_orders(self, symbol: str = 'BTCUSDT') -> List[Dict]:
-        return self._get_private('/fapi/v1/openOrders', {'symbol': symbol})
-    def place_market_order(self, symbol: str, side: str, quantity: float) -> Dict:
-        """Place a market order. side: BUY or SELL"""
-        qty = self._round_qty(symbol, quantity)
-        params = {
-            'symbol': symbol,
-            'side': side.upper(),
-            'type': 'MARKET',
-            'quantity': qty,
-        }
-        return self._post_private('/fapi/v1/order', params)
-    def place_stop_market_order(self, symbol: str, side: str, quantity: float,
-                               stop_price: float) -> Dict:
-        """Place a STOP_MARKET order (exchange-side stop loss). side: BUY or SELL"""
-        # Round to exchange requirements
-        qty = self._round_qty(symbol, quantity)
-        stop = self._round_price(symbol, stop_price)
-        params = {
-            'symbol': symbol,
-            'side': side.upper(),
-            'type': 'STOP_MARKET',
-            'quantity': qty,
-            'stopPrice': stop,
-            'reduceOnly': 'true',
-        }
-        return self._post_private('/fapi/v1/order', params)
+    def get_recent_trades(self, symbol: str = 'BTCUSDT', limit: int = 500) -> List:
+        """Fetch recent trades for CVD calculation."""
+        return self._get_public('/fapi/v1/trades', {'symbol': symbol, 'limit': limit})
 
     def place_limit_order(self, symbol: str, side: str, quantity: float,
-                         price: float, time_in_force: str = 'GTC') -> Dict:
+                          price: float, time_in_force: str = 'GTC') -> Dict:
         params = {
             'symbol': symbol,
             'side': side.upper(),

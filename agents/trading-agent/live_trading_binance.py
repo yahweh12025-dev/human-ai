@@ -29,7 +29,7 @@ Analysis of v11 logs shows:
 
 import json, os, sys, time, signal, subprocess
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -78,6 +78,25 @@ ASIAN_VOL_MULT  = 1.5   # v12: RESTORE (was 1.2) - stricter Asian hours
 MIN_STRENGTH = 0.55     # v12: STRONGER (was 0.40) - better entry signals
 MAX_HOLD_S = 90         # v12: SHORTER (was 130) - exit fast on chop
 DAILY_LOSS_LIMIT = -100.0  # v12: STRICTER (was -300.0) - protect capital
+
+# ════════════════════════════════════════════════════════════════════════════
+# RISK-01: Circuit breaker at 15-20% total account drawdown
+# RISK-02: Real-time equity-based drawdown monitoring
+# RISK-03: Self-imposed daily loss limit at 60% of prop firm max
+# RISK-04: Consecutive loss detection — 2 losses → stop for the day
+# RISK-05: Correlation-aware position sizing
+# ════════════════════════════════════════════════════════════════════════════
+CB_DRAWDOWN_PCT = 0.15       # 15% drawdown from peak equity → circuit breaker
+CB_RESET_FILE = "cb_reset"   # marker: touch this file to reset circuit breaker
+DAILY_LOSS_PCT = 0.02        # 2% of starting equity → self-imposed daily limit
+MAX_CONSECUTIVE_LOSSES = 2   # consecutive losses → stop for the day
+MAX_CORRELATED_RISK_PCT = 0.03  # max 3% aggregate risk across correlated pairs
+CORRELATION_GROUPS = [
+    {"name": "BTC_ETH",   "symbols": ["BTCUSDT", "ETHUSDT"]},
+    {"name": "BNB_SOL",   "symbols": ["BNBUSDT", "SOLUSDT"]},
+    {"name": "XRP_ADA",   "symbols": ["XRPUSDT", "ADAUSDT"]},
+    {"name": "TRX",       "symbols": ["TRXUSDT"]},
+]
 
 # ────────────────────────────────────────────────────────────────────────────
 # v12: Increased equity per symbol (2-3x) to avoid qty rounding & API errors
@@ -182,10 +201,46 @@ def _trend_strength(closes: list) -> float:
     adx = (closes[-1] - lows[-1]) / (highs[-1] - lows[-1]) if (highs[-1] - lows[-1]) > 0 else 0.5
     return max(0.0, min(1.0, adx))
 
+def _get_cvd_bias(client, symbol: str) -> float:
+    """Calculate Cumulative Volume Delta bias (-1.0 to 1.0)."""
+    try:
+        trades = client.get_recent_trades(symbol)
+        if not trades: return 0.0
+        delta = 0.0
+        for t in trades:
+            q = float(t['qty'])
+            delta += q if t['isBuyerMaker'] == 'False' else -q
+        total_vol = sum(float(t['qty']) for t in trades)
+        return delta / total_vol if total_vol > 0 else 0.0
+    except Exception:
+        return 0.0
+
+def _get_vwap(klines: list) -> float:
+    """Calculate VWAP from klines (sum(p*v)/sum(v))."""
+    try:
+        num = sum(float(k[4]) * float(k[5]) for k in klines[-20:])
+        den = sum(float(k[5]) for k in klines[-20:])
+        return num / den if den > 0 else 0.0
+    except Exception:
+        return 0.0
+
+def _get_book_imbalance(client, symbol: str) -> float:
+    """Calculate order book imbalance (-1.0 to 1.0)."""
+    try:
+        book = client.get_orderbook(symbol, limit=10)
+        bids = sum(float(b[1]) for b in book.get('bids', []))
+        asks = sum(float(a[1]) for a in book.get('asks', []))
+        return (bids - asks) / (bids + asks) if (bids + asks) > 0 else 0.0
+    except Exception:
+        return 0.0
+
 def compute_signal(klines: list, sentiment: dict, alpaca_trend: str,
-                   market_intel: dict = None) -> dict:
+                    market_intel: dict = None, funding_rate: float = 0.0,
+                    multi_tf_bias: str = "NEUTRAL", cvd_bias: float = 0.0,
+                    book_imbalance: float = 0.0, vwap: float = 0.0) -> dict:
     """
     v12: Improved signal with trend confirmation + stronger gate
+    Includes funding rate, multi-TF bias, CVD, book imbalance, VWAP
     """
     if market_intel is None:
         market_intel = {}
@@ -278,6 +333,43 @@ def compute_signal(klines: list, sentiment: dict, alpaca_trend: str,
     score_bull = min(max(score_bull, 0.0), 1.0)
     score_bear = min(max(score_bear, 0.0), 1.0)
 
+    # BINANCE-01: Funding Rate Drag
+    if funding_rate > 0.0001: # Longs pay Shorts
+        score_bull -= 0.05
+        score_bear += 0.05
+    elif funding_rate < -0.0001: # Shorts pay Longs
+        score_bear -= 0.05
+        score_bull += 0.05
+
+    # BINANCE-02: Multi-TF Bias gating
+    if multi_tf_bias == "BULL":
+        score_bull += 0.15
+        score_bear -= 0.10
+    elif multi_tf_bias == "BEAR":
+        score_bear += 0.15
+        score_bull -= 0.10
+
+    # BINANCE-05: CVD bias
+    if cvd_bias > 0.3:
+        score_bull += 0.10
+    elif cvd_bias < -0.3:
+        score_bear += 0.10
+
+    # BINANCE-05: Book imbalance
+    if book_imbalance > 0.15:
+        score_bull += 0.10
+    elif book_imbalance < -0.15:
+        score_bear += 0.10
+
+    # BINANCE-05: VWAP proximity — scalp toward VWAP mean reversion
+    if vwap > 0 and closes[-1] and len(klines) > 20:
+        vwap_dist = (closes[-1] - vwap) / vwap
+        if vwap_dist < -0.0005: score_bull += 0.05
+        if vwap_dist > 0.0005:  score_bear += 0.05
+
+    score_bull = min(max(score_bull, 0.0), 1.0)
+    score_bear = min(max(score_bear, 0.0), 1.0)
+
     # v12: STRENGTHENED gate (require BOTH fast + slow + trend alignment)
     bull_ok = (score_bull >= MIN_STRENGTH and score_bull > score_bear
                and rsi_buy and slow_bull and trend_str > 0.5)
@@ -344,6 +436,10 @@ class BinanceTrader:
         self._today_losses: int = 0
         self.pnl_today: float = 0.0
         self.daily_reset_date: str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        # RISK state
+        self.peak_equity: float = 0.0
+        self.circuit_breaker: bool = False
+        self._global_consecutive_losses: int = 0
         self._load_state()
         PID_FILE.write_text(str(os.getpid()))
         signal.signal(signal.SIGINT, self._stop)
@@ -393,6 +489,15 @@ class BinanceTrader:
                 else:
                     self.pnl_today = 0.0
                     self.daily_reset_date = today
+                self.peak_equity = s.get("peak_equity", 0.0)
+                self.circuit_breaker = s.get("circuit_breaker", False)
+                self._global_consecutive_losses = s.get("global_consecutive_losses", 0)
+                # Check for manual reset
+                if self.circuit_breaker and Path(CB_RESET_FILE).exists():
+                    print(f"[CB] Manual reset detected — clearing circuit breaker")
+                    self.circuit_breaker = False
+                    self.peak_equity = 0.0
+                    Path(CB_RESET_FILE).unlink(missing_ok=True)
             except Exception as _e:
                 print(f"[WARN] Failed to load state: {_e}")
 
@@ -404,13 +509,14 @@ class BinanceTrader:
             self.daily_reset_date = today
             self._today_wins = 0
             self._today_losses = 0
+            self._global_consecutive_losses = 0
 
     def _today_stats_tag(self) -> str:
         total = self._today_wins + self._today_losses
         wr = int(self._today_wins / total * 100) if total > 0 else 0
         return f"[Today: {self.pnl_today:+.2f} | W:{self._today_wins} L:{self._today_losses} | WR:{wr}%]"
 
-    def _save(self, bal: float):
+    def _save(self, bal: float, equity: float = 0.0):
         if self.start_bal is None:
             self.start_bal = bal
         STATE_FILE.write_text(json.dumps({
@@ -420,11 +526,75 @@ class BinanceTrader:
             "last_update": datetime.now().isoformat(),
             "pnl_today": round(self.pnl_today, 6),
             "daily_reset_date": self.daily_reset_date,
+            "peak_equity": round(self.peak_equity, 2),
+            "circuit_breaker": self.circuit_breaker,
+            "global_consecutive_losses": self._global_consecutive_losses,
+            "current_equity": round(equity, 2),
         }, indent=2))
 
     def _stop(self, *_):
         print("\nStopping Binance trader...")
         self.running = False
+
+    def _get_equity(self) -> float:
+        bal = self.client.get_usdt_balance()
+        unrealized = 0.0
+        for sym, pos in self.positions.items():
+            try:
+                price = self.client.get_price(sym)
+                pos_pnl = (price - pos["entry"]) * pos["qty"] * pos.get("leverage", 1)
+                if pos["side"] == "SELL":
+                    pos_pnl = -pos_pnl
+                unrealized += pos_pnl
+            except Exception:
+                pass
+        return bal + unrealized
+
+    def _check_circuit_breaker(self, equity: float):
+        if equity > self.peak_equity:
+            self.peak_equity = equity
+        dd_pct = (self.peak_equity - equity) / self.peak_equity if self.peak_equity > 0 else 0.0
+        if dd_pct >= CB_DRAWDOWN_PCT and not self.circuit_breaker:
+            self.circuit_breaker = True
+            print(f"[CB] CIRCUIT BREAKER TRIPPED — drawdown {dd_pct*100:.1f}% >= {CB_DRAWDOWN_PCT*100:.0f}%")
+            print(f"[CB] Peak equity: ${self.peak_equity:.2f} | Current: ${equity:.2f}")
+            print(f"[CB] Touch '{CB_RESET_FILE}' to resume trading")
+            _obsidian("CIRCUIT BREAKER ENGAGED",
+                f"Drawdown: {dd_pct*100:.1f}%\nPeak: ${self.peak_equity:.2f}\nEquity: ${equity:.2f}")
+        return dd_pct
+
+    def _check_correlation_risk(self, symbol: str, equity: float) -> bool:
+        group = None
+        for g in CORRELATION_GROUPS:
+            if symbol in g["symbols"]:
+                group = g
+                break
+        if group is None:
+            return True
+        total_notional = 0.0
+        for sym, pos in self.positions.items():
+            if sym in group["symbols"]:
+                try:
+                    price = self.client.get_price(sym)
+                    total_notional += price * pos["qty"] * pos.get("leverage", 1)
+                except Exception:
+                    pass
+        current_risk = total_notional / equity if equity > 0 else 1.0
+        return current_risk < MAX_CORRELATED_RISK_PCT
+
+    def _get_tf_bias(self, symbol: str, interval: str) -> str:
+        try:
+            klines = self.client.get_klines(symbol, interval, limit=30)
+            if not klines or len(klines) < 21: return "NEUTRAL"
+            closes = [float(k[4]) for k in klines]
+            # Simple EMA 21
+            k = 2/(21+1); e = closes[0]
+            for x in closes[1:]: e = x*k + e*(1-k)
+            if closes[-1] > e * 1.0001: return "BULL"
+            if closes[-1] < e * 0.9999: return "BEAR"
+        except Exception:
+            pass
+        return "NEUTRAL"
 
     def _get_intel(self) -> dict:
         if time.time() - self._intel_ts > 600:
@@ -473,7 +643,16 @@ class BinanceTrader:
                 sentiment = self._get_sentiment()
                 alp_trend = self._get_alpaca_trend()
                 bal = self._get_balance_with_retry("main-loop")
-                self._save(bal)
+                equity = self._get_equity()
+                dd_pct = self._check_circuit_breaker(equity)
+                self._save(bal, equity)
+                if self.circuit_breaker:
+                    if any(self.positions.values()):
+                        for sym in list(self.positions.keys()):
+                            self._tick(sym, sentiment, alp_trend, bal, intel)
+                    print(f"[CB] Blocking entries — drawdown {dd_pct*100:.1f}% | equity=${equity:.2f}")
+                    time.sleep(INTERVAL)
+                    continue
                 for sym in SYMBOLS:
                     try:
                         self._tick(sym, sentiment, alp_trend, bal, intel)
@@ -511,6 +690,19 @@ class BinanceTrader:
         sig = compute_signal(klines, sentiment, alp_trend, market_intel)
         price = self.client.get_price(symbol)
         pos = self.positions.get(symbol)
+        
+        # BINANCE-01/02: Fetch funding and multi-TF bias
+        try:
+            fund_rate = self.client.get_funding_rate(symbol)
+            bias_1h = self._get_tf_bias(symbol, "1h")
+            bias_4h = self._get_tf_bias(symbol, "4h")
+            multi_tf_bias = "BULL" if (bias_1h == "BULL" and bias_4h == "BULL") else \
+                            ("BEAR" if (bias_1h == "BEAR" and bias_4h == "BEAR") else "NEUTRAL")
+            # Update signal with these new parameters
+            sig = compute_signal(klines, sentiment, alp_trend, market_intel, 
+                                 funding_rate=fund_rate, multi_tf_bias=multi_tf_bias)
+        except Exception as e_fund:
+            print(f"   [FUND_ERR] {symbol}: {e_fund}")
 
         _urgency_floor = MIN_STRENGTH * 0.70
         if pos is None and sig["strength"] < _urgency_floor and sig["direction"] == "NONE":
@@ -526,9 +718,19 @@ class BinanceTrader:
         skip_tag = f" [SKIP{skip_cycles}]" if skip_cycles > 0 else ""
         vol_tag = " [LOWVOL]" if not sig.get("vol_ok", True) else ""
         daily_tag = f" [DLOSS${self.pnl_today:+.0f}]" if self.pnl_today < -50 else ""
+        cb_tag = " [CB]" if self.circuit_breaker else ""
+        consec_ok = self._global_consecutive_losses < MAX_CONSECUTIVE_LOSSES
+        consec_tag = f" [CONSEC{self._global_consecutive_losses}]" if self._global_consecutive_losses > 0 else ""
+        daily_loss_pct_ok = True
+        if self.start_bal and self.start_bal > 0:
+            daily_pct_limit = self.start_bal * DAILY_LOSS_PCT
+            daily_loss_pct_ok = self.pnl_today >= max(DAILY_LOSS_LIMIT, -daily_pct_limit)
+        corr_ok = self._check_correlation_risk(symbol, bal)
+        corr_tag = " [CORR]" if not corr_ok else ""
+        daily_pct_tag = f" [DPCT]" if not daily_loss_pct_ok else ""
         stats_tag = self._today_stats_tag()
         trend_tag = f" tr:{sig.get('trend', 0.5):.2f}"
-        print(f"[{ts}] {symbol} ${price:,.2f} | {sig['direction']} str:{sig['strength']:.2f} rsi:{sig.get('rsi',0):.0f} lev:{lev}x sess:{sess_key}×{sess_mult}{trend_tag} | {'POS' if pos else '-'} open:{open_count}/{MAX_OPEN}{skip_tag}{vol_tag}{daily_tag} {stats_tag}")
+        print(f"[{ts}] {symbol} ${price:,.2f} | {sig['direction']} str:{sig['strength']:.2f} rsi:{sig.get('rsi',0):.0f} lev:{lev}x sess:{sess_key}×{sess_mult}{trend_tag} | {'POS' if pos else '-'} open:{open_count}/{MAX_OPEN}{skip_tag}{vol_tag}{daily_tag}{cb_tag}{consec_tag}{corr_tag}{daily_pct_tag} {stats_tag}")
 
         if skip_cycles > 0:
             self._sym_skip_cycle[symbol] = skip_cycles - 1
@@ -543,7 +745,10 @@ class BinanceTrader:
                 and skip_cycles == 0
                 and vol_ok
                 and atr_ratio > 0.0
-                and daily_ok):
+                and daily_ok
+                and daily_loss_pct_ok
+                and consec_ok
+                and corr_ok):
 
             leverage_mult = 1.0
             if self._streak <= STREAK_LEV_THRESHOLD or self._streak_lev_remaining > 0:
@@ -729,12 +934,16 @@ class BinanceTrader:
 
                 if raw_pnl > 0:
                     self._sym_consec_losses[symbol] = 0
+                    self._global_consecutive_losses = 0
                 else:
                     self._sym_consec_losses[symbol] = self._sym_consec_losses.get(symbol, 0) + 1
                     if self._sym_consec_losses[symbol] >= 3:
                         self._sym_skip_cycle[symbol] = 2
                         self._sym_consec_losses[symbol] = 0
                         print(f"   [REVERSE] {symbol} 3 losses → skipping 2 cycles")
+                    self._global_consecutive_losses += 1
+                    if self._global_consecutive_losses >= MAX_CONSECUTIVE_LOSSES:
+                        print(f"   [RISK-04] {self._global_consecutive_losses} consecutive losses global → stopping entries for the day")
 
                 if raw_pnl > 0:
                     self._streak = max(1, self._streak + 1) if self._streak >= 0 else 1
