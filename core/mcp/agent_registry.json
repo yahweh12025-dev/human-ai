@@ -1,0 +1,53 @@
+{
+  "agents": {
+    "Hermes": {
+      "agent_id": "Hermes",
+      "capabilities": [
+        "gateway",
+        "task_queue",
+        "coordination"
+      ],
+      "endpoint": "",
+      "registered_at": "2026-06-02T17:30:28.032935",
+      "last_heartbeat": "2026-06-02T17:30:28.032952",
+      "status": "active"
+    },
+    "hermes": {
+      "agent_id": "hermes",
+      "capabilities": [
+        "architect",
+        "strategy",
+        "orchestration"
+      ],
+      "endpoint": "",
+      "registered_at": "2026-06-02T17:30:28.032959",
+      "last_heartbeat": "2026-06-02T17:30:28.032964",
+      "status": "active"
+    },
+    "opencode": {
+      "agent_id": "opencode",
+      "capabilities": [
+        "coding",
+        "refactoring",
+        "implementation"
+      ],
+      "endpoint": "",
+      "registered_at": "2026-06-02T17:30:28.032967",
+      "last_heartbeat": "2026-06-02T17:30:28.032976",
+      "status": "active"
+    },
+    "researcher": {
+      "agent_id": "researcher",
+      "capabilities": [
+        "research",
+        "deepseek",
+        "analysis"
+      ],
+      "endpoint": "",
+      "registered_at": "2026-06-02T17:30:28.032979",
+      "last_heartbeat": "2026-06-02T17:30:28.032981",
+      "status": "active"
+    }
+  },
+  "updated_at": "2026-06-02T17:30:28.032984"
+}

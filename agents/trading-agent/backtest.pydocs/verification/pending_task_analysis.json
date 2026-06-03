@@ -1,0 +1,45 @@
+{
+  "pending_count": 153,
+  "completed_count": 207,
+  "pending_by_agent": {
+    "Pi.dev": 27,
+    "Researcher": 24,
+    "OpenCode": 30,
+    "Hermes": 44,
+    "opencode": 11,
+    "pi.dev": 6,
+    "OpenClaw": 4,
+    "hermes": 7
+  },
+  "high_priority_pending": 107,
+  "low_priority_pending": 2,
+  "very_old_pending": 0,
+  "potential_duplicates": 13,
+  "agent_workloads": {
+    "Pi.dev": 27,
+    "Researcher": 24,
+    "OpenCode": 30,
+    "Hermes": 44,
+    "opencode": 11,
+    "pi.dev": 6,
+    "OpenClaw": 4,
+    "hermes": 7
+  },
+  "adjustments": [
+    {
+      "type": "decomposition",
+      "suggestion": "Review 107 high-priority pending tasks for decomposition into smaller, more manageable sub-tasks",
+      "priority": "medium"
+    },
+    {
+      "type": "priority_rebalance",
+      "suggestion": "Consider rebalancing priorities: 107 P1 tasks vs 0 P4 tasks. Some P1 tasks may be over-prioritized",
+      "priority": "low"
+    },
+    {
+      "type": "workload_rebalance",
+      "suggestion": "Consider rebalancing workload: Hermes has 44 pending tasks vs OpenClaw with 4",
+      "priority": "medium"
+    }
+  ]
+}

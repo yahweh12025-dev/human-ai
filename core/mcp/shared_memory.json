@@ -1,0 +1,31 @@
+{
+  "store": {
+    "a2a_inbox_hermes": [
+      {
+        "id": "fdb4cb0a-2c86-4cd1-a87e-b66ee578f5b8",
+        "sender": "opencode",
+        "recipient": "hermes",
+        "message": {
+          "type": "task_request",
+          "task": "review Wave 2 migration",
+          "priority": 1
+        },
+        "sent_at": "2026-06-02T17:33:35.410544",
+        "delivered": false
+      },
+      {
+        "id": "10cd724e-9a2e-4bf5-b0f9-b710ade8d0d9",
+        "sender": "opencode",
+        "recipient": "hermes",
+        "message": {
+          "type": "handoff",
+          "summary": "E2E test passed",
+          "next_task": "Start Wave 4"
+        },
+        "sent_at": "2026-06-02T17:33:35.476133",
+        "delivered": false
+      }
+    ]
+  },
+  "updated_at": "2026-06-02T17:33:35.476252"
+}

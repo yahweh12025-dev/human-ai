@@ -1,0 +1,1 @@
+The plan is to integrate [[ObsidianAgent]] into the core.

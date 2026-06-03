@@ -1,0 +1,14 @@
+{
+    "total_trades": 194,
+    "winning_trades": 34,
+    "losing_trades": 160,
+    "win_rate": 0.17525773195876287,
+    "total_profit": -1.455045831828735,
+    "avg_profit": 0.007499691749443753,
+    "avg_loss": -0.01068772094568639,
+    "profit_factor": 0.14911359539191707,
+    "max_drawdown": -43.95759460768702,
+    "starting_equity": 5.0,
+    "ending_equity": 2.802120269615649,
+    "return_pct": -43.95759460768702
+}

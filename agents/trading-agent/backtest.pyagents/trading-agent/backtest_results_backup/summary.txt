@@ -1,0 +1,14 @@
+Backtest Summary
+==================================================
+total_trades: 31
+winning_trades: 17
+losing_trades: 14
+win_rate: 0.5483870967741935
+total_profit: 0.29694694944961997
+avg_profit: 0.06704064075134754
+avg_loss: -0.06019599595166343
+profit_factor: 1.3523572632021956
+max_drawdown: -6.27413844635587
+starting_equity: 5.0
+ending_equity: 5.296946949449621
+return_pct: 5.938938988992426

@@ -1,0 +1,18 @@
+{
+  "human_ai_alpha": {
+    "model_id": "99574c0c-7897-4214-aceb-180a4414500c",
+    "tournament": "main",
+    "pipeline": "numerai_pipeline.py"
+  },
+  "crypto_model_alpha": {
+    "model_id": "fa491282-c161-4ba0-8e36-caabf34a63b9",
+    "tournament": "crypto",
+    "pipeline": "crypto_pipeline.py"
+  },
+  "signal_model_alpha": {
+    "model_id": "fa0e6ddf-bb19-4d87-a91c-fcea7944ed3e",
+    "tournament": "signals",
+    "pipeline": "signal_pipeline.py",
+    "note": "Created 2026-05-20"
+  }
+}

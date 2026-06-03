@@ -1,0 +1,21 @@
+# Backtest Registry
+
+- **alpaca_run_20260424_181037.json** – Completed
+- **cycle_cycle_1_is** – Completed (In‑sample)
+- **cycle_cycle_1_oos** – Completed (Out‑of‑sample)
+- **cycle_cycle_2_is** – Completed
+- **cycle_cycle_2_oos** – Completed
+- **cycle_cycle_3_is** – Completed
+- **cycle_cycle_3_oos** – Completed
+- **cycle_cycle_4_is** – Completed
+- **cycle_cycle_4_oos** – Completed
+- **cycle_cycle_5_is** – Completed
+- **cycle_cycle_5_oos** – Completed
+- **cycle_cycle_6_is** – Completed
+- **cycle_cycle_6_oos** – Completed
+- **cycle_oos_baseline** – Completed
+- **equity_curve.csv** – Completed (baseline)
+- **run_20260424_124610.json** – Completed
+- **run_20260428_104623.json** – Completed
+- **run_20260428_110141.json** – Completed
+- **summary_v3.json** – Completed

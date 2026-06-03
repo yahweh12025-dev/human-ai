@@ -1,0 +1,112 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Environments
+.env
+.venv
+env.ini
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Data
+data/
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Trading specific
+unified_tasks.json
+*.mq5
+*.ex5
+
+# Trading strategies and backtests (git history purged - keep locally)
+agents/trading-agent/backtest*.py
+agents/trading-agent/backtest_results_*/
+agents/trading-agent/backtests/
+agents/trading-agent/strategies/
+agents/trading-agent/freqtrade_*
+agents/trading-agent/optimized_backtest.py
+agents/trading-agent/strategy_verifier.py
+agents/trading-agent/trading_strategy.py
+agents/trading-agent/ea_virtual_backtest.py
+agents/trading-agent/openclaw_freqtrade_bridge.py
+agents/numerai/
+core/apps/alpha_integration/
+core/research/trading_strategy_review/
+docs/strategy_improvement_analysis.md
+docs/verification/freqtrade_testnet_verification_20260510.md
+scripts/run_*backtest*.py
+scripts/strategy_profiler.py
+
+# Media
+media_output/
+obsidian/
+
+# Backups
+backups/
+
+# Process output
+nohup.out
+
+# Configs that may contain secrets
+config/

@@ -1,0 +1,86 @@
+[
+  {
+    "agent": "Hermes",
+    "task": "Create a verification system that automatically updates verification criteria based on code commit analysis and historical failure patterns.",
+    "priority": 1,
+    "pow_file": "scripts/verification_criteria_updater.py"
+  },
+  {
+    "agent": "Hermes",
+    "task": "Build a verification insight dissemination system that pushes actionable insights to agent configuration systems in real-time.",
+    "priority": 1,
+    "pow_file": "scripts/verification_insight_disseminator.py"
+  },
+  {
+    "agent": "Hermes",
+    "task": "Develop a verification gamification system to encourage agents to produce higher quality verification outputs.",
+    "priority": 2,
+    "pow_file": "scripts/verification_gamification.py"
+  },
+  {
+    "agent": "Pi.dev",
+    "task": "Create a verification-driven market prediction system that uses verification audit outcomes as features for predicting market movements.",
+    "priority": 1,
+    "pow_file": "data/verification_market_predictor.py"
+  },
+  {
+    "agent": "Pi.dev",
+    "task": "Develop a system to automatically generate trading strategy parameters from verification audit findings using genetic algorithms.",
+    "priority": 2,
+    "pow_file": "data/verification_ga_strategy.py"
+  },
+  {
+    "agent": "Pi.dev",
+    "task": "Build a verification-aware research paper prioritization system that ranks papers based on relevance to verification outcomes.",
+    "priority": 2,
+    "pow_file": "research/verification_paper_prioritizer.py"
+  },
+  {
+    "agent": "OpenCode",
+    "task": "Create a verification-aware infrastructure monitoring system that correlates verification results with infrastructure metrics.",
+    "priority": 1,
+    "pow_file": "scripts/verification_aware_infra_monitor.py"
+  },
+  {
+    "agent": "OpenCode",
+    "task": "Build an automated verification-based rollback system for failed deployments.",
+    "priority": 2,
+    "pow_file": "scripts/verification_based_rollback.py"
+  },
+  {
+    "agent": "OpenCode",
+    "task": "Develop a verification-driven canary analysis system for safe deployments.",
+    "priority": 2,
+    "pow_file": "scripts/verification_canary_analyzer.py"
+  },
+  {
+    "agent": "Researcher",
+    "task": "Create a verification methodology benchmarking system that compares different verification approaches across domains.",
+    "priority": 1,
+    "pow_file": "research/verification_methodology_benchmark.py"
+  },
+  {
+    "agent": "Researcher",
+    "task": "Build a system to automatically generate research hypotheses from verification audit contradictions.",
+    "priority": 2,
+    "pow_file": "research/verification_contradiction_hypothesis.py"
+  },
+  {
+    "agent": "Researcher",
+    "task": "Develop a verification impact tracking system that measures long-term effects of verification insights on trading performance.",
+    "priority": 2,
+    "pow_file": "research/verification_longterm_impact.py"
+  },
+  {
+    "agent": "OpenClaw",
+    "task": "Create a verification-aware agent template system that automatically generates agent scaffolding with built-in verification hooks.",
+    "priority": 1,
+    "pow_file": "templates/verification_aware_agent_scaffold.py"
+  },
+  {
+    "agent": "OpenClaw",
+    "task": "Build a verification-based agent deployment orchestration system with pre-deployment verification checks.",
+    "priority": 2,
+    "pow_file": "scripts/verification_orchestrator_deployment.py"
+  }
+]

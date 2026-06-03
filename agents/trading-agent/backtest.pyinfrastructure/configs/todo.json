@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "id": "int-1",
+      "content": "Clone tauricresearch/tradingagents, virattt/ai-hedge-fund, freqtrade/freqtrade into /apps/",
+      "status": "completed"
+    },
+    {
+      "id": "int-2",
+      "content": "Implement Macro Agent for XAU/XAG watching interest rates and inflation data",
+      "status": "completed"
+    },
+    {
+      "id": "int-3",
+      "content": "Develop Python Bridge that runs hourly, collects consensus, sends to Freqtrade via REST API",
+      "status": "completed"
+    },
+    {
+      "id": "int-4",
+      "content": "Create Satellite Strategy in Freqtrade with hard stop loss (2%) and trailing profit",
+      "status": "completed"
+    },
+    {
+      "id": "int-5",
+      "content": "Focus on extracting Final Decision from AI output to drive trades",
+      "status": "completed"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Core dependencies for the AI trading system
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+ta-lib>=0.4.0
+ccxt>=4.0.0
+requests>=2.28.0
+flask>=2.3.0
+fastapi>=0.95.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+psutil>=5.9.0
+# Data providers
+yfinance>=0.2.36
+# Cloud / database backends
+supabase>=2.3.0
+firebase-admin>=6.4.0
+google-cloud-firestore>=2.15.0
+# Add other dependencies as needed
+gpt-researcher>=0.10.0
+camoufox>=0.4.0
+# Multi-agent frameworks (high-star repos)
+crewai>=1.14.4
+pyautogen>=0.10.0
+# tradingagents>=0.6.0  # Requires Python >=3.12; use trading_agents_bridge.py wrapper

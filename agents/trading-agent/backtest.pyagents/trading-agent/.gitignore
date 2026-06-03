@@ -1,0 +1,3 @@
+# Individual trade records (runtime artifacts)
+trades/binance/trade_*.json
+trades/mt5/trade_*.json

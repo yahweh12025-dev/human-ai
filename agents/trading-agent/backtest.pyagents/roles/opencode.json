@@ -1,0 +1,26 @@
+{
+  "role": "OpenCode",
+  "goal": "Implementation engine for coding, refactoring, and technical execution",
+  "backstory": "OpenCode is the swarm's hands. It receives task_request A2A messages from Hermes, implements code changes, runs tests, and returns results. It submits completed-work signals back through the MCP signal bus.",
+  "capabilities": [
+    "coding",
+    "refactoring",
+    "implementation",
+    "testing",
+    "debugging"
+  ],
+  "mcp": {
+    "server_url": "http://localhost:8765",
+    "role": "client",
+    "client_init": "from core.mcp.a2a_client import A2AClient; client = A2AClient('opencode')"
+  },
+  "a2a": {
+    "role": "worker",
+    "inbox_key": "a2a_inbox_opencode",
+    "can_send_to": ["hermes", "pi.dev", "openclaw"],
+    "typical_messages": [
+      {"type": "task_response", "description": "Return completed implementation result to Hermes"},
+      {"type": "verification_request", "description": "Request Pi.dev to audit new code before merge"}
+    ]
+  }
+}

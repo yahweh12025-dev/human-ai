@@ -1,0 +1,16 @@
+[Unit]
+Description=Human-AI Binance Trading Agent
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/yahwehatwork/human-ai
+ExecStart=/home/yahwehatwork/human-ai/.venv/bin/python3 /home/yahwehatwork/human-ai/startbinance.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/yahwehatwork/human-ai/data/logs/binance.service.log
+StandardError=append:/home/yahwehatwork/human-ai/data/logs/binance.service.err
+
+[Install]
+WantedBy=multi-user.target

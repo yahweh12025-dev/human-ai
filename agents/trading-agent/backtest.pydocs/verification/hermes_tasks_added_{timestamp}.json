@@ -1,0 +1,82 @@
+[
+  {
+    "id": "HERMES-VERIF-GUIDE-20260508_210824",
+    "task": "Create VERIFICATION_GUIDE.md documentation compiling all verification systems, processes, and best practices",
+    "agent": "Hermes",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": "docs/VERIFICATION_GUIDE.md"
+  },
+  {
+    "id": "HERMES-VERIF-INSIGHTS-20260508_210824",
+    "task": "Develop verification insights extraction system that identifies actionable improvements from completed verification audits and generates implementation tasks",
+    "agent": "Hermes",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": "scripts/verification_insights_extractor.py"
+  },
+  {
+    "id": "HERMES-VERIF-COMPLETENESS-20260508_210824",
+    "task": "Create automated verification completeness checker that ensures all completed tasks have proper pow_file verification",
+    "agent": "Hermes",
+    "priority": 2,
+    "status": "pending",
+    "pow_file": "scripts/verification_completeness_checker.py"
+  },
+  {
+    "id": "PI-VERIF-MARKET-20260508_210824",
+    "task": "Create verification-driven market analysis system that extracts trading signals from verification audit findings",
+    "agent": "Pi.dev",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": "data/verification_market_analyzer.py"
+  },
+  {
+    "id": "PI-VERIF-HYPOTHESIS-20260508_210824",
+    "task": "Develop automated hypothesis generation system that creates trading hypotheses from verification audit patterns",
+    "agent": "Pi.dev",
+    "priority": 2,
+    "status": "pending",
+    "pow_file": "research/verification_hypothesis_generator.py"
+  },
+  {
+    "id": "OPENCODE-CONTRIBUTING-20260508_210824",
+    "task": "Create CONTRIBUTING.md documentation for developer onboarding and contribution guidelines",
+    "agent": "OpenCode",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": "docs/CONTRIBUTING.md"
+  },
+  {
+    "id": "OPENCODE-CD-WORKFLOW-20260508_210824",
+    "task": "Create missing .github/workflows/cd.yml for continuous deployment workflows",
+    "agent": "OpenCode",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": ".github/workflows/cd.yml"
+  },
+  {
+    "id": "OPENCODE-API-REF-20260508_210824",
+    "task": "Create API_REFERENCE.md documentation for all Pi.dev developed systems and interfaces",
+    "agent": "OpenCode",
+    "priority": 2,
+    "status": "pending",
+    "pow_file": "docs/API_REFERENCE.md"
+  },
+  {
+    "id": "RESEARCHER-VERIF-LIT-20260508_210824",
+    "task": "Create automated verification literature review system that continuously analyzes verification methodologies and suggests improvements",
+    "agent": "Researcher",
+    "priority": 1,
+    "status": "pending",
+    "pow_file": "research/automated_verification_literature_review.py"
+  },
+  {
+    "id": "RESEARCHER-VERIF-TREND-20260508_210824",
+    "task": "Develop verification trend analysis system for identifying promising research directions from audit findings",
+    "agent": "Researcher",
+    "priority": 2,
+    "status": "pending",
+    "pow_file": "research/verification_trend_research_analyzer.py"
+  }
+]

@@ -1,0 +1,41 @@
+- link "Sign in" [e1]:
+  - /url: https://accounts.google.com/ServiceLogin?passive=1209600&continue=https://gemini.google.com/&followup=https://gemini.google.com/&ec=GAZAkgU
+- main:
+  - button "Main menu" [e2]
+  - button "New chat" [e3] [disabled]: Gemini
+  - link "About Gemini Opens in a new window" [e4]:
+    - /url: https://gemini.google/about/?utm_source=gemini&utm_medium=web&utm_campaign=gemini_zero_state_link_to_marketing_microsite
+  - link "Gemini App Opens in a new window" [e5]:
+    - /url: https://gemini.google.com/app/download
+  - link "Subscriptions Opens in a new window" [e6]:
+    - /url: https://one.google.com/ai
+  - link "For Business Opens in a new window" [e7]:
+    - /url: https://workspace.google.com/solutions/ai/?utm_source=geminiforbusiness&utm_medium=et&utm_campaign=gemini-page-crosslink&utm_term=-&utm_content=forbusiness-2025Q3
+  - navigation "Side Navigation":
+    - group:
+      - link "New chat" [e8] [disabled]:
+        - /url: /app
+    - group:
+      - button "Settings & help" [e9]
+  - heading "Conversation with Gemini" [level=1]
+  - heading "Meet Gemini, your personal AI assistant" [level=1]
+  - button "Write, button, tap to use tool" [e10]: Write
+  - button "Plan, button, tap to use tool" [e11]: Plan
+  - button "Research, button, tap to use tool" [e12]: Research
+  - button "Learn, button, tap to use tool" [e13]: Learn
+  - group:
+    - textbox "Enter a prompt for Gemini" [e14]:
+      - text: Ask Gemini
+      - paragraph
+    - button "Open upload file menu" [e15]
+    - button "Tools" [e16]
+    - button "Open mode picker, currently Flash" [e17]: Flash
+    - button "Microphone" [e18]
+    - button "Send message" [e19] [disabled]
+  - paragraph:
+    - link "Google Terms Opens in a new window" [e20]:
+      - /url: https://policies.google.com/terms
+    - text: and the
+    - link "Google Privacy Policy Opens in a new window" [e21]:
+      - /url: https://policies.google.com/privacy
+    - text: apply. Gemini is AI and can make mistakes.
